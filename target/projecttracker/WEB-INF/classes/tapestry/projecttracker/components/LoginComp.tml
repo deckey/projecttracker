@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_4.xsd">
+    <body>
+        <!-- LOGIN FORM COMPONENT -->
+        <div class="row">
+            
+            <div class="col-md-6 col-md-offset-6">
+                <t:form t:id="loginForm">
+                    <t:errors/>
+                    <div class="form-group col-sm-6">
+                        <label t:type="label" for="memberUsername" class="control-label">Username:</label>
+                        <input t:type="textfield" t:id="memberUsername" class="form-control" name="username" value="memberUsername"/>
+                    </div>
+                    <div class="form-group col-sm-6">
+                        <label t:type="label" for="memberPassword" class="control-label">Password:</label>
+                        <input t:type="passwordfield" t:id="memberPassword" class="form-control" name="password" value="memberPassword"/>
+                    </div>
+                    <div class="form-group col-sm-6 col-sm-offset-6">
+                        <t:submit class="btn btn-primary pull-right " value="Login"/>
+                    </div>
+                </t:form>
+            </div>
+        </div>
+    </body>
+</html>

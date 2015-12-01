@@ -65,6 +65,16 @@ public class Member implements Serializable {
     public Member() {
     }
 
+    public Member(String memberName, MemberRole memberRole, MemberSpecialty memberSpecialty, MemberStatus memberStatus, String memberUsername, String memberPassword) {
+        this.memberName = memberName;
+        this.memberRole = memberRole;
+        this.memberSpecialty = memberSpecialty;
+        this.memberStatus = memberStatus;
+        this.memberUsername = memberUsername;
+        this.memberPassword = memberPassword;
+    }
+    
+
     public Integer getMemberId() {
         return memberId;
     }

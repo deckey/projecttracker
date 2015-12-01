@@ -13,8 +13,8 @@ p{white-space: pre-line;}
     margin-top:5px;
     margin-bottom:5px;
 }
-input, label{
-    margin-left:5px;
-    margin-top:5px;
-}
 .black{background-color: #333333; color:#fff;}
+
+#logoHeader{
+    width:250px;
+}

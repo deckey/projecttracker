@@ -1,7 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+//TODO: Get user persistant to all pages and displayed in header bar
+//TODO: Mockup secondary pages for adding and removing projects/members
+//TODO: Setup access levels for Admin and Member
+
+/* 
+Header class combining components for member details and logo
+This class holds main menu navigation
  */
 package tapestry.projecttracker.components;
 
@@ -14,10 +17,6 @@ import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import tapestry.projecttracker.data.MemberDAO;
 
-/**
- *
- * @author dejan
- */
 @Import(stylesheet = {
     "context:css/bootstrap-custom.css",
     "context:css/main.css"})
