@@ -35,6 +35,10 @@ public class AppModule {
         // invoking the constructor.
     }
 
+    public void contributeComponentRequestHandler(OrderedConfiguration<ComponentRequestFilter> configuration) {
+        configuration.addInstance("PageProtectionFilter", PageProtectionFilter.class);
+    }
+
     public static void contributeFactoryDefaults(
             MappedConfiguration<String, Object> configuration) {
         // The application version is incorporated into URLs for most assets. Web

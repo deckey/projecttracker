@@ -32,7 +32,7 @@ public class ViewProjects {
     }
 
     public boolean getLoggedInRole() {
-        return (loggedInMember.getMemberRole().name() == "Administrator") ? true : false;
+        return (loggedInMember.getMemberRole().name() != "Member") ? true : false;
     }
 
 }
