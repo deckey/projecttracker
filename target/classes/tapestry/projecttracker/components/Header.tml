@@ -1,16 +1,22 @@
-<!DOCTYPE html>
 <html t:type="layout" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_4.xsd">
-    
-    <body>
-        <div class="container">
-            <div class="row">
-                
-            </div>
-           
-            
-        </div>
-        <div class="container">
-            <t:body />
-        </div>
-    </body>
+    <t:content>
+        <t:if test="!loggedIn">
+            <!-- HEADER BAR -->
+            <div class="row" id="headerBar">
+                <t:eventlink t:event="goHome">
+                    <img class="img-responsive pull-left"  src="${context:images/projectTracker_logoHeader.png}" alt="Go to homepage" title="Home page"/>
+                </t:eventlink>
+                <div class="col-sm-3 pull-right">
+                    <div class="text-right">
+                        <t:eventlink t:event="logout">
+                            <img src="${context:images/glyphicons/logout.png}" alt="Logout" title="Logout"/>
+                        </t:eventlink>
+                    </div>
+                    <div class="pull-right" id="logoutBtn">
+                        Welcome, <b>${user}</b>
+                    </div>
+                </div>
+            </div> 
+        </t:if>
+    </t:content>
 </html>

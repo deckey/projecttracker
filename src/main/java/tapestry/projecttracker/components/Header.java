@@ -1,4 +1,3 @@
-//TODO: Get user persistant to all pages and displayed in header bar
 //TODO: Mockup secondary pages for adding and removing projects/members
 //TODO: Setup access levels for Admin and Member
 
@@ -21,21 +20,30 @@ public class Header {
 
     @Inject
     private MemberDAO memberDao;
-    
-    @Inject
-    private ComponentResources resources;
-    
-    @Property
-    private String pageName;
-    
+
     @SessionState
     @Property
     private Member loggedInMember;
 
-    Object onGoHome(){
+    @Inject
+    private ComponentResources componentResources;
+
+    Object onGoHome() {
         return Index.class;
     }
-    public String getUser(){
-        return loggedInMember.getMemberUsername();
+
+    public String getUser() {
+        return loggedInMember.getMemberName();
     }
+
+    public boolean getLoggedIn() {
+        return (loggedInMember.getMemberUsername() == null) ? true : false;
+    }
+
+    Object onLogout() {
+        componentResources.discardPersistentFieldChanges();
+        loggedInMember = null;
+        return Index.class;
+    }
+
 }

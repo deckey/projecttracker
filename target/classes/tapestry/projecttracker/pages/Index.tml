@@ -1,41 +1,27 @@
-<!DOCTYPE html>
-<html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_4.xsd">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title> Welcome to Project Tracker App</title>
-    </head>
+<html t:type="layout" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_4.xsd">
+   
     <div class="container">
+        <!-- MAIN MENU COMPONENT -->
         <t:if test="!loggedIn">
-            <!-- HEADER BAR -->
-            <div class="row">
-                <t:eventlink t:event="goHome">
-                    <img class="img-responsive col-sm-2"  src="${context:images/projectTracker_logoHeader.png}"/>
-                </t:eventlink>
-                <div class="col-sm-3 pull-right text-right" id="memberName">
-                    Welcome, <b>${user}</b>
-                </div>
-            </div> 
-            <hr/>
-            
+            <t:header/>
+            <t:mainmenu/>
         </t:if>
         <!-- LOGIN FORM COMPONENT -->
         <t:if test="loggedIn">
             <div class="row">
                 <div class="col-md-6 col-md-offset-6">
-                    <t:form t:id="loginForm">
+                    <t:form t:id="loginForm" class="clearfix" >
                         <t:errors/>
-                        <div class="form-group col-sm-6">
+                        <div class="form-group col-sm-5">
                             <label t:type="label" for="memberUsername" class="control-label">Username:</label>
                             <input t:type="textfield" t:id="memberUsername" class="form-control" name="username" value="memberUsername"/>
                         </div>
-                        <div class="form-group col-sm-6">
+                        <div class="form-group col-sm-5">
                             <label t:type="label" for="memberPassword" class="control-label">Password:</label>
                             <input t:type="passwordfield" t:id="memberPassword" class="form-control" name="password" value="memberPassword"/>
                         </div>
-                        <div class="form-group col-sm-6 col-sm-offset-6">
+                        <div class="form-group col-sm-2">
+                            <label class="invisible">Submit</label>
                             <t:submit class="btn btn-primary pull-right " value="Login"/>
                         </div>
                     </t:form>

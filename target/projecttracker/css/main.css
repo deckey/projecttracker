@@ -10,11 +10,20 @@ and open the template in the editor.
 .blue{background-color:#9999ff; }
 p{white-space: pre-line;}
 .row {
-    margin-top:5px;
-    margin-bottom:5px;
+    margin-top:10px;
+    margin-bottom:10px;
 }
 .black{background-color: #333333; color:#fff;}
-
+#loginForm{
+    min-height:110px;
+    
+}
 #logoHeader{
     width:250px;
+}
+#logoutBtn{margin-top:40px;}
+#headerBar{
+    padding:10px 0;
+    margin-bottom: 10px;
+    border-bottom:#cccccc 1px solid;
 }

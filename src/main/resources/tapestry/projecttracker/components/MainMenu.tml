@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_4.xsd">
+<html t:type="layout" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_4.xsd">
     <t:content>
         <!-- MAIN MENU -->
         <div class="row">

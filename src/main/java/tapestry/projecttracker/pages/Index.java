@@ -1,13 +1,6 @@
 package tapestry.projecttracker.pages;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import org.apache.tapestry5.ComponentResources;
-import org.apache.tapestry5.annotations.Import;
 import org.apache.tapestry5.annotations.InjectComponent;
-import org.apache.tapestry5.annotations.InjectPage;
-import org.apache.tapestry5.annotations.Persist;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.annotations.SessionState;
 import org.apache.tapestry5.beaneditor.Validate;
@@ -21,9 +14,6 @@ import tapestry.projecttracker.pages.view.ViewDashboard;
 /**
  * Start page of application ProjectTracker.
  */
-@Import(stylesheet = {
-    "context:css/bootstrap-custom.css",
-    "context:css/main.css"})
 public class Index {
 
 //    TEMPORARY to ADD members
