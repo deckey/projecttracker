@@ -1,32 +1,13 @@
 <!DOCTYPE html>
-<html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_4.xsd">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-    </head>
+<html t:type="layout" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_4.xsd">
+    
     <body>
         <div class="container">
             <div class="row">
-                <a href="Index">
-                    <img class="img-responsive col-sm-2"  src="${context:images/projectTracker_logoHeader.png}"/>
-                </a>
-                <div class="col-sm-3 pull-right text-right" id="memberName">
-                    Welcome, <b>guest</b>
-                </div>
+                
             </div>
-            <hr/>
-            <div class="row">
-                <!-- MENU NAVIGATION -->
-                <ul class="nav nav-pills">
-                    <t:loop source="pageNames" value="pageName" >
-                        <t:any element="li" class="prop:classForPageName">
-                            <t:pagelink page="prop:pageName">${pageLabel}</t:pagelink>
-                        </t:any>
-                    </t:loop>
-                </ul>
-            </div>
+           
+            
         </div>
         <div class="container">
             <t:body />
