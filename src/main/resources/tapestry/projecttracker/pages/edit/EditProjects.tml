@@ -1,0 +1,29 @@
+<html t:type="layout" 
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_4.xsd"
+      xmlns:p="tapestry:parameter">
+    <body>
+        <div class="container">
+            <t:header/>
+            <t:mainmenu/>
+            <div class="row border_btm">
+                <h3> Edit projects </h3>
+                <div class="row frame" >
+                    <t:grid class="table table-hover"
+                            t:source="projects"
+                            exclude="projectId, projectEnd,projectTime"
+                            rowsperpage="5" 
+                            pagerPosition="top">
+                       
+                    </t:grid>
+                    
+                </div>
+            </div>
+            <div class="row">
+                <h3> Add / Edit project </h3>
+                <t:beaneditform t:id="addProjectForm" 
+                                t:object="project"
+                                exclude="projectId, projectEnd, projectTime"/>
+            </div>
+        </div>
+    </body>
+</html>

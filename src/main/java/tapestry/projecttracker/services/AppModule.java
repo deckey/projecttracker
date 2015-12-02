@@ -14,6 +14,8 @@ import org.apache.tapestry5.services.*;
 import org.slf4j.Logger;
 import tapestry.projecttracker.data.MemberDAO;
 import tapestry.projecttracker.data.MemberIMPL;
+import tapestry.projecttracker.data.ProjectDAO;
+import tapestry.projecttracker.data.ProjectIMPL;
 
 /**
  * This module is automatically included as part of the Tapestry IoC Registry,
@@ -25,11 +27,16 @@ public class AppModule {
     public static void bind(ServiceBinder binder) {
         // binder.bind(MyServiceInterface.class, MyServiceImpl.class);
         binder.bind(MemberDAO.class, MemberIMPL.class);
+        binder.bind(ProjectDAO.class, ProjectIMPL.class);
 
 // Make bind() calls on the binder object to define most IoC services.
         // Use service builder methods (example below) when the implementation
         // is provided inline, or requires more initialization than simply
         // invoking the constructor.
+    }
+
+    public void contributeComponentRequestHandler(OrderedConfiguration<ComponentRequestFilter> configuration) {
+        configuration.addInstance("PageProtectionFilter", PageProtectionFilter.class);
     }
 
     public static void contributeFactoryDefaults(

@@ -6,10 +6,13 @@
 package tapestry.projecttracker.pages.view;
 
 import java.util.List;
+import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.annotations.Property;
+import org.apache.tapestry5.annotations.SessionState;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.hibernate.Session;
 import tapestry.projecttracker.entities.Member;
+import tapestry.projecttracker.pages.Index;
 
 /**
  *
@@ -23,8 +26,16 @@ public class ViewMembers {
     @Property
     private Member member;
 
+    @SessionState
+    @Property
+    private Member loggedInMember;
+
     @Inject
     private Session dbs;
+
+    public boolean getLoggedInRole() {
+        return (loggedInMember.getMemberRole().name() == "Administrator") ? true : false;
+    }
 
     void onActivate() {
         members = dbs.createCriteria(Member.class).list();

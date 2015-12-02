@@ -4,9 +4,19 @@
             <t:header/>
             <t:mainmenu/>
             <div class="row">
-                <h2> Members </h2>
+                <div class="edit-icon">
+                    <t:if test="loggedInRole">
+                        <t:pagelink page="edit/EditMembers">
+                            <img src="${context:images/glyphicons/edit.png}" alt="Edit members" title="Edit members"/>
+                        </t:pagelink>
+                    </t:if>
+                </div>
+                <div class="col-sm-2 ">
+                    <h3> Members </h3>
+                </div>
                 <div class="row">
-                    <t:grid source="members"/>
+                    <t:grid source="members" 
+                            exclude="memberId, memberPassword"/>
                 </div>
             </div>
         </div>

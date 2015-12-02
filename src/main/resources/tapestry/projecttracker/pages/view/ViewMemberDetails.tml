@@ -1,0 +1,14 @@
+<html t:type="layout" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_4.xsd">
+    <body>
+        <div class="container">
+            <t:header/>
+            <t:mainmenu/>
+            <div class="row">
+                <h3> Member details </h3>
+                <div class="row">
+                    <t:grid source="members"/>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

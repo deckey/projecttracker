@@ -8,6 +8,8 @@ and open the template in the editor.
     Author     : dejan
 */
 .blue{background-color:#9999ff; }
+.orange{background-color: #ff9966;}
+.border_btm{border-bottom: #ff9966 1px solid;}
 p{white-space: pre-line;}
 .row {
     margin-top:10px;
@@ -16,7 +18,7 @@ p{white-space: pre-line;}
 .black{background-color: #333333; color:#fff;}
 #loginForm{
     min-height:110px;
-    
+
 }
 #logoHeader{
     width:250px;
@@ -27,3 +29,10 @@ p{white-space: pre-line;}
     margin-bottom: 10px;
     border-bottom:#cccccc 1px solid;
 }
+.edit-icon{
+    float:left;
+    margin-top:20px;
+    margin-right:5px;
+}
+.frame{padding:10px;}
+.bordered {border:#ff9966 1px solid;}

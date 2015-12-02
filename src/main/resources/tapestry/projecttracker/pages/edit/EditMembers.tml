@@ -1,0 +1,21 @@
+<html t:type="layout" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_4.xsd">
+    <body>
+        <div class="container">
+            <t:header/>
+            <t:mainmenu/>
+            <div class="row">
+                <h3> Edit members </h3>
+                <div class="row">
+                    <t:grid source="members" 
+                            exclude="memberId, memberPassword"/>
+                </div>
+            </div>
+            <hr/>
+            <div class="row">
+                <h3> Add new member </h3>
+                <t:beaneditform t:id="addMemberForm" t:object="member"
+                                    exclude="memberId"/>
+            </div>
+        </div>
+    </body>
+</html>
