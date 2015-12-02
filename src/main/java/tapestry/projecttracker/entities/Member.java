@@ -25,7 +25,7 @@ import org.apache.tapestry5.ioc.annotations.Inject;
  * @author dejan
  */
 @Entity
-@Table(name = "Member")
+@Table(name = "tbl_member")
 public class Member implements Serializable {
 
     @Id

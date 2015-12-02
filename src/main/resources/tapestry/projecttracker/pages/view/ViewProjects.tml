@@ -4,10 +4,19 @@
             <t:header/>
             <t:mainmenu/>
             <div class="row">
-                <h2>Projects</h2>
+                <div class="edit-icon">
+                    <t:if test="loggedInRole">
+                        <t:pagelink page="edit/EditProjects">
+                            <img src="${context:images/glyphicons/edit.png}" alt="Edit projects" title="Edit projects"/>
+                        </t:pagelink>
+                    </t:if>
+                </div>
+                <div class="col-sm-2 ">
+                    <h3> Projects </h3>
+                </div>
             </div>
             <div class="row">
-                <p>Summary of project activity </p>
+                <t:grid source="projects" exclude="projectId" rowsperpage="10" pagerPosition="bottom"/>
             </div>
         </div>
     </body>

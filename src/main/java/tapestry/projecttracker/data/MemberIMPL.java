@@ -5,6 +5,7 @@
  */
 package tapestry.projecttracker.data;
 
+import java.util.List;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
@@ -18,6 +19,17 @@ public class MemberIMPL implements MemberDAO {
 
     @Inject
     private Session dbs;
+
+    @Override
+    public Member addMember(Member member) {
+        return (Member) dbs.merge(member);
+    }
+
+    @Override
+    public List<Member> getAllMembers() {
+        List<Member> members = dbs.createCriteria(Member.class).list();
+        return members;
+    }
 
     @Override
     public Member getMemberById(Integer id) {

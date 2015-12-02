@@ -4,10 +4,12 @@
             <t:header/>
             <t:mainmenu/>
             <div class="row">
-                <h2> Overview </h2>
+                <div class="col-sm-2 ">
+                    <h3> Dashboard </h3>
+                </div>
             </div>
             <div class="row">
-                <p>Summary of all activity </p>
+                <h5>Overview </h5>
             </div>
         </div>
     </body>

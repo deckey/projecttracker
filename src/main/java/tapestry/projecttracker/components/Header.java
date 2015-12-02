@@ -1,4 +1,3 @@
-//TODO: Mockup secondary pages for adding and removing projects/members
 //TODO: Setup access levels for Admin and Member
 
 /* 
