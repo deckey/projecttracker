@@ -1,0 +1,15 @@
+<html t:type="layout" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_4.xsd">
+    <t:content>
+        <!-- MAIN MENU -->
+        <div class="row">
+            <!-- MENU NAVIGATION -->
+            <ul class="nav nav-pills">
+                <t:loop source="pageNames" value="pageName" >
+                    <t:any element="li" class="prop:classForPageName">
+                        <t:pagelink page="prop:pageName">${pageLabel}</t:pagelink>
+                    </t:any>
+                </t:loop>
+            </ul>
+        </div>
+    </t:content>
+</html>

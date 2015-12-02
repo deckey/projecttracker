@@ -10,5 +10,10 @@ package tapestry.projecttracker.prop;
  * @author dejan
  */
 public enum MemberRole {
-    Administrator, Member;
+    /*  
+    Admin - full control create / edit projects and members
+    Supervisor - can create / edit projects
+    Member - view projects/members, log time on a project
+    */
+    Administrator, Supervisor, Member;
 }

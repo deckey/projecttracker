@@ -10,5 +10,7 @@ public interface MemberDAO {
 
     public Member getMemberByUsername(String username);
 
-    public boolean validateMember(String uName, String pWord);
+    public Member validateMember(String uName, String pWord);
+    
+    public boolean checkIfMemberExists(String uName);
 }

@@ -6,9 +6,7 @@
 package tapestry.projecttracker.data;
 
 import org.apache.tapestry5.ioc.annotations.Inject;
-import org.apache.tapestry5.runtime.ComponentEventException;
 import org.hibernate.Session;
-import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import tapestry.projecttracker.entities.Member;
 
@@ -38,18 +36,22 @@ public class MemberIMPL implements MemberDAO {
     }
 
     @Override
-    public boolean validateMember(String uName, String pWord) {
+    public Member validateMember(String uName, String pWord) {
         System.out.println("VALIDATING MEMBER: " + uName + " : " + pWord);
         Member member = getMemberByUsername(uName);
-        if (member == null) {
-            return false;
-        } else {
+        if (member != null) {
             if (member.getMemberUsername().equals(uName)) {
                 if (member.getMemberPassword().equals(pWord)) {
-                    return true;
+                    return member;
                 }
             }
         }
-        return false;
+        return null;
+    }
+
+    @Override
+    public boolean checkIfMemberExists(String uName) {
+        Member member = getMemberByUsername(uName);
+        return (member == null) ? false : true;
     }
 }

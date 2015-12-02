@@ -1,8 +1,0 @@
-<t:header xmlns:t="http://tapestry.apache.org/schema/tapestry_5_3.xsd">
-    <div class="row">
-        <h2> Members </h2>
-        <div class="row">
-            <t:grid source="members"/>
-        </div>
-    </div>
-</t:header>
