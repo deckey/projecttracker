@@ -21,9 +21,22 @@ public class MemberIMPL implements MemberDAO {
     private Session dbs;
 
     @Override
-    public Member addMember(Member member) {
+    public void addMember(Member member) {
+        dbs.persist(member);
+    }
+
+    @Override
+    public Member updateMember(Member member) {
         return (Member) dbs.merge(member);
     }
+
+    @Override
+    public void deleteMember(Integer id) {
+        Member member = getMemberById(id);
+        dbs.delete(member);    
+        System.out.println("DB: Member "+member.getMemberName()+" deleted...");
+    }
+    
 
     @Override
     public List<Member> getAllMembers() {

@@ -7,12 +7,12 @@
                     <img class="img-responsive pull-left"  src="${context:images/projectTracker_logoHeader.png}" alt="Go to homepage" title="Home page"/>
                 </t:eventlink>
                 <div class="col-sm-3 pull-right">
-                    <div class="text-right">
-                        <t:eventlink t:event="logout">
+                    <div class="text-right " id="logoutBtn">
+                        <t:eventlink t:event="logout" >
                             <img src="${context:images/glyphicons/logout.png}" alt="Logout" title="Logout"/>
                         </t:eventlink>
                     </div>
-                    <div class="pull-right" id="logoutBtn">
+                    <div class="pull-right" id="loggedUser">
                         Welcome, <b>${user}</b>
                     </div>
                 </div>

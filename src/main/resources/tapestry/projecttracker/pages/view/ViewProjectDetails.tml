@@ -4,9 +4,87 @@
             <t:header/>
             <t:mainmenu/>
             <div class="row">
-                <h3> Project details </h3>
-                <div class="row">
-                    <t:grid source="members"/>
+                 
+                <t:form class="col-sm-3 form-inline" t:id="projectSelectForm">
+                    <label for="projectSelector">
+                        Project details:
+                    </label>
+                    <select t:type="select"
+                            t:id="projectSelector" 
+                            t:model="projects" 
+                            t:value="project"/>
+                    <t:submit class="btn btn-default" value="Select"/>
+                </t:form>
+                <form class="col-sm-3 form-inline">
+                    <input type="submit" class="btn btn-success right10" value="Log time"/>
+                    <input t:type="pagelink" t:page="edit/EditProject" context="project" class="btn btn-primary">Edit project</input>
+                </form>
+                <div class="col-sm-2 pull-right text-right ">
+                    <h3>ID: 000-${project.projectId}</h3>
+                </div>
+            </div>
+            <div class="row border_btm "/>
+            <div class="row">
+                <div class="col-sm-9 ">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h4>
+                                <small>Project title:</small>
+                            </h4>
+                            <h4>${project.projectTitle}</h4>
+                        </div>
+                        <div class="col-sm-6">
+                            <h4>
+                                <small>Client:</small>
+                            </h4>
+                            <h4>${project.projectClient}</h4>
+                        </div>
+                    </div>
+                    <div class="row desc-box">
+                        <h4>
+                            <small>Description:</small>
+                        </h4>
+                        <h4>
+                            <i>${project.projectDescription}</i>
+                        </h4>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="row">
+                        <h4>
+                            <small>Start date:</small>
+                        </h4>
+                        <h4>${project.projectStart}</h4>
+                    </div>
+                    <div class="row">
+                        <h4>
+                            <small>Due date:</small>
+                        </h4>
+                        <h4>${project.projectDue}</h4>
+                    </div>
+                    <div class="row">
+                        <h4>
+                            <small>Category:</small>
+                        </h4>
+                        <h4>${project.projectCategory}</h4>
+                    </div>
+                    <div class="row">
+                        <h4>
+                            <small>Status:</small>
+                        </h4>
+                        <h4>${project.projectStatus}</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="row border_btm"/>
+            <div class="row">
+                <div class="col-sm-9">
+                    <div class="row border_btm">
+                        <h4>[table grid of assigned members here]</h4>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    
                 </div>
             </div>
         </div>

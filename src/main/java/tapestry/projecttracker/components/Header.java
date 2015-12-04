@@ -1,4 +1,3 @@
-//TODO: Setup access levels for Admin and Member
 
 /* 
 Header class combining components for member details and logo

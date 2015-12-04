@@ -1,0 +1,100 @@
+<html t:type="layout" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_4.xsd">
+    <body>
+        <div class="container">
+            <t:header/>
+            <t:mainmenu/>
+            <!--EDIT PROJECT--> 
+            <div class="row"> 
+                <div class="edit-icon">
+                    <t:pagelink page="view/ViewProjectDetails" context="project" >
+                        <img src="${context:images/glyphicons/back.png}" alt="Back to projects" title="Back to projects"/>
+                    </t:pagelink>
+                </div> 
+                <div class="col-sm-4">
+                    <h3> Edit project : </h3> 
+                </div>
+                <div class="col-sm-2 pull-right text-right">
+                    <h3>ID: 000-${project.projectId}</h3>
+                </div>
+            </div>
+            <div class="row border_btm"/>
+            <!--PROJECT DETAILS-->
+            <div class="row">
+                <div class="col-sm-9 ">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <h4>
+                                <!--TITLE-->
+                                <small>Project title:</small>
+                            </h4> 
+                            <t:form t:id="updateForm">
+                                <h4>
+                                    <input t:type="textfield" t:value="projectTitle"/>
+                                </h4>
+                                <t:submit t:value="Update"/>
+                            </t:form>
+                        </div>
+                        <div class="col-sm-6">
+                            <h4>
+                                <small>Client:</small>
+                            </h4>
+                            <h4>${project.projectClient}</h4>
+                        </div>
+                    </div>
+                    <div class="row desc-box">
+                        <h4>
+                            <small>Description:</small>
+                        </h4>
+                        <h4>
+                            <i>${project.projectDescription}</i>
+                        </h4>
+                    </div>
+                </div>
+                <!--PROJECT DATE AND STATUS-->
+                <div class="col-sm-3">
+                    <div class="row">
+                        <h4>
+                            <small>Start date:</small>
+                        </h4>
+                        <h4>${project.projectStart}</h4>
+                    </div>
+                    <div class="row">
+                        <h4>
+                            <small>Due date:</small>
+                        </h4>
+                        <h4>${project.projectDue}</h4>
+                    </div>
+                    <div class="row">
+                        <h4>
+                            <small>Category:</small>
+                        </h4>
+                        <h4>${project.projectCategory}</h4>
+                    </div>
+                    <div class="row">
+                        <h4>
+                            <small>Status:</small>
+                        </h4>
+                        <h4>${project.projectStatus}</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="row border_btm"/>
+            
+            <div class="row">
+                <!--ASSIGNED MEMBERS TABLE--> 
+                <div class="col-sm-9">
+                    <div class="row border_btm">
+                        <h4>[table grid of assigned members here]</h4>
+                    </div>
+                </div>
+                <!--FORM BUTTONS-->
+                <div class="col-sm-3">
+                    <div class="pull-right">
+                        <input type="submit" class="btn btn-success right10" value="Log time"/>
+                        <input t:type="eventlink" t:event="updateProject" context="project" class="btn btn-primary">Update project</input>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
