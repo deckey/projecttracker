@@ -1,6 +1,7 @@
 package tapestry.projecttracker.entities;
 
 import java.io.Serializable;
+import java.util.Comparator;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,6 +14,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import org.apache.tapestry5.beaneditor.Validate;
 import org.apache.tapestry5.ioc.annotations.Inject;
+import tapestry.projecttracker.prop.ProjectCategory;
+import tapestry.projecttracker.prop.ProjectStatus;
 
 @Entity
 @Table(name = "tbl_project")
@@ -32,6 +35,9 @@ public class Project implements Serializable {
     @Validate("required")
     private String projectClient;
 
+    @Enumerated(EnumType.STRING)
+    private ProjectCategory projectCategory;
+
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date projectStart;
 
@@ -43,18 +49,24 @@ public class Project implements Serializable {
 
     private double projectTime;
 
+    @Validate("required")
+    @Enumerated(EnumType.STRING)
+    private ProjectStatus projectStatus;
+
     @Inject
     public Project() {
     }
 
-    public Project(String projectTitle, String projectDescription, String projectClient, Date projectStart, Date projectEnd, Date projectDue, double projectTime) {
+    public Project(String projectTitle, String projectDescription, String projectClient, ProjectCategory category, Date projectStart, Date projectEnd, Date projectDue, double projectTime, ProjectStatus status) {
         this.projectTitle = projectTitle;
         this.projectDescription = projectDescription;
         this.projectClient = projectClient;
+        this.projectCategory = category;
         this.projectStart = projectStart;
         this.projectEnd = projectEnd;
         this.projectDue = projectDue;
         this.projectTime = projectTime;
+        this.projectStatus = status;
     }
 
     public Integer getProjectId() {
@@ -89,6 +101,14 @@ public class Project implements Serializable {
         this.projectClient = projectClient;
     }
 
+    public ProjectCategory getProjectCategory() {
+        return projectCategory;
+    }
+
+    public void setProjectCategory(ProjectCategory projectCategory) {
+        this.projectCategory = projectCategory;
+    }
+
     public Date getProjectStart() {
         return projectStart;
     }
@@ -121,4 +141,18 @@ public class Project implements Serializable {
         this.projectTime = projectTime;
     }
 
+    public ProjectStatus getProjectStatus() {
+        return projectStatus;
+    }
+
+    public void setProjectStatus(ProjectStatus projectStatus) {
+        this.projectStatus = projectStatus;
+    }
+
+    @Override
+    public String toString() {
+        return this.projectTitle; //To change body of generated methods, choose Tools | Templates.
+    }
+
+    
 }

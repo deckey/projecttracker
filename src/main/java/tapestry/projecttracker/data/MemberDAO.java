@@ -7,7 +7,11 @@ import tapestry.projecttracker.entities.Member;
 
 public interface MemberDAO {
     
-    public Member addMember(Member member);
+    public void addMember(Member member);
+    
+    public Member updateMember(Member member);
+    
+    public void deleteMember(Integer id);
     
     public List<Member> getAllMembers();
 

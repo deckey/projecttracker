@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 02, 2015 at 05:16 PM
+-- Generation Time: Dec 03, 2015 at 11:19 PM
 -- Server version: 5.6.26
 -- PHP Version: 5.5.28
 
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS `tbl_member` (
 INSERT INTO `tbl_member` (`memberId`, `memberName`, `memberRole`, `memberSpecialty`, `memberStatus`, `memberUsername`, `memberPassword`) VALUES
 (1, 'Dejan Ivanovic', 'Administrator', 'Supervisor', 'Active', 'admin', 'admin'),
 (2, 'Team Member', 'Member', 'Modeling', 'Active', 'team', 'team'),
-(4, 'Supervisor', 'Supervisor', 'Lighting', 'Active', 'sup', 'sup');
+(4, 'Supervisor', 'Administrator', 'Lighting', 'Suspended', 'sup', 'sup');
 
 -- --------------------------------------------------------
 
@@ -56,23 +56,26 @@ CREATE TABLE IF NOT EXISTS `tbl_project` (
   `projectTitle` varchar(32) NOT NULL,
   `projectDescription` text NOT NULL,
   `projectClient` varchar(32) NOT NULL,
+  `projectCategory` varchar(32) NOT NULL DEFAULT 'Other',
   `projectStart` date DEFAULT NULL,
   `projectEnd` date DEFAULT NULL,
   `projectDue` date DEFAULT NULL,
-  `projectTime` float NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+  `projectTime` float NOT NULL,
+  `projectStatus` varchar(32) DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tbl_project`
 --
 
-INSERT INTO `tbl_project` (`projectId`, `projectTitle`, `projectDescription`, `projectClient`, `projectStart`, `projectEnd`, `projectDue`, `projectTime`) VALUES
-(1, 'Project 1', 'Some project description', 'Company X', '2015-12-10', NULL, '2015-12-25', 0),
-(2, 'Project 2', '', 'Company Y', '2015-12-12', NULL, '2015-12-14', 0),
-(5, 'Project 3', 'Description of project 3', 'Client Z', '2015-12-17', NULL, '2015-12-19', 0),
-(6, 'Project 4', 'Project 4 description', 'Client A', '2015-12-12', NULL, '2015-12-31', 0),
-(7, 'Client Z', 'Client Z', 'Client Z', '0015-11-26', NULL, '0015-11-30', 0),
-(8, 'Project 6', 'Description of project 6', 'Client A', '2015-10-09', NULL, '0205-10-18', 0);
+INSERT INTO `tbl_project` (`projectId`, `projectTitle`, `projectDescription`, `projectClient`, `projectCategory`, `projectStart`, `projectEnd`, `projectDue`, `projectTime`, `projectStatus`) VALUES
+(1, 'Project 1', 'Some project description', 'Company X', 'Animation', '2015-12-10', NULL, '2015-12-25', 0, 'Active'),
+(2, 'Project 2', '', 'Company Y', 'Animation', '2015-12-12', NULL, '2015-12-14', 0, 'Active'),
+(5, 'Project 3', 'Description of project 3', 'Client Z', 'Motion_Graphics', '2015-12-17', NULL, '2015-12-19', 4, 'Active'),
+(6, 'Project 4', 'Project 4 description', 'Client A', 'Game_Modeling', '2015-12-12', NULL, '2015-12-31', 0, 'Active'),
+(7, 'Project Z', 'Project Z short description', 'Client Z', 'TV_Commercial', '0015-11-26', NULL, '0015-11-30', 0, 'Active'),
+(8, 'Project 6', 'Description of project 6', 'Client A', 'Motion_Graphics', '2015-10-09', NULL, '0205-10-18', 0, 'Active'),
+(9, 'New project', 'new project description', 'some client', 'TV_Commercial', '2015-12-01', NULL, '2015-12-17', 14, 'Active');
 
 --
 -- Indexes for dumped tables
@@ -104,7 +107,7 @@ ALTER TABLE `tbl_member`
 -- AUTO_INCREMENT for table `tbl_project`
 --
 ALTER TABLE `tbl_project`
-  MODIFY `projectId` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
+  MODIFY `projectId` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

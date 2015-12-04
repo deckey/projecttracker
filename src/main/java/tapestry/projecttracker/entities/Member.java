@@ -60,6 +60,8 @@ public class Member implements Serializable {
     @Column(name = "memberPassword")
     @Validate("required")
     private String memberPassword;
+    
+    private double memberTotalHours;
 
     @Inject
     public Member() {
@@ -72,8 +74,8 @@ public class Member implements Serializable {
         this.memberStatus = memberStatus;
         this.memberUsername = memberUsername;
         this.memberPassword = memberPassword;
+        this.memberTotalHours = 0;
     }
-    
 
     public Integer getMemberId() {
         return memberId;
@@ -130,4 +132,14 @@ public class Member implements Serializable {
     public void setMemberPassword(String memberPassword) {
         this.memberPassword = memberPassword;
     }
+
+    public double getMemberTotalHours() {
+        return memberTotalHours;
+    }
+
+    public void setMemberTotalHours(double memberTotalHours) {
+        this.memberTotalHours = memberTotalHours;
+    }
+    
+    
 }

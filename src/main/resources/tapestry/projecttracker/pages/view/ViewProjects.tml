@@ -1,22 +1,49 @@
-<html t:type="layout" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_4.xsd">
+<html t:type="layout" 
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_4.xsd"
+      xmlns:p="tapestry:parameter">
     <body>
         <div class="container">
             <t:header/>
             <t:mainmenu/>
             <div class="row">
-                <div class="edit-icon">
-                    <t:if test="loggedInRole">
-                        <t:pagelink page="edit/EditProjects">
-                            <img src="${context:images/glyphicons/edit.png}" alt="Edit projects" title="Edit projects"/>
-                        </t:pagelink>
-                    </t:if>
-                </div>
-                <div class="col-sm-2 ">
-                    <h3> Projects </h3>
+                
+                <div class="col-sm-6">
+                    <h4> 
+                        <small>
+                            <i>click on the project name for more details</i>
+                        </small>
+                    </h4> 
                 </div>
             </div>
             <div class="row">
-                <t:grid source="projects" exclude="projectId" rowsperpage="10" pagerPosition="bottom"/>
+               
+                <t:grid source="projects"
+                        exclude="projectEnd,projectTime,projectStatus"
+                        rowsperpage="10"
+                        pagerPosition="bottom"
+                        row="project">
+                    <p:projectTitleCell>
+                        <t:pagelink  t:page="view/ViewProjectDetails" context="project">
+                            <b>${project.projectTitle}</b>
+                        </t:pagelink>
+                    </p:projectTitleCell>
+
+                </t:grid>
+            </div>
+            <div class="row border_btm"/>
+            <div class="row">
+                <h4>[table grid of recent projects here]</h4>
+            </div>
+            <div class="row border_btm"/>
+            <div class="row">
+                <h4>Archived projects</h4>
+            </div>
+            <div class="row border_btm">    
+                <table t:type="grid" t:id="archivedProjectsGrid" class="table table-bordered"
+                       model="gridModel"
+                       t:source="projects"
+                       t:rowsperpage="5"
+                       t:pagerPosition="bottom"/>
             </div>
         </div>
     </body>

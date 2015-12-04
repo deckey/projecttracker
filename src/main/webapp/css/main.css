@@ -7,9 +7,14 @@ and open the template in the editor.
     Created on : Nov 21, 2015, 10:31:12 AM
     Author     : dejan
 */
+.pad10{padding:10px;}
+.marg10{margin:10px;}
+.right10{margin-right: 10px;}
+.left10{margin-left:10px;}
 .blue{background-color:#9999ff; }
 .orange{background-color: #ff9966;}
 .border_btm{border-bottom: #ff9966 1px solid;}
+.border_grey{border-bottom: #cccccc 1px solid;}
 p{white-space: pre-line;}
 .row {
     margin-top:10px;
@@ -23,16 +28,22 @@ p{white-space: pre-line;}
 #logoHeader{
     width:250px;
 }
-#logoutBtn{margin-top:40px;}
+#logoutBtn{margin-top: 40px;}
+#loggedUser{margin-top:10px;}
 #headerBar{
-    padding:10px 0;
+    padding-bottom:10px;
     margin-bottom: 10px;
     border-bottom:#cccccc 1px solid;
 }
-.edit-icon{
-    float:left;
-    margin-top:20px;
-    margin-right:5px;
-}
 .frame{padding:10px;}
 .bordered {border:#ff9966 1px solid;}
+.dash-info{padding:20px;}
+.spacer{margin-bottom: 40px;}
+.desc-box{min-height:200px;}
+/*#projectSelectForm{
+    margin-top:15px;
+}*/
+#projectSelectForm select{margin-left:10px;margin-bottom: 10px;}
+#projectSelectForm .btn{margin-left:5px;margin-bottom: 10px;}
+#projectSelectForm label{padding:5px;font-size:2em;font-weight:normal;line-height:2em; }
+.btn-arrow{float:left;}

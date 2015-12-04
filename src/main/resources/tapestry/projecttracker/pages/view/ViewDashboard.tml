@@ -3,13 +3,35 @@
         <div class="container">
             <t:header/>
             <t:mainmenu/>
+            <div class="row spacer"/>
+               
+            
             <div class="row">
-                <div class="col-sm-2 ">
-                    <h3> Dashboard </h3>
+                <div class="col-sm-4 text-center dash-info">
+                    <t:pagelink page="view/ViewProjects">
+                        <img src="${context:images/dash-icon-projects.png}"  alt="View projects" title="View projects"/>
+                    </t:pagelink> 
+                    <h3>Active projects</h3>
+                    <h1>
+                        <strong>${projectCount}</strong>
+                    </h1>
                 </div>
-            </div>
-            <div class="row">
-                <h5>Overview </h5>
+                <div class="col-sm-4 text-center dash-info">
+                    <t:pagelink page="view/ViewMembers">
+                        <img src="${context:images/dash-icon-members.png}"  alt="View members" title="View members"/>
+                    </t:pagelink> 
+                    <h3>Active members</h3>
+                    <h1>
+                        <strong>${memberCount}</strong>
+                    </h1>
+                </div>
+                <div class="col-sm-4 text-center dash-info">
+                    <img src="${context:images/dash-icon-hours.png}"  alt="Hours logged" />
+                    <h3>Hours logged</h3>
+                    <h1>
+                        <strong>${hourCount}</strong>
+                    </h1>
+                </div>
             </div>
         </div>
     </body>
