@@ -27,12 +27,7 @@
                                 <!--TITLE-->
                                 <small>Project title:</small>
                             </h4> 
-                            <t:form t:id="updateForm">
-                                <h4>
-                                    <input t:type="textfield" t:value="projectTitle"/>
-                                </h4>
-                                <t:submit t:value="Update"/>
-                            </t:form>
+                            
                         </div>
                         <div class="col-sm-6">
                             <h4>
@@ -90,7 +85,10 @@
                 <!--FORM BUTTONS-->
                 <div class="col-sm-3">
                     <div class="pull-right">
-                        <input type="submit" class="btn btn-success right10" value="Log time"/>
+                         <!--TEST IF ADMIN AND DISABLE TIME LOGGING-->
+                        <t:if test="loggedInRole">
+                            <input type="submit" class="btn btn-warning right10" value="Log time"/>
+                        </t:if>
                         <input t:type="eventlink" t:event="updateProject" context="project" class="btn btn-primary">Update project</input>
                     </div>
                 </div>

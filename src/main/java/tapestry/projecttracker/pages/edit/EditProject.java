@@ -9,10 +9,12 @@ import org.apache.tapestry5.annotations.InjectComponent;
 import org.apache.tapestry5.annotations.InjectPage;
 import org.apache.tapestry5.annotations.Persist;
 import org.apache.tapestry5.annotations.Property;
+import org.apache.tapestry5.annotations.SessionState;
 import org.apache.tapestry5.corelib.components.Form;
 import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import tapestry.projecttracker.data.ProjectDAO;
+import tapestry.projecttracker.entities.Member;
 import tapestry.projecttracker.entities.Project;
 import tapestry.projecttracker.pages.view.ViewProjectDetails;
 
@@ -32,13 +34,13 @@ public class EditProject {
     @Property
     private String projectTitle;
 
+    @SessionState
+    private Member loggedInMember;
+
     @InjectPage
     private ViewProjectDetails viewProjectDetailsPage;
 
-    @InjectComponent
-    private Form updateForm;
-
-    void set(Project project) {
+    public void set(Project project) {
         this.project = project;
     }
 
@@ -55,15 +57,12 @@ public class EditProject {
         return viewProjectDetailsPage;
     }
 
-    @CommitAfter
-    void onValidateFromUpdateForm() {
-        project.setProjectTitle(this.projectTitle);
-        projectDao.updateProject(project);
-    }
-
     Object onUpdateProject() {
         viewProjectDetailsPage.set(project);
         return viewProjectDetailsPage;
     }
 
+    public boolean getLoggedInRole() {
+        return (loggedInMember.getMemberRole().name() != "Administrator") ? true : false;
+    }
 }
