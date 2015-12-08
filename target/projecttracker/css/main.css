@@ -19,6 +19,9 @@ and open the template in the editor.
 .grey{background-color: rgba(160,160,160,0.2);}
 .bordered {border:#ff9966 1px solid;}
 
+
+/* SPACING */
+.nav li{margin-right: 10px;}
 .pad10{padding:10px;}
 .marg10{margin:10px;}
 .right10{margin-right: 10px;}
@@ -52,16 +55,53 @@ p{white-space: pre-line;}
 #projectSelectForm .btn{margin-left:5px;margin-bottom: 10px;}
 #projectSelectForm label{padding:5px;font-size:2em;font-weight:normal;line-height:2em; }
 .btn-arrow{float:left;}
+
 .table-colored tr:nth-child(even) {background: rgba(255,102,50,0.2)}
+/* GRID TABLE STYLE: 
+/* 1st COLUMN: */
+.table-colored td:first-child, .table-grid td:first-child{width:15%;}
+/* 2nd COLUMN: - project client*/
+.table-colored td:nth-child(2),.table-grid td:nth-child(2){width:10%;}
+/* 3rd COLUMN: - project status*/
+.table-colored td:nth-child(3),.table-grid td:nth-child(3){width:10%;}
+/* 4th COLUMN: - project start date*/
+.table-colored td:nth-child(4),.table-grid td:nth-child(4){width:6%;}
+/* 5th COLUMN: - project start date*/
+.table-colored td:nth-child(5),.table-grid td:nth-child(5){width:6%;}
+/* 6th COLUMN: - project start date*/
+.table-colored td:nth-child(6),.table-grid td:nth-child(6){width:6%;}
+
+/* GRID-ARCHIVED TABLE STYLE: 
+/* 1st COLUMN: */
+.table-archived td:first-child{width:15%;}
+/* 2nd COLUMN: - project client*/
+.table-archived td:nth-child(2){width:10%;}
+/* 3rd COLUMN: - project description*/
+.table-archived td:nth-child(3){width:10%;}
+/* 4th COLUMN: - project category*/
+.table-archived td:nth-child(4){width:6%;}
+/* 5th COLUMN: - project start date*/
+.table-archived td:nth-child(5){width:6%;}
+/* 6th COLUMN: - project end date*/
+.table-archived td:nth-child(6){width:6%;}
+
+
 .table-grey tr:nth-child(even) {background: rgba(160,160,160,0.2)}
 .table-grid, .table-archived {width:100%;}
-.table-grid td{height:30px;width:15%;}
+.table-grid td{height:30px;width:12%;}
 .table-grid th{border-bottom: rgba(255,102,50,0.5) 2px solid;}
 .table-grid td, th{padding: 5px;}
 .table-archived {height:20px;}
 .table-archived  th{border-bottom: #cccccc 2px solid;}
 .table-archived  td, th{padding: 5px;}
+.table-grey th, .table-archived th, .table-colored th{font-size: 0.9em;}
+.table-grey th, .table-archived th{font-weight: normal;}
 /*.palette-available, .palette-selected, .palette-controls{padding:20px;}*/
 /*.palette-available, .palette-selected{width:300px;}*/
-.palette-title{padding: 6px;}
-.palette .form-control{height:120px;width:250px;}
+
+.palette-title{padding:10px;}
+.palette .form-control{height:120px;}
+.palette-controls{padding:5% 5%;}
+.palette {width:100%;}
+.table-link {width:100%;display:block;font-weight: bold;}
+.table-link:hover{color:#ff6633;text-decoration: none;border-right: #ff6633 10px solid;}

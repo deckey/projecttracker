@@ -57,7 +57,7 @@ public class ViewProjectDetails {
     }
 
     Object onEditProject() {
-        editProjectPage.set(this.project);
+        editProjectPage.set(project);
         return editProjectPage;
 
     }

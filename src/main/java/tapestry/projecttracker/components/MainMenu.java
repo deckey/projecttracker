@@ -50,6 +50,11 @@ public class MainMenu {
         String[] pageLabels = {"Overview", "Projects", "Members"};
         return pageLabels[pageNames.indexOf(pageName)];
     }
+    public String getPageTooltip() {
+        List<String> pageNames = getPageNames();
+        String[] pageTooltips = {"View dashboard", "View project list", "View members"};
+        return pageTooltips[pageNames.indexOf(pageName)];
+    }
 
     public String getLinkTitle() {
         String linkTitle = "";
@@ -78,5 +83,11 @@ public class MainMenu {
             return "../images/glyphicons/project.png";
         }
         return "../images/glyphicons/member.png";
+    }
+    public String getTooltip() {
+        if (this.getLinkTitle() == "create/CreateProject") {
+            return "Create new project";
+        }
+        return "Add new member";
     }
 }

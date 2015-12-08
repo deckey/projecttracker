@@ -17,7 +17,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import org.apache.tapestry5.beaneditor.Validate;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import tapestry.projecttracker.prop.ProjectCategory;
 import tapestry.projecttracker.prop.ProjectStatus;
@@ -48,9 +47,9 @@ public class Project implements java.io.Serializable {
         this.assignedMembers=new HashSet<>();
     }
 
-    public Project(String projectTitle, String projectDescription, String projectClient, Date projectStart, Date projectDue, ProjectCategory projectCategory, ProjectStatus projectStatus, Set<Member> assignedMembers) {
+    public Project(String projectTitle, String projectClient, Date projectStart, Date projectDue, ProjectCategory projectCategory, ProjectStatus projectStatus, Set<Member> assignedMembers) {
         this.projectTitle = projectTitle;
-        this.projectDescription = projectDescription;
+        this.projectDescription = "No description provided ...";
         this.projectClient = projectClient;
         this.projectCategory = projectCategory;
         this.projectStart = projectStart;
@@ -80,7 +79,7 @@ public class Project implements java.io.Serializable {
         this.projectTitle = projectTitle;
     }
 
-    @Validate("required")
+    @Column(name = "projectDescription")
     public String getProjectDescription() {
         return projectDescription;
     }
@@ -89,7 +88,7 @@ public class Project implements java.io.Serializable {
         this.projectDescription = projectDescription;
     }
 
-    @Validate("required")
+    @Column(name = "projectClient")
     public String getProjectClient() {
         return projectClient;
     }
@@ -98,7 +97,7 @@ public class Project implements java.io.Serializable {
         this.projectClient = projectClient;
     }
 
-    @Validate("required")
+    @Column(name = "projectCategory")
     @Enumerated(EnumType.STRING)
     public ProjectCategory getProjectCategory() {
         return projectCategory;
@@ -108,7 +107,7 @@ public class Project implements java.io.Serializable {
         this.projectCategory = projectCategory;
     }
 
-    @Validate("required")
+    @Column(name = "projectStart")
     public Date getProjectStart() {
         return projectStart;
     }
@@ -117,6 +116,7 @@ public class Project implements java.io.Serializable {
         this.projectStart = projectStart;
     }
 
+    @Column(name = "projectEnd")
     @Temporal(javax.persistence.TemporalType.DATE)
     public Date getProjectEnd() {
         return projectEnd;
@@ -126,7 +126,7 @@ public class Project implements java.io.Serializable {
         this.projectEnd = projectEnd;
     }
 
-    @Validate("required")
+    @Column(name = "projectDue")
     public Date getProjectDue() {
         return projectDue;
     }
@@ -135,6 +135,7 @@ public class Project implements java.io.Serializable {
         this.projectDue = projectDue;
     }
 
+    @Column(name = "projectTime")
     public double getProjectTime() {
         return projectTime;
     }
@@ -143,7 +144,7 @@ public class Project implements java.io.Serializable {
         this.projectTime = projectTime;
     }
 
-    @Validate("required")
+    @Column(name = "projectStatus")
     @Enumerated(EnumType.STRING)
     public ProjectStatus getProjectStatus() {
         return projectStatus;
@@ -153,6 +154,7 @@ public class Project implements java.io.Serializable {
         this.projectStatus = projectStatus;
     }
 
+    @Column(name = "projectCreationDate")
     @Temporal(TemporalType.TIMESTAMP)
     public Date getProjectCreationDate() {
         return projectCreationDate;

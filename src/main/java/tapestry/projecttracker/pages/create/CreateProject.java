@@ -31,10 +31,13 @@ public class CreateProject {
 
     @Property
     private Project project;
-    @Inject
-    private ProjectDAO projectDao;
+    
     @Property
     private List<Project> projects;
+    
+    @Inject
+    private ProjectDAO projectDao;
+    
 
     @Inject
     private MemberDAO memberDao;
@@ -59,7 +62,6 @@ public class CreateProject {
     private String projectClient;
 
     @Property
-    @Validate("required")
     private String projectDescription;
 
     @Property
@@ -73,12 +75,10 @@ public class CreateProject {
     private Date projectDue;
 
     @Property
-    @Validate("required")
     @Enumerated(EnumType.STRING)
     private ProjectCategory projectCategory = ProjectCategory.Other;
 
     @Property
-    @Validate("required")
     @Enumerated(EnumType.STRING)
     private ProjectStatus projectStatus = ProjectStatus.Active;
 
@@ -97,6 +97,7 @@ public class CreateProject {
 
     void onPrepare() {
         members = memberDao.getAllMembers();
+        selectedMembers = new HashSet<>();
         if (selectedMembers == null) {
             selectedMembers = new HashSet<>();
         }
@@ -117,7 +118,7 @@ public class CreateProject {
     @CommitAfter
     Object onSuccessFromAddProjectForm() {
         System.out.println("SUBMITTING FORM...");
-        Project newProject = new Project(projectTitle, projectDescription, projectClient, projectStart, projectDue, projectCategory, projectStatus, selectedMembers);
+        Project newProject = new Project(projectTitle, projectClient, projectStart, projectDue, projectCategory, projectStatus, selectedMembers);
         projectDao.addProject(newProject);
         System.out.println("FORM SUBMITTED....");
 //        projectDao.addProject(project);

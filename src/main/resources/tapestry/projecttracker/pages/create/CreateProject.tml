@@ -11,25 +11,28 @@
             <!--ADDING PROJECTS FORM-->
             <t:form t:id="addProjectForm">
                 <t:errors/>
+                
                 <!--PROJECT TITLE, CLIENT AND DATES-->
                 <div class="row">
                     <div class="form-group col-sm-3">
-                        <label for="projectTitle">Project title:</label>
+                        <label for="projectTitle">* Project title:</label>
                         <t:textfield t:id="projectTitle" t:value="projectTitle"/>
                     </div>
                     <div class="form-group col-sm-3 col-sm-offset-1">
-                        <label for="projectClient">Company:</label>
+                        <label for="projectClient">* Company:</label>
                         <t:textfield t:id="projectClient" t:value="projectClient"/>
                     </div>
                     <div class="form-group col-sm-2 col-sm-offset-1">
-                        <label for="projectStartDate">Start date:</label>
+                        <label for="projectStartDate">* Start date:</label>
                         <input t:type="datefield" t:id="projectStartDate" t:value="projectStart"/>
                     </div>
-                    <div class="form-group col-sm-2 ">
-                        <label for="projectDueDate">Due date:</label>
+                    <div class="form-group col-sm-2">
+                        <label for="projectDueDate">* Due date:</label>
                         <input t:type="datefield" t:id="projectDueDate" t:value="projectDue"/>
                     </div>
                 </div>
+                
+                
                 <!--PROJECT DESCRIPTION,  CATEGORY, PROJECT STATUS--> 
                 <div class="row">
                     <div class="form-group col-sm-7">
@@ -45,15 +48,15 @@
                         <t:select  model="statuses" t:value="projectStatus"/>
                     </div>
                 </div>
+
+                <!--MEMBER ASSIGNMENT PALETTE--> 
                 <div class="row">
-                    <!--MEMBER ASSIGNMENT PALETTE--> 
                     <div class="form-group col-sm-9">
                         <!--<label for="memberPalette">Assign members:</label>-->
                         <t:palette model="members" selected="selectedMembers" encoder="memberEncoder" />
-                        ${selectedMembers}
                     </div>
-                    <div class="form-group col-sm-1 col-sm-offset-2">
-                        <t:submit />
+                    <div class="col-sm-1 col-sm-offset-2">
+                        <t:submit class="btn btn-primary pull-right " value="Create project"/>
                     </div>
                 </div>
             </t:form>
