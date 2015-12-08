@@ -2,6 +2,6 @@
 package tapestry.projecttracker.prop;
 
 public enum ProjectStatus {
-    Active, Inactive, Archived;
+    Active, Inactive, Completed, Archived;
     
 }

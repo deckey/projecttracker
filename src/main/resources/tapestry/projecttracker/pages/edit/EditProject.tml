@@ -4,95 +4,61 @@
             <t:header/>
             <t:mainmenu/>
             <!--EDIT PROJECT--> 
-            <div class="row"> 
-                <div class="edit-icon">
-                    <t:pagelink page="view/ViewProjectDetails" context="project" >
-                        <img src="${context:images/glyphicons/back.png}" alt="Back to projects" title="Back to projects"/>
-                    </t:pagelink>
-                </div> 
-                <div class="col-sm-4">
-                    <h3> Edit project : </h3> 
-                </div>
-                <div class="col-sm-2 pull-right text-right">
-                    <h3>ID: 000-${project.projectId}</h3>
-                </div>
+            <div class="row border_btm">
+                <h3> Update project: </h3>
             </div>
-            <div class="row border_btm"/>
-            <!--PROJECT DETAILS-->
-            <div class="row">
-                <div class="col-sm-9 ">
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <h4>
-                                <!--TITLE-->
-                                <small>Project title:</small>
-                            </h4> 
-                            
-                        </div>
-                        <div class="col-sm-6">
-                            <h4>
-                                <small>Client:</small>
-                            </h4>
-                            <h4>${project.projectClient}</h4>
-                        </div>
+            <div class="spacer"/>
+            <!--ADDING PROJECTS FORM-->
+            <t:form t:type="beaneditform" t:id="projectEditForm" object="project">
+                <t:errors/>
+                <!--PROJECT TITLE, CLIENT AND DATES-->
+                <div class="row">
+                    <div class="form-group col-sm-3">
+                        <label for="projectTitle">* Project title:</label>
+                        <input t:type="textfield" t:value="project.projectTitle" validate="required"/>
                     </div>
-                    <div class="row desc-box">
-                        <h4>
-                            <small>Description:</small>
-                        </h4>
-                        <h4>
-                            <i>${project.projectDescription}</i>
-                        </h4>
+                    <div class="form-group col-sm-3 col-sm-offset-1">
+                        <label for="projectClient">* Company:</label>
+                        <t:textfield t:id="projectClient" t:value="project.projectClient" validate="required"/>
+                    </div>
+                    <div class="form-group col-sm-2 col-sm-offset-1">
+                        <label for="projectStartDate">* Start date:</label>
+                        <t:datefield t:id="projectStartDate" t:value="project.projectStart" validate="required"/>
+                    </div>
+                    <div class="form-group col-sm-2">
+                        <label for="projectDueDate">* Due date:</label>
+                        <t:datefield  t:id="projectDueDate" t:value="project.projectDue" validate="required"/>
                     </div>
                 </div>
-                <!--PROJECT DATE AND STATUS-->
-                <div class="col-sm-3">
-                    <div class="row">
-                        <h4>
-                            <small>Start date:</small>
-                        </h4>
-                        <h4>${project.projectStart}</h4>
+                
+                <!--PROJECT DESCRIPTION,  CATEGORY, PROJECT STATUS--> 
+                <div class="row">
+                    <div class="form-group col-sm-7">
+                        <label for="projectDescription">Description:</label>
+                        <t:textarea t:id="projectDescription" t:value="project.projectDescription"/>
                     </div>
-                    <div class="row">
-                        <h4>
-                            <small>Due date:</small>
-                        </h4>
-                        <h4>${project.projectDue}</h4>
+                    <div class="form-group col-sm-2 col-sm-offset-1">
+                        <label for="projectCategory">Category:</label>
+                        <t:select  model="categories" t:id="projectCategory" t:value="project.projectCategory"/>
                     </div>
-                    <div class="row">
-                        <h4>
-                            <small>Category:</small>
-                        </h4>
-                        <h4>${project.projectCategory}</h4>
-                    </div>
-                    <div class="row">
-                        <h4>
-                            <small>Status:</small>
-                        </h4>
-                        <h4>${project.projectStatus}</h4>
+                    <div class="form-group col-sm-2">
+                        <label for="projectStatus">Status:</label>
+                        <t:select  model="statuses" t:value="project.projectStatus"/>
                     </div>
                 </div>
-            </div>
-            <div class="row border_btm"/>
-            
-            <div class="row">
-                <!--ASSIGNED MEMBERS TABLE--> 
-                <div class="col-sm-9">
-                    <div class="row border_btm">
-                        <h4>[table grid of assigned members here]</h4>
+
+                <!--MEMBER ASSIGNMENT PALETTE--> 
+                <div class="row">
+                    <div class="form-group col-sm-9">
+                        <!--<label for="memberPalette">Assign members:</label>-->
+                        <t:palette model="members" selected="selectedMembers" encoder="memberEncoder" />
+                    </div>
+                    <div class="col-sm-1 col-sm-offset-2">
+                        <t:submit class="btn btn-primary pull-right " value="Update project"/>
                     </div>
                 </div>
-                <!--FORM BUTTONS-->
-                <div class="col-sm-3">
-                    <div class="pull-right">
-                         <!--TEST IF ADMIN AND DISABLE TIME LOGGING-->
-                        <t:if test="loggedInRole">
-                            <input type="submit" class="btn btn-warning right10" value="Log time"/>
-                        </t:if>
-                        <input t:type="eventlink" t:event="updateProject" context="project" class="btn btn-primary">Update project</input>
-                    </div>
-                </div>
-            </div>
+            </t:form>
         </div>
+
     </body>
 </html>

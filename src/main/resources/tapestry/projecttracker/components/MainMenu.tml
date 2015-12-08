@@ -5,14 +5,14 @@
             <!-- MENU NAVIGATION -->
             <ul class="nav nav-pills">
                 <t:loop source="pageNames" value="pageName" >
-                    <t:any element="li" class="prop:classForPageName">
+                    <t:any element="li" class="prop:classForPageName" title="${pageTooltip}">
                         <t:pagelink page="prop:pageName">${pageLabel}</t:pagelink>
                     </t:any>
                 </t:loop>
                 <t:if test="creationLink">
                     <div class="btn pull-right">
                         <t:pagelink t:page="${linkTitle}">
-                            <img src="${linkIcon}"/>
+                            <img src="${linkIcon}" title="${tooltip}"/>
                         </t:pagelink>
                     </div>
                 </t:if>

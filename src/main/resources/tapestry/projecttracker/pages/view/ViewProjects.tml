@@ -18,7 +18,7 @@
                         model="gridModel"
                         row="project">
                     <p:projectTitleCell> 
-                        <t:pagelink  t:page="view/ViewProjectDetails" context="project">
+                        <t:pagelink  t:page="view/ViewProjectDetails" context="project" class="table-link" title="View recent project details" >
                             <b>${project.projectTitle}</b>
                         </t:pagelink>
                     </p:projectTitleCell>
@@ -27,7 +27,7 @@
                 
                 <!--COMPLETE PROJECT LIST-->
                 <div class="row spacer"/>
-                <h4>Complete project list</h4>
+                <h4>Full project list</h4>
                 <t:grid class="table-grid table-grey"
                         source="projects"
                         model="gridModel"
@@ -35,7 +35,7 @@
                         pagerPosition="bottom"
                         row="project">
                     <p:projectTitleCell>
-                        <t:pagelink  t:page="view/ViewProjectDetails" context="project">
+                        <t:pagelink  t:page="view/ViewProjectDetails" context="project" class="table-link" title="View project details">
                             ${project.projectTitle}
                         </t:pagelink>
                     </p:projectTitleCell>
@@ -50,8 +50,13 @@
                             source="archivedProjects"
                             model="gridArchiveModel"
                             rowsperpage="5"
-                            pagerPosition="bottom"
-                    />
+                            pagerPosition="bottom">
+                        <p:projectTitleCell>
+                            <a t:type="pagelink"  t:page="view/ViewProjectDetails" context="project" title="View archived project details">
+                                ${project.projectTitle}
+                            </a>
+                        </p:projectTitleCell>
+                    </t:grid>
                 </div>
             </div>
         </div>

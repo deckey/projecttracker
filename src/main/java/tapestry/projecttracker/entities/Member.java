@@ -125,6 +125,7 @@ public class Member implements java.io.Serializable {
         this.memberPassword = memberPassword;
     }
 
+    @Column(name = "memberTotalHours")
     public double getMemberTotalHours() {
         return memberTotalHours;
     }

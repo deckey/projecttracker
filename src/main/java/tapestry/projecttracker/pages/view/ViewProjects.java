@@ -51,12 +51,15 @@ public class ViewProjects {
     void setupRender() {
         /* Draw grid table for archived projects: */
         gridModel = beanModelSource.createDisplayModel(Project.class, messages);
-        gridModel.include("projectTitle", "projectDescription", "projectClient", "projectStart", "projectDue", "projectCreationDate");
-        gridModel.get("projectDescription").sortable(false);
+        gridModel.include("projectTitle",  "projectClient", "projectStatus","projectStart", "projectDue", "projectCreationDate");
         gridModel.get("projectClient").sortable(false);
+        gridModel.get("projectStatus").sortable(false);
 
         gridArchiveModel = beanModelSource.createDisplayModel(Project.class, messages);
-        gridArchiveModel.include("projectTitle", "projectDescription", "projectClient", "projectCategory", "projectStart", "projectDue");
+        gridArchiveModel.include("projectTitle", "projectClient","projectDescription",  "projectCategory", "projectStart", "projectEnd");
+        gridArchiveModel.get("projectClient").sortable(false);
+        gridArchiveModel.get("projectDescription").sortable(false);
+        gridArchiveModel.get("projectCategory").sortable(false);
         /*  */
     }
 
