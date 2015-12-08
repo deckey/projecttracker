@@ -4,46 +4,55 @@
     <body>
         <div class="container">
             <t:header/>
-            <t:mainmenu/>
+            <t:mainmenu/> 
+            <div class="row spacer"/>
             <div class="row">
+                <h4>Last 5 active projects
+                    <small>
+                        <i>(click on the project name for more details)</i>
+                    </small>
+                </h4>
+                <!--RECENT ACTIVE PROJECTS-->
+                <t:grid class="table-grid table-colored"
+                        t:source="recentProjects"
+                        model="gridModel"
+                        row="project">
+                    <p:projectTitleCell> 
+                        <t:pagelink  t:page="view/ViewProjectDetails" context="project">
+                            <b>${project.projectTitle}</b>
+                        </t:pagelink>
+                    </p:projectTitleCell>
+                </t:grid>
+                <div class="row border_btm"/>
                 
-                <div class="col-sm-6">
-                    <h4> 
-                        <small>
-                            <i>click on the project name for more details</i>
-                        </small>
-                    </h4> 
-                </div>
-            </div>
-            <div class="row">
-               
-                <t:grid source="projects"
-                        exclude="projectEnd,projectTime,projectStatus"
+                <!--COMPLETE PROJECT LIST-->
+                <div class="row spacer"/>
+                <h4>Complete project list</h4>
+                <t:grid class="table-grid table-grey"
+                        source="projects"
+                        model="gridModel"
                         rowsperpage="10"
                         pagerPosition="bottom"
                         row="project">
                     <p:projectTitleCell>
                         <t:pagelink  t:page="view/ViewProjectDetails" context="project">
-                            <b>${project.projectTitle}</b>
+                            ${project.projectTitle}
                         </t:pagelink>
                     </p:projectTitleCell>
-
                 </t:grid>
-            </div>
-            <div class="row border_btm"/>
-            <div class="row">
-                <h4>[table grid of recent projects here]</h4>
-            </div>
-            <div class="row border_btm"/>
-            <div class="row">
+                <div class="row border_btm"/>
+                
+                <!--ARCHIVED PROJECTS-->
+                <div class="row spacer"/>
                 <h4>Archived projects</h4>
-            </div>
-            <div class="row border_btm">    
-                <table t:type="grid" t:id="archivedProjectsGrid" class="table table-bordered"
-                       model="gridModel"
-                       t:source="projects"
-                       t:rowsperpage="5"
-                       t:pagerPosition="bottom"/>
+                <div class="row grey frame">
+                    <t:grid class="table-archived "
+                            source="archivedProjects"
+                            model="gridArchiveModel"
+                            rowsperpage="5"
+                            pagerPosition="bottom"
+                    />
+                </div>
             </div>
         </div>
     </body>

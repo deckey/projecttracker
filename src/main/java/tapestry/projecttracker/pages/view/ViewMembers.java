@@ -26,12 +26,12 @@ public class ViewMembers {
     @Property
     private Member member;
 
+    @Inject
+    private Session dbs;
+
     @SessionState
     @Property
     private Member loggedInMember;
-
-    @Inject
-    private Session dbs;
 
     public boolean getLoggedInRole() {
         return (loggedInMember.getMemberRole().name() == "Administrator") ? true : false;

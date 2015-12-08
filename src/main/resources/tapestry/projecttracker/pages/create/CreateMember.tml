@@ -1,0 +1,17 @@
+<html t:type="layout" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_4.xsd"
+      xmlns:p="tapestry:parameter">
+    <body>
+        <div class="container">
+            <t:header/>
+            <t:mainmenu/>
+            <div class="row">
+                <h3> Add / Edit member </h3>
+                
+                <t:beaneditform t:id="addMemberForm"
+                                object="member"
+                                exclude="memberId,memberTotalHours"
+                                submitLabel="Add / Update"/>
+            </div>
+        </div>
+    </body>
+</html>

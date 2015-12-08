@@ -7,20 +7,27 @@ and open the template in the editor.
     Created on : Nov 21, 2015, 10:31:12 AM
     Author     : dejan
 */
+
+/* COLORS AND BORDERS */
+
+.blue{background-color:#9999ff; }
+.orange{background-color: #ff9966;}
+.black{background-color: #333333; color:#fff;}
+.border_btm{border-bottom: #ff9966 1px solid;}
+.border_grey{border-bottom: #cccccc 1px solid;}
+.frame{padding:10px;}
+.grey{background-color: rgba(160,160,160,0.2);}
+.bordered {border:#ff9966 1px solid;}
+
 .pad10{padding:10px;}
 .marg10{margin:10px;}
 .right10{margin-right: 10px;}
 .left10{margin-left:10px;}
-.blue{background-color:#9999ff; }
-.orange{background-color: #ff9966;}
-.border_btm{border-bottom: #ff9966 1px solid;}
-.border_grey{border-bottom: #cccccc 1px solid;}
 p{white-space: pre-line;}
 .row {
     margin-top:10px;
     margin-bottom:10px;
 }
-.black{background-color: #333333; color:#fff;}
 #loginForm{
     min-height:110px;
 
@@ -35,8 +42,6 @@ p{white-space: pre-line;}
     margin-bottom: 10px;
     border-bottom:#cccccc 1px solid;
 }
-.frame{padding:10px;}
-.bordered {border:#ff9966 1px solid;}
 .dash-info{padding:20px;}
 .spacer{margin-bottom: 40px;}
 .desc-box{min-height:200px;}
@@ -47,3 +52,16 @@ p{white-space: pre-line;}
 #projectSelectForm .btn{margin-left:5px;margin-bottom: 10px;}
 #projectSelectForm label{padding:5px;font-size:2em;font-weight:normal;line-height:2em; }
 .btn-arrow{float:left;}
+.table-colored tr:nth-child(even) {background: rgba(255,102,50,0.2)}
+.table-grey tr:nth-child(even) {background: rgba(160,160,160,0.2)}
+.table-grid, .table-archived {width:100%;}
+.table-grid td{height:30px;width:15%;}
+.table-grid th{border-bottom: rgba(255,102,50,0.5) 2px solid;}
+.table-grid td, th{padding: 5px;}
+.table-archived {height:20px;}
+.table-archived  th{border-bottom: #cccccc 2px solid;}
+.table-archived  td, th{padding: 5px;}
+/*.palette-available, .palette-selected, .palette-controls{padding:20px;}*/
+/*.palette-available, .palette-selected{width:300px;}*/
+.palette-title{padding: 6px;}
+.palette .form-control{height:120px;width:250px;}

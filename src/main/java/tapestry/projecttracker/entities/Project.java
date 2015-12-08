@@ -1,8 +1,9 @@
 package tapestry.projecttracker.entities;
 
-import java.io.Serializable;
-import java.util.Comparator;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -10,8 +11,12 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import org.apache.tapestry5.beaneditor.Validate;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import tapestry.projecttracker.prop.ProjectCategory;
@@ -19,56 +24,45 @@ import tapestry.projecttracker.prop.ProjectStatus;
 
 @Entity
 @Table(name = "tbl_project")
-public class Project implements Serializable {
+public class Project implements java.io.Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "projectId")
     private Integer projectId;
-
-    @Validate("required")
     private String projectTitle;
-
-    @Validate("required")
     private String projectDescription;
-
-    @Validate("required")
     private String projectClient;
-
-    @Enumerated(EnumType.STRING)
     private ProjectCategory projectCategory;
-
-    @Temporal(javax.persistence.TemporalType.DATE)
     private Date projectStart;
-
-    @Temporal(javax.persistence.TemporalType.DATE)
     private Date projectEnd;
-
-    @Temporal(javax.persistence.TemporalType.DATE)
     private Date projectDue;
-
     private double projectTime;
-
-    @Validate("required")
-    @Enumerated(EnumType.STRING)
     private ProjectStatus projectStatus;
+    private Date projectCreationDate;
+    private Set<Member> assignedMembers;
 
     @Inject
     public Project() {
     }
 
-    public Project(String projectTitle, String projectDescription, String projectClient, ProjectCategory category, Date projectStart, Date projectEnd, Date projectDue, double projectTime, ProjectStatus status) {
+    public Project(String projectTitle) {
+        this.projectTitle = projectTitle;
+        this.assignedMembers=new HashSet<>();
+    }
+
+    public Project(String projectTitle, String projectDescription, String projectClient, Date projectStart, Date projectDue, ProjectCategory projectCategory, ProjectStatus projectStatus, Set<Member> assignedMembers) {
         this.projectTitle = projectTitle;
         this.projectDescription = projectDescription;
         this.projectClient = projectClient;
-        this.projectCategory = category;
+        this.projectCategory = projectCategory;
         this.projectStart = projectStart;
-        this.projectEnd = projectEnd;
         this.projectDue = projectDue;
-        this.projectTime = projectTime;
-        this.projectStatus = status;
+        this.projectStatus = projectStatus;
+        this.projectCreationDate = new Date();
+        this.assignedMembers = assignedMembers;
     }
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "projectId")
     public Integer getProjectId() {
         return projectId;
     }
@@ -77,6 +71,7 @@ public class Project implements Serializable {
         this.projectId = projectId;
     }
 
+    @Column(name = "projectTitle")
     public String getProjectTitle() {
         return projectTitle;
     }
@@ -85,6 +80,7 @@ public class Project implements Serializable {
         this.projectTitle = projectTitle;
     }
 
+    @Validate("required")
     public String getProjectDescription() {
         return projectDescription;
     }
@@ -93,6 +89,7 @@ public class Project implements Serializable {
         this.projectDescription = projectDescription;
     }
 
+    @Validate("required")
     public String getProjectClient() {
         return projectClient;
     }
@@ -101,6 +98,8 @@ public class Project implements Serializable {
         this.projectClient = projectClient;
     }
 
+    @Validate("required")
+    @Enumerated(EnumType.STRING)
     public ProjectCategory getProjectCategory() {
         return projectCategory;
     }
@@ -109,6 +108,7 @@ public class Project implements Serializable {
         this.projectCategory = projectCategory;
     }
 
+    @Validate("required")
     public Date getProjectStart() {
         return projectStart;
     }
@@ -117,6 +117,7 @@ public class Project implements Serializable {
         this.projectStart = projectStart;
     }
 
+    @Temporal(javax.persistence.TemporalType.DATE)
     public Date getProjectEnd() {
         return projectEnd;
     }
@@ -125,6 +126,7 @@ public class Project implements Serializable {
         this.projectEnd = projectEnd;
     }
 
+    @Validate("required")
     public Date getProjectDue() {
         return projectDue;
     }
@@ -141,6 +143,8 @@ public class Project implements Serializable {
         this.projectTime = projectTime;
     }
 
+    @Validate("required")
+    @Enumerated(EnumType.STRING)
     public ProjectStatus getProjectStatus() {
         return projectStatus;
     }
@@ -149,10 +153,30 @@ public class Project implements Serializable {
         this.projectStatus = projectStatus;
     }
 
+    @Temporal(TemporalType.TIMESTAMP)
+    public Date getProjectCreationDate() {
+        return projectCreationDate;
+    }
+
+    public void setProjectCreationDate(Date projectCreationDate) {
+        this.projectCreationDate = projectCreationDate;
+    }
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "project_member", joinColumns = {
+        @JoinColumn(name = "projectId")}, inverseJoinColumns = {
+        @JoinColumn(name = "memberId")})
+    public Set<Member> getAssignedMembers() {
+        return assignedMembers;
+    }
+
+    public void setAssignedMembers(Set<Member> assignedMembers) {
+        this.assignedMembers = assignedMembers;
+    }
+
     @Override
     public String toString() {
         return this.projectTitle; //To change body of generated methods, choose Tools | Templates.
     }
 
-    
 }

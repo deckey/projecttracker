@@ -6,6 +6,7 @@
 package tapestry.projecttracker.data;
 
 import java.util.List;
+import tapestry.projecttracker.entities.Member;
 import tapestry.projecttracker.entities.Project;
 
 /**
@@ -21,7 +22,7 @@ public interface ProjectDAO {
     public List<Project> getAllProjects();
 
     public Project getProjectById(Integer id);
-
+    
     public Project getProjectByTitle(String projectTitle);
 
 }

@@ -10,7 +10,9 @@ import java.util.Arrays;
 import java.util.List;
 import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.annotations.Property;
+import org.apache.tapestry5.annotations.SessionState;
 import org.apache.tapestry5.ioc.annotations.Inject;
+import tapestry.projecttracker.entities.Member;
 
 /**
  *
@@ -23,6 +25,14 @@ public class MainMenu {
 
     @Property
     private String pageName;
+
+    @SessionState
+    @Property
+    private Member loggedInMember;
+
+    public boolean getLoggedInRole() {
+        return (loggedInMember.getMemberRole().name() == "Administrator") ? true : false;
+    }
 
     public String getClassForPageName() {
         return resources.getPageName().equalsIgnoreCase(pageName)
@@ -39,5 +49,34 @@ public class MainMenu {
         List<String> pageNames = getPageNames();
         String[] pageLabels = {"Overview", "Projects", "Members"};
         return pageLabels[pageNames.indexOf(pageName)];
+    }
+
+    public String getLinkTitle() {
+        String linkTitle = "";
+        String currentPage = resources.getPageName();
+        System.out.println("CURRENT PAGE: " + currentPage);
+        if (currentPage.equals("view/Projects")) {
+            linkTitle = "create/CreateProject";
+
+        }
+        if (currentPage.equals("view/Members")) {
+            linkTitle = "create/CreateMember";
+        }
+        return linkTitle;
+    }
+
+    public boolean getCreationLink() {
+        if (loggedInMember.getMemberRole().name() == "Administrator"
+                && (resources.getPageName().equals("view/Members") || resources.getPageName().equals("view/Projects"))) {
+            return true;
+        }
+        return false;
+    }
+
+    public String getLinkIcon() {
+        if (this.getLinkTitle() == "create/CreateProject") {
+            return "../images/glyphicons/project.png";
+        }
+        return "../images/glyphicons/member.png";
     }
 }

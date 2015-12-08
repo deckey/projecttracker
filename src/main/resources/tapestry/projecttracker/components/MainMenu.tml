@@ -9,6 +9,13 @@
                         <t:pagelink page="prop:pageName">${pageLabel}</t:pagelink>
                     </t:any>
                 </t:loop>
+                <t:if test="creationLink">
+                    <div class="btn pull-right">
+                        <t:pagelink t:page="${linkTitle}">
+                            <img src="${linkIcon}"/>
+                        </t:pagelink>
+                    </div>
+                </t:if>
             </ul>
         </div>
     </t:content>
