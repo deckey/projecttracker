@@ -54,12 +54,28 @@ public class ViewProjects {
         gridModel.include("projectTitle",  "projectClient", "projectStatus","projectStart", "projectDue", "projectCreationDate");
         gridModel.get("projectClient").sortable(false);
         gridModel.get("projectStatus").sortable(false);
+        // Column titles:
+        gridModel.get("projectTitle").label("Project name");
+        gridModel.get("projectClient").label("Company");
+        gridModel.get("projectStatus").label("Status");
+        gridModel.get("projectStart").label("Start date");
+        gridModel.get("projectDue").label("Due date");
+        gridModel.get("projectCreationDate").label("Created on");
 
+        /* ARCHIVE MODEL */
         gridArchiveModel = beanModelSource.createDisplayModel(Project.class, messages);
         gridArchiveModel.include("projectTitle", "projectClient","projectDescription",  "projectCategory", "projectStart", "projectEnd");
         gridArchiveModel.get("projectClient").sortable(false);
         gridArchiveModel.get("projectDescription").sortable(false);
         gridArchiveModel.get("projectCategory").sortable(false);
+        
+        // Column titles:
+        gridArchiveModel.get("projectTitle").label("Project name");
+        gridArchiveModel.get("projectClient").label("Company");
+        gridArchiveModel.get("projectDescription").label("Description");
+        gridArchiveModel.get("projectCategory").label("Category");
+        gridArchiveModel.get("projectStart").label("Start date");
+        gridArchiveModel.get("projectEnd").label("Completed on");
         /*  */
     }
 

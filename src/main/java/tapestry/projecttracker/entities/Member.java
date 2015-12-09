@@ -18,11 +18,8 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import org.apache.tapestry5.beaneditor.Validate;
 import org.apache.tapestry5.ioc.annotations.Inject;
 
 /**
@@ -35,11 +32,11 @@ public class Member implements java.io.Serializable {
 
     private Integer memberId;
     private String memberName;
+    private String memberUsername;
+    private String memberPassword;
     private MemberRole memberRole;
     private MemberSpecialty memberSpecialty;
     private MemberStatus memberStatus;
-    private String memberUsername;
-    private String memberPassword;
     private double memberTotalHours;
     private Set<Project> assignedProjects = new HashSet<>();
 
@@ -49,12 +46,21 @@ public class Member implements java.io.Serializable {
 
     public Member(String memberName) {
         this.memberName = memberName;
-
     }
 
     public Member(String memberName, Set<Project> assignedProjects) {
         this.memberName = memberName;
         this.assignedProjects = assignedProjects;
+    }
+
+    public Member(String memberName, String memberUsername, String memberPassword, MemberRole memberRole, MemberSpecialty memberSpecialty, MemberStatus memberStatus) {
+        this.memberName = memberName;
+        this.memberUsername = memberUsername;
+        this.memberPassword = memberPassword;
+        this.memberRole = memberRole;
+        this.memberSpecialty = memberSpecialty;
+        this.memberStatus = memberStatus;
+        this.memberTotalHours = 0;
     }
 
     @Id
@@ -75,6 +81,24 @@ public class Member implements java.io.Serializable {
 
     public void setMemberName(String memberName) {
         this.memberName = memberName;
+    }
+
+    @Column(name = "memberUsername")
+    public String getMemberUsername() {
+        return memberUsername;
+    }
+
+    public void setMemberUsername(String memberUsername) {
+        this.memberUsername = memberUsername;
+    }
+
+    @Column(name = "memberPassword")
+    public String getMemberPassword() {
+        return memberPassword;
+    }
+
+    public void setMemberPassword(String memberPassword) {
+        this.memberPassword = memberPassword;
     }
 
     @Column(name = "memberRole")
@@ -105,24 +129,6 @@ public class Member implements java.io.Serializable {
 
     public void setMemberStatus(MemberStatus memberStatus) {
         this.memberStatus = memberStatus;
-    }
-
-    @Column(name = "memberUsername")
-    public String getMemberUsername() {
-        return memberUsername;
-    }
-
-    public void setMemberUsername(String memberUsername) {
-        this.memberUsername = memberUsername;
-    }
-
-    @Column(name = "memberPassword")
-    public String getMemberPassword() {
-        return memberPassword;
-    }
-
-    public void setMemberPassword(String memberPassword) {
-        this.memberPassword = memberPassword;
     }
 
     @Column(name = "memberTotalHours")
@@ -158,5 +164,5 @@ public class Member implements java.io.Serializable {
     public int hashCode() {
         return super.hashCode(); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
 }

@@ -11,5 +11,5 @@ package tapestry.projecttracker.prop;
  */
 public enum MemberStatus {
 
-    Active, Inactive, Suspended;
+    Active, Inactive;
 }

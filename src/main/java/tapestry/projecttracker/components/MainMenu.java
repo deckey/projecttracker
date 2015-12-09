@@ -72,7 +72,7 @@ public class MainMenu {
 
     public boolean getCreationLink() {
         if (loggedInMember.getMemberRole().name() == "Administrator"
-                && (resources.getPageName().equals("view/Members") || resources.getPageName().equals("view/Projects"))) {
+                && (resources.getPageName().equals("view/Members") || resources.getPageName().equals("view/Projects"))){
             return true;
         }
         return false;

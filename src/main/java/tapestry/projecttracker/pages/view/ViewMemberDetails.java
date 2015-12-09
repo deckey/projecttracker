@@ -5,10 +5,27 @@
  */
 package tapestry.projecttracker.pages.view;
 
+import org.apache.tapestry5.annotations.Property;
+import org.apache.tapestry5.ioc.annotations.Inject;
+import tapestry.projecttracker.data.MemberDAO;
+import tapestry.projecttracker.entities.Member;
+
 /**
  *
  * @author dejan
  */
 public class ViewMemberDetails {
+
+    @Property
+    private Member member;
     
+    @Inject
+    private MemberDAO memberDao;
+    
+    void onActivate(Member member){
+        this.member=member;
+    }
+    Member onPassivate(){
+        return this.member;
+    }
 }
