@@ -11,7 +11,7 @@
                 </t:loop>
                 <t:if test="creationLink">
                     <div class="btn pull-right">
-                        <t:pagelink t:page="${linkTitle}">
+                        <t:pagelink t:page="${linkTitle}" class="menu-link">
                             <img src="${linkIcon}" title="${tooltip}"/>
                         </t:pagelink>
                     </div>

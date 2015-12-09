@@ -3,6 +3,11 @@
         <div class="container">
             <t:header/>
             <t:mainmenu/>
+            
+            <div class="row">
+                <t:beandisplay t:object="project"/>
+            </div>
+            
             <!--EDIT PROJECT--> 
             <div class="row border_btm">
                 <h3> Update project: </h3>

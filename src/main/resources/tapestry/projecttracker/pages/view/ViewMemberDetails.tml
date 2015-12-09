@@ -6,7 +6,7 @@
             <div class="row">
                 <h3> Member details </h3>
                 <div class="row">
-                    <t:grid source="members"/>
+                    <t:beandisplay object="member"/>
                 </div>
             </div>
         </div>
