@@ -79,63 +79,14 @@
                     </tbody>
                 </table>
             </div>
-            
-            <!--EDIT PROJECT--> 
-            <div class="row border_btm">
-                <h3>Update project: </h3>
-            </div>
+            <t:if test="loggedInRole">
+                <!--ONLY VISIBLE FOR ADMINISTRATORS-->
+                <!--EDIT PROJECT LINK BUTTON-->
+                <div class="row">
+                    <a t:type="pagelink" t:page="edit/EditProject" context="project.projectId" class="btn btn-primary  pull-right ">Edit project</a> 
+                </div>
+            </t:if>
             <div class="spacer"/>
-            <!--ADDING PROJECTS FORM-->
-            <t:form t:type="beaneditform" t:id="projectEditForm" object="project">
-                <t:errors/>
-                <!--PROJECT TITLE, CLIENT AND DATES-->
-                <div class="row">
-                    <div class="form-group col-sm-3">
-                        <label for="projectTitle">* Project title:</label>
-                        <t:textfield t:id="projectTitle" t:value="project.projectTitle" validate="required"/>
-                    </div>
-                    <div class="form-group col-sm-3 col-sm-offset-1">
-                        <label for="projectClient">* Company:</label>
-                        <t:textfield t:id="projectClient" t:value="project.projectClient" validate="required"/>
-                    </div>
-                    <div class="form-group col-sm-2 col-sm-offset-1">
-                        <label for="projectStartDate">* Start date:</label>
-                        <t:datefield t:id="projectStartDate" t:value="project.projectStart" validate="required"/>
-                    </div>
-                    <div class="form-group col-sm-2">
-                        <label for="projectDueDate">* Due date:</label>
-                        <t:datefield  t:id="projectDueDate"  t:value="project.projectDue" validate="required"/>
-                    </div>
-                </div>
-                
-                <!--PROJECT DESCRIPTION,  CATEGORY, PROJECT STATUS--> 
-                <div class="row">
-                    <div class="form-group col-sm-7">
-                        <label for="projectDescription">Description:</label>
-                        <t:textarea t:id="projectDescription" t:value="project.projectDescription"/>
-                    </div>
-                    <div class="form-group col-sm-2 col-sm-offset-1">
-                        <label for="projectCategory">Category:</label>
-                        <t:select  model="categories" t:id="projectCategory" t:value="project.projectCategory"/>
-                    </div>
-                    <div class="form-group col-sm-2">
-                        <label for="projectStatus">Status:</label>
-                        <t:select  model="statuses" t:value="project.projectStatus"/>
-                    </div>
-                </div>
-
-                <!--MEMBER ASSIGNMENT PALETTE--> 
-                <div class="row">
-                    <div class="form-group col-sm-9">
-                        <!--<label for="memberPalette">Assign members:</label>-->
-                        <t:palette model="members" selected="selectedMembers" encoder="memberEncoder" />
-                    </div>
-                    <t:alerts class="col-sm-2"/>
-                    <div class="col-sm-1">
-                        <t:submit class="btn btn-primary pull-right" value="Update project"/>
-                    </div>
-                </div>
-            </t:form>
         </div>
     </body>
 </html>

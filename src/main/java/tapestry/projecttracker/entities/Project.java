@@ -1,7 +1,8 @@
 package tapestry.projecttracker.entities;
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -36,7 +37,7 @@ public class Project implements java.io.Serializable {
     private double projectTime;
     private ProjectStatus projectStatus;
     private Date projectCreationDate;
-    private Set<Member> assignedMembers;
+    private List<Member> assignedMembers;
 
     @Inject
     public Project() {
@@ -44,10 +45,10 @@ public class Project implements java.io.Serializable {
 
     public Project(String projectTitle) {
         this.projectTitle = projectTitle;
-        this.assignedMembers=new HashSet<>();
+        this.assignedMembers=new ArrayList<>();
     }
 
-    public Project(String projectTitle, String projectClient, Date projectStart, Date projectDue, ProjectCategory projectCategory, ProjectStatus projectStatus, Set<Member> assignedMembers) {
+    public Project(String projectTitle, String projectClient, Date projectStart, Date projectDue, ProjectCategory projectCategory, ProjectStatus projectStatus, List<Member> assignedMembers) {
         this.projectTitle = projectTitle;
         this.projectDescription = "No description provided ...";
         this.projectClient = projectClient;
@@ -168,11 +169,11 @@ public class Project implements java.io.Serializable {
     @JoinTable(name = "project_member", joinColumns = {
         @JoinColumn(name = "projectId")}, inverseJoinColumns = {
         @JoinColumn(name = "memberId")})
-    public Set<Member> getAssignedMembers() {
+    public List<Member> getAssignedMembers() {
         return assignedMembers;
     }
 
-    public void setAssignedMembers(Set<Member> assignedMembers) {
+    public void setAssignedMembers(List<Member> assignedMembers) {
         this.assignedMembers = assignedMembers;
     }
 

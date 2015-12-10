@@ -5,7 +5,7 @@
             <t:header/>
             <t:mainmenu/>
             <div class="row border_btm">
-                <h3> Add new member: </h3>
+                <h3> Add member: </h3>
             </div>
             <div class="spacer"/>
             <!--ADDING MEMBERS FORM-->
@@ -51,19 +51,21 @@
                 </div>
                 <div class="row spacer "/>
                 <div class="row ">  
-                    <h4> Member list: </h4>
+                    <h4> Members list: </h4>
                     <t:grid source="members" 
+                            t:id="memberGrid"
                             model="membersGridModel"
                             class="table-grid"
                             rowsperpage="10"
                             row="member"
                             add="Action"
                             exclude="memberId, memberPassword">
-                        <p:actionCell>
-                            <t:pagelink t:page="view/ViewMemberDetails"
-                                        t:context="member.memberId">
-                                <img src="${context:images/glyphicons/view.png}" title="View details for ${member.memberName} " class="glyph-icon" />
+                        <p:memberNameCell>
+                            <t:pagelink t:page="view/ViewMemberDetails" class="table-link"
+                                        t:context="member.memberId">${member.memberName}
                             </t:pagelink>
+                        </p:memberNameCell>
+                        <p:actionCell>
                             <t:pagelink t:page="view/ViewMemberDetails"
                                         t:context="member.memberId">
                                 <img src="${context:images/glyphicons/edit.png}" width="20" title="Edit details of ${member.memberName}" />

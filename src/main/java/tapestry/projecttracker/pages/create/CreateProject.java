@@ -1,14 +1,14 @@
 package tapestry.projecttracker.pages.create;
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import javax.annotation.security.RolesAllowed;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Temporal;
 import org.apache.tapestry5.annotations.InjectComponent;
+import org.apache.tapestry5.annotations.InjectPage;
 import org.apache.tapestry5.annotations.Persist;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.beaneditor.Validate;
@@ -20,24 +20,24 @@ import tapestry.projecttracker.data.ProjectDAO;
 import tapestry.projecttracker.encoders.MemberEncoder;
 import tapestry.projecttracker.entities.Member;
 import tapestry.projecttracker.entities.Project;
+import tapestry.projecttracker.pages.view.ViewProject;
 import tapestry.projecttracker.pages.view.ViewProjects;
 import tapestry.projecttracker.prop.ProjectCategory;
 import tapestry.projecttracker.prop.ProjectStatus;
 import tapestry.projecttracker.services.ProtectedPage;
 
 @ProtectedPage
-@RolesAllowed(value = {"Administrator"})
+@RolesAllowed(value = {"Administrator", "Supervisor"})
 public class CreateProject {
 
     @Property
     private Project project;
-    
+
     @Property
     private List<Project> projects;
-    
+
     @Inject
     private ProjectDAO projectDao;
-    
 
     @Inject
     private MemberDAO memberDao;
@@ -47,10 +47,13 @@ public class CreateProject {
 
     @Property
     @Persist
-    private Set<Member> selectedMembers;
+    private List<Member> selectedMembers;
 
     @InjectComponent("addProjectForm")
     private Form form;
+
+    @InjectPage
+    private ViewProject viewProjectPage;
 
     /*PROJECT PROPERTIES*/
     @Property
@@ -97,31 +100,34 @@ public class CreateProject {
 
     void onPrepare() {
         members = memberDao.getAllMembers();
-        selectedMembers = new HashSet<>();
+        selectedMembers = new ArrayList<>();
+        projects = projectDao.getAllProjects();
         if (selectedMembers == null) {
-            selectedMembers = new HashSet<>();
+            selectedMembers = new ArrayList<>();
         }
     }
 
-    void onSetupRender() {
-        System.out.println("PREPARING RENDER ...");
-        System.out.println("RENDER PREPARED ...");
+    void onSubmitFromAddProjectForm() {
+        System.out.println("ADD PROJECT FORM: SUBMITTED...");
     }
 
     void onValidateFromAddProjectForm() {
-        System.out.println("VALIDATING INPUT...");
-        if (projectDue.before(projectStart)) {
-            form.recordError("Project due date can not be before start date!");
+        System.out.println("ADD PROJECT FORM: VALIDATING...");
+        for (Project prj : projects) {
+            if (projectTitle.equals(prj.getProjectTitle())) {
+                form.recordError("Project named '" + projectTitle + "' already exists!");
+                return;
+            }
         }
     }
 
     @CommitAfter
-    Object onSuccessFromAddProjectForm() {
-        System.out.println("SUBMITTING FORM...");
-        Project newProject = new Project(projectTitle, projectClient, projectStart, projectDue, projectCategory, projectStatus, selectedMembers);
-        projectDao.addProject(newProject);
-        System.out.println("FORM SUBMITTED....");
-//        projectDao.addProject(project);
-        return ViewProjects.class;
+    void onSuccessFromAddProjectForm() {
+        System.out.println("ADD PROJECT FORM: SUCCESS...");
+        projectDao.addProject(new Project(projectTitle, projectClient, projectStart, projectDue, projectCategory, projectStatus, selectedMembers));
+    }
+
+    void onFailureFromAddProjectForm() {
+        System.out.println("ADD MEMBER FORM: FAILURE...");
     }
 }

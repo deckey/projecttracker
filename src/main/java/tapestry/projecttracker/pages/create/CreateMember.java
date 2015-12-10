@@ -1,5 +1,6 @@
 package tapestry.projecttracker.pages.create;
 
+import java.util.Collections;
 import java.util.List;
 import javax.annotation.security.RolesAllowed;
 import org.apache.tapestry5.annotations.InjectComponent;
@@ -92,7 +93,6 @@ public class CreateMember {
     }
 
     void setupRender() {
-
         membersGridModel = beanModelSource.createDisplayModel(Member.class, messages);
         membersGridModel.get("memberTotalHours").label("Total hours");
     }
@@ -100,11 +100,40 @@ public class CreateMember {
     void onActivate() {
     }
 
-    @CommitAfter
+//    @CommitAfter
+//    void onSuccessFromAddMemberForm() {
+//        System.out.println("VALIDATING INPUT...");
+//        for (Member m : members){
+//            if (memberUsername.equals(m.getMemberUsername())){
+//                form.recordError("Username already exists!");
+//            }
+//        }
+//        Member newMember = new Member(memberName, memberUsername, memberPassword, memberRole, memberSpecialty, memberStatus);
+//        memberDao.addMember(newMember);
+//    }
+    void onSubmitFromAddMemberForm() {
+        System.out.println("ADD MEMBER FORM: SUBMITTED...");
+    }
+
     void onValidateFromAddMemberForm() {
-        System.out.println("VALIDATING INPUT...");
+        System.out.println("ADD MEMBER FORM: VALIDATING...");
+        for (Member mem : members) {
+            if (memberUsername.equals(mem.getMemberUsername())) {
+                form.recordError("Username '"+memberUsername +"' already exists!");
+                return;
+            }
+        }
+    }
+
+    @CommitAfter
+    void onSuccessFromAddMemberForm() {
+        System.out.println("ADD MEMBER FORM: SUCCESS...");
         Member newMember = new Member(memberName, memberUsername, memberPassword, memberRole, memberSpecialty, memberStatus);
         memberDao.addMember(newMember);
+    }
+
+    void onFailureFromAddMemberForm() {
+        System.out.println("ADD MEMBER FORM: FAILURE...");
     }
 
     @CommitAfter

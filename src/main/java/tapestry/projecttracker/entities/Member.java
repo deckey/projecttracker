@@ -5,7 +5,11 @@
  */
 package tapestry.projecttracker.entities;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
+import java.util.List;
 import tapestry.projecttracker.prop.MemberStatus;
 import tapestry.projecttracker.prop.MemberSpecialty;
 import tapestry.projecttracker.prop.MemberRole;
@@ -28,7 +32,7 @@ import org.apache.tapestry5.ioc.annotations.Inject;
  */
 @Entity
 @Table(name = "tbl_member")
-public class Member implements java.io.Serializable {
+public class Member implements java.io.Serializable, Comparable<Member> {
 
     private Integer memberId;
     private String memberName;
@@ -163,6 +167,11 @@ public class Member implements java.io.Serializable {
     @Override
     public int hashCode() {
         return super.hashCode(); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public int compareTo(Member m1) {
+        return this.getMemberName().compareTo(m1.getMemberName());
     }
 
 }
