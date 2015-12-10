@@ -24,5 +24,7 @@ public interface ProjectDAO {
     public Project getProjectById(Integer id);
     
     public Project getProjectByTitle(String projectTitle);
+    
+    public boolean checkIfProjectExists(String projectTitle);
 
 }

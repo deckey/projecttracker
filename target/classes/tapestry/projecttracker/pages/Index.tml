@@ -28,7 +28,7 @@
                 </div>
             </div>
         </t:if>
-        <div class="jumbotron">
+        <div class="jumbotron marg10">
             <img class="img-responsive" src="${context:images/projectTracker_logo.png}"/>
             <p>Quickly find what your employees are working on,
                 add new projects and assignments 

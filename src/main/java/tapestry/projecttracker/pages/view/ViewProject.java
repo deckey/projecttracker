@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tapestry.projecttracker.pages.edit;
+package tapestry.projecttracker.pages.view;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -11,32 +11,18 @@ import java.util.Collections;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
-import javax.annotation.security.RolesAllowed;
-import org.apache.tapestry5.PersistenceConstants;
-import org.apache.tapestry5.alerts.AlertManager;
-import org.apache.tapestry5.alerts.Duration;
-import org.apache.tapestry5.alerts.Severity;
-import org.apache.tapestry5.annotations.InjectComponent;
-import org.apache.tapestry5.annotations.InjectPage;
-import org.apache.tapestry5.annotations.Persist;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.annotations.SessionState;
-import org.apache.tapestry5.corelib.components.Form;
-import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import tapestry.projecttracker.data.MemberDAO;
 import tapestry.projecttracker.data.ProjectDAO;
 import tapestry.projecttracker.encoders.MemberEncoder;
 import tapestry.projecttracker.entities.Member;
 import tapestry.projecttracker.entities.Project;
-import tapestry.projecttracker.pages.view.ViewProject;
 import tapestry.projecttracker.prop.ProjectCategory;
 import tapestry.projecttracker.prop.ProjectStatus;
-import tapestry.projecttracker.services.ProtectedPage;
 
-@ProtectedPage
-@RolesAllowed(value = {"Administrator", "Supervisor"})
-public class EditProject {
+public class ViewProject {
 
     @Inject
     private ProjectDAO projectDao;
@@ -46,9 +32,6 @@ public class EditProject {
 
     @Property
     private Project project;
-
-    @InjectPage
-    private ViewProject viewProjectPage;
 
     @Property
     private List<Project> projects;
@@ -68,8 +51,6 @@ public class EditProject {
     @Property
     private final MemberEncoder memberEncoder = new MemberEncoder(memberDao);
 
-    @InjectComponent("projectEditForm")
-    private Form form;
 
     public ProjectCategory[] getCategories() {
         ProjectCategory[] categories = ProjectCategory.values();
@@ -105,8 +86,8 @@ public class EditProject {
         selectedMembers = project.getAssignedMembers();
         Collections.sort(selectedMembers);
     }
-
-    public SortedSet<Member> getSortedAssignedMembers() {
+    
+    public SortedSet<Member> getSortedAssignedMembers(){
         return new TreeSet(project.getAssignedMembers());
     }
 
@@ -122,8 +103,9 @@ public class EditProject {
         return project;
     }
 
+
     public boolean getLoggedInRole() {
-        return (loggedInMember.getMemberRole().name() != "Administrator") ? true : false;
+        return (loggedInMember.getMemberRole().name() != "Member") ? true : false;
     }
 
     void onValidateFromProjectSelectForm() {
@@ -131,21 +113,5 @@ public class EditProject {
         if (project == null) {
             project = projects.get(0);
         }
-    }
-
-    void onValidateFromProjectEditForm() {
-        System.out.println("EDIT FORM: VALIDATION... " + ": PROJECT : " + project);
-        // validation queries like
-        // if user.getFirstName()== null || ....
-        if (project.getProjectStart().after(project.getProjectDue())) {
-            form.recordError("Due date can not be set before start date!");
-        }
-    }
-
-    @CommitAfter
-    Object onSuccessFromProjectEditForm() {
-        System.out.println("EDIT FORM: SUCCESS... UPDATED PROJECT..." + project);
-        viewProjectPage.set(projectDao.updateProject(project));
-        return viewProjectPage;
     }
 }

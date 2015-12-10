@@ -5,7 +5,11 @@
  */
 package tapestry.projecttracker.data;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
@@ -41,6 +45,7 @@ public class MemberIMPL implements MemberDAO {
     @Override
     public List<Member> getAllMembers() {
         List<Member> members = dbs.createCriteria(Member.class).list();
+        Collections.sort(members);
         return members;
     }
 
