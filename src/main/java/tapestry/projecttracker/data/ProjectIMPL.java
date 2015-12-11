@@ -10,6 +10,7 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 import org.hibernate.Session;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import tapestry.projecttracker.entities.Log;
 import tapestry.projecttracker.entities.Member;
 import tapestry.projecttracker.entities.Project;
 
@@ -57,5 +58,15 @@ public class ProjectIMPL implements ProjectDAO {
                 .add(Restrictions.eq("projectTitle", projectTitle))
                 .setProjection(Projections.rowCount()).uniqueResult();
         return rows != 0;
+    }
+
+    @Override
+    public void addLog(Log log) {
+        dbs.persist(log);
+    }
+
+    @Override
+    public List<Log> getAllLogs() {
+        return dbs.createCriteria(Log.class).list();
     }
 }

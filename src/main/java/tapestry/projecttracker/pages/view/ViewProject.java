@@ -8,7 +8,10 @@ package tapestry.projecttracker.pages.view;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import org.apache.tapestry5.annotations.Property;
@@ -51,7 +54,6 @@ public class ViewProject {
     @Property
     private final MemberEncoder memberEncoder = new MemberEncoder(memberDao);
 
-
     public ProjectCategory[] getCategories() {
         ProjectCategory[] categories = ProjectCategory.values();
         return categories;
@@ -86,8 +88,8 @@ public class ViewProject {
         selectedMembers = project.getAssignedMembers();
         Collections.sort(selectedMembers);
     }
-    
-    public SortedSet<Member> getSortedAssignedMembers(){
+
+    public SortedSet<Member> getSortedAssignedMembers() {
         return new TreeSet(project.getAssignedMembers());
     }
 
@@ -103,7 +105,6 @@ public class ViewProject {
         return project;
     }
 
-
     public boolean getLoggedInRole() {
         return (loggedInMember.getMemberRole().name() != "Member") ? true : false;
     }
@@ -113,5 +114,20 @@ public class ViewProject {
         if (project == null) {
             project = projects.get(0);
         }
+    }
+
+    /* Method returning true if the member is assigned to selected project
+        Used for log time button visibility
+     */
+    public boolean getCheckProjectMember() {
+        System.out.println("SELECTED MEMBERS...." + selectedMembers);
+        System.out.println("LOGGED IN MEMBER..." + loggedInMember);
+        for (Member mem : selectedMembers) {
+            if (mem.getMemberUsername().equals(loggedInMember.getMemberUsername())) {
+                System.out.println("LOGGED IN MEMBER FOUND AS ASSIGNED");
+                return true;
+            }
+        }
+        return false;
     }
 }

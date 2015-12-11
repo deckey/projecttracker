@@ -16,8 +16,13 @@
                                 t:model="projects" 
                                 t:value="project"/>
                         <t:submit class="btn btn-default" value="Select"/>
+                        <!--LOG PROJECT TIME LINK BUTTON-->
+                        <!--VISIBLE TO ASSIGNED MEMBERS ONLY-->
+                        <t:if test="checkProjectMember">
+                            <a t:type="pagelink" t:page="log/LogProject" context="project.projectId" class="btn btn-warning ">Log Time</a>
+                        </t:if>
                     </div>
-                </t:form>
+                </t:form> 
             </div>
             <!--BEAN DISPLAY TABLE-->
             <div class="row well">
@@ -70,7 +75,8 @@
                 </table>
                
                 <table class="col-sm-3 " id="assignedTable">
-                    <th>Assigned members:</th>
+                    <th>Assigned member</th>
+                    <th>Role</th>
                     <tbody>
                         <tr t:type="loop" t:source="getSortedAssignedMembers()" t:value="member">
                             <td>${member.memberName}</td>
@@ -79,8 +85,11 @@
                     </tbody>
                 </table>
             </div>
+            
+           
+            
+            <!--ONLY VISIBLE FOR ADMINISTRATORS-->
             <t:if test="loggedInRole">
-                <!--ONLY VISIBLE FOR ADMINISTRATORS-->
                 <!--EDIT PROJECT LINK BUTTON-->
                 <div class="row">
                     <a t:type="pagelink" t:page="edit/EditProject" context="project.projectId" class="btn btn-primary  pull-right ">Edit project</a> 

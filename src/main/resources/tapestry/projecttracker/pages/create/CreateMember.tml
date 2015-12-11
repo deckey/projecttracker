@@ -58,25 +58,12 @@
                             class="table-grid"
                             rowsperpage="10"
                             row="member"
-                            add="Action"
                             exclude="memberId, memberPassword">
                         <p:memberNameCell>
                             <t:pagelink t:page="view/ViewMemberDetails" class="table-link"
                                         t:context="member.memberId">${member.memberName}
                             </t:pagelink>
                         </p:memberNameCell>
-                        <p:actionCell>
-                            <t:pagelink t:page="view/ViewMemberDetails"
-                                        t:context="member.memberId">
-                                <img src="${context:images/glyphicons/edit.png}" width="20" title="Edit details of ${member.memberName}" />
-                            </t:pagelink>
-                            <t:actionlink t:mixins="confirm" 
-                                          t:message="Delete item: ${member.memberName}?"
-                                          t:id="deleteMember" 
-                                          t:context="member.memberId">
-                                <img src="${context:images/glyphicons/remove.png}" title="Delete ${member.memberName}?" class="glyph-icon"/>
-                            </t:actionlink>
-                        </p:actionCell>
                     </t:grid>
                 </div>
             </t:form>

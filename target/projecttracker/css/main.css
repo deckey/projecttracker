@@ -11,8 +11,8 @@ and open the template in the editor.
 /* COLORS AND BORDERS */
 
 .blue{background-color:#9999ff; }
-.orange{background-color: rgba(255,102,50,0.2);padding:10px;}
-.black{background-color: #333333; color:#fff;padding:10px;}
+.orange{background-color: rgba(255,102,50,0.2);}
+.black{background-color: #333333; color:#fff;}
 .border_btm{border-bottom: #ff9966 1px solid;}
 .border_grey{border-bottom: #cccccc 1px solid;}
 .frame{padding:20px; }
@@ -116,7 +116,7 @@ p{white-space: pre-line;}
 .row dt{ margin-right:15px;}  /* IE 7 hack */
 #assignedTable{margin-left:20px;}
 #assignedTable tr{border-bottom: #cccccc 1px solid;}
-#assignedTable td{padding:2px 0;}
+#assignedTable td, #assignedTable th{padding:2px 0;}
 #assignedTable td:first-child{}
 #assignedTable th{color:#666666;}
 /* details table */
