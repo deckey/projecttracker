@@ -135,11 +135,4 @@ public class CreateMember {
     void onFailureFromAddMemberForm() {
         System.out.println("ADD MEMBER FORM: FAILURE...");
     }
-
-    @CommitAfter
-    void onActionFromDeleteMember(Integer id) {
-        System.out.println("DELETING MEMBER... " + memberDao.getMemberById(id).getMemberName());
-        memberDao.deleteMember(id);
-        System.out.println("...DELETED");
-    }
 }
