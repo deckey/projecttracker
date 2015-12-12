@@ -145,7 +145,6 @@ public class Member implements java.io.Serializable, Comparable<Member> {
     }
 
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "assignedMembers")
-
     public Set<Project> getAssignedProjects() {
         return this.assignedProjects;
     }

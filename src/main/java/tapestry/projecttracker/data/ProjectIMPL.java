@@ -5,12 +5,14 @@
  */
 package tapestry.projecttracker.data;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.hibernate.Session;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
-import tapestry.projecttracker.entities.Member;
+import tapestry.projecttracker.entities.Log;
 import tapestry.projecttracker.entities.Project;
 
 /**
@@ -21,6 +23,9 @@ public class ProjectIMPL implements ProjectDAO {
 
     @Inject
     private Session dbs;
+    
+    @Inject
+    private MemberDAO memberDao;
 
     @Override
     public void addProject(Project project) {
@@ -57,5 +62,47 @@ public class ProjectIMPL implements ProjectDAO {
                 .add(Restrictions.eq("projectTitle", projectTitle))
                 .setProjection(Projections.rowCount()).uniqueResult();
         return rows != 0;
+    }
+
+    @Override
+    public List<Log> getLogsByProject(Project project) {
+        List<Log> logs = new ArrayList<>();
+        Integer projectId = project.getProjectId();
+        logs = dbs.createCriteria(Log.class).add(Restrictions.eq("logProjectId", projectId)).list();
+        if (logs == null) {
+            return null;
+        }
+        return logs;
+    }
+
+    @Override
+    public double getProjectLoggedTime(Project project) {
+        List<Log> logs = getLogsByProject(project);
+        double logTimeSum = 0;
+        for (Log entry : logs) {
+            logTimeSum += entry.getLogTime();
+        }
+        return logTimeSum;
+    }
+
+    @Override
+    public void addLog(Log log) {
+        log.setLogAdded(new Date());
+        log.setLogMemberName(memberDao.getMemberById(log.getLogMemberId()).getMemberName());
+        dbs.persist(log);
+        System.out.println("PROJECT DAO...NEW LOG CREATED...");
+    }
+
+    @Override
+    public List<Log> getAllLogs() {
+        return dbs.createCriteria(Log.class).list();
+    }
+
+    @Override
+    public void deleteLog(Integer id) {
+        Log log = (Log) dbs.createCriteria(Log.class).add(Restrictions.eq("logId", id)).uniqueResult();
+        Project project = getProjectById(log.getLogProjectId());
+        project.setProjectTime(project.getProjectTime()-log.getLogTime());
+        dbs.delete(log);
     }
 }

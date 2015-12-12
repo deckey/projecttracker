@@ -8,12 +8,11 @@ package tapestry.projecttracker.data;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
-import java.util.SortedSet;
-import java.util.TreeSet;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import tapestry.projecttracker.entities.Member;
+import tapestry.projecttracker.entities.Project;
 
 /**
  *

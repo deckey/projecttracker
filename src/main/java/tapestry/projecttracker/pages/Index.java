@@ -1,13 +1,18 @@
 package tapestry.projecttracker.pages;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.apache.tapestry5.annotations.InjectComponent;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.annotations.SessionState;
 import org.apache.tapestry5.beaneditor.Validate;
 import org.apache.tapestry5.corelib.components.Form;
+import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.hibernate.Session;
 import tapestry.projecttracker.data.MemberDAO;
+import tapestry.projecttracker.data.ProjectDAO;
+import tapestry.projecttracker.entities.Log;
 import tapestry.projecttracker.entities.Member;
 import tapestry.projecttracker.pages.view.ViewDashboard;
 
@@ -41,7 +46,6 @@ public class Index {
     @Inject
     private Session dbs;
 
-
     void onValidateFromLoginForm() {
         member = memberDao.validateMember(memberUsername, memberPassword);
         if (member == null) {
@@ -70,8 +74,26 @@ public class Index {
 //        return ViewMembers.class;
 //    }
 
+    @Property
+    private Log log;
+
+    @Property
+    private List<Log> logs;
+
+    @Inject
+    private ProjectDAO projectDao;
+
     void onActivate() {
         System.out.println("ON ACTIVATE - INDEX - LOGGED IN MEMBER..." + loggedInMember.getMemberUsername());
+        if (logs == null) {
+            logs = new ArrayList<>();
+        }
+        logs = projectDao.getAllLogs();
     }
+//
+//    @CommitAfter
+//    void onSuccessFromAddLog() {
+//        projectDao.addLog(log);
+//    }
 
 }

@@ -11,5 +11,5 @@ package tapestry.projecttracker.prop;
  */
 public enum MemberSpecialty {
 
-    Animation, Lighting, Modeling, Rigging, Supervisor, VFX;
+    Animation, Lighting, Modeling, Rigging, Supervision, VFX;
 }
