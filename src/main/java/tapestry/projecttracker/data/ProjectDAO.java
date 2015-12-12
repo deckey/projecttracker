@@ -27,8 +27,14 @@ public interface ProjectDAO {
     
     public boolean checkIfProjectExists(String projectTitle);
     
+    public double getProjectLoggedTime(Project project);
+    
+    public List<Log> getLogsByProject(Project project);
+    
     public void addLog(Log log);
     
     public List<Log> getAllLogs();
+    
+    public void deleteLog(Integer id);
 
 }

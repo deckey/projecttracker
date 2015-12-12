@@ -6,31 +6,40 @@
             <t:mainmenu/>
             <div class="row border_btm">
                 <!-- PROJECT DETAILS HEADER -->
-                <t:form class="col-sm-10 form-inline" t:id="projectSelectForm">
-                    <label for="projectSelector">
+                <t:form class="col-sm-12 form-inline" t:id="projectSelectForm">
+                    <label>
                         Project details:
                     </label>
-                    <div class="form-group ">
+                    <div class="form-group">
                         <select t:type="select"
-                                t:id="projectSelector" 
                                 t:model="projects" 
                                 t:value="project"/>
                         <t:submit class="btn btn-default" value="Select"/>
-                        <!--LOG PROJECT TIME LINK BUTTON-->
-                        <!--VISIBLE TO ASSIGNED MEMBERS ONLY-->
-                        <t:if test="checkProjectMember">
-                            <a t:type="pagelink" t:page="log/LogProject" context="project.projectId" class="btn btn-warning ">Log Time</a>
+                        
+                    </div>
+                    <!--ONLY VISIBLE FOR ADMINISTRATORS-->
+                    <div class="form-group ">
+                        <t:if test="loggedInRole">
+                            <!--EDIT PROJECT LINK BUTTON-->
+                            <a t:type="pagelink" t:page="edit/EditProject" context="project.projectId" class="btn btn-primary  pull-right ">Edit project</a> 
                         </t:if>
                     </div>
+                    <!--LOG PROJECT TIME LINK BUTTON-->
+                    <!--VISIBLE TO ASSIGNED MEMBERS ONLY-->
+                    <t:if test="checkProjectMember">
+                        <a t:type="pagelink" t:page="create/CreateLog" context="project.projectId" class="btn btn-warning ">Log Time</a>
+                    </t:if>
+                    <div class="col-sm-3 pull-right text-right">
+                        <h5> Project ID:000-${project.projectId}</h5>
+                    </div>
+                
                 </t:form> 
+                
             </div>
             <!--BEAN DISPLAY TABLE-->
             <div class="row well">
                 <table class="col-sm-6" id="detailsTable">
-                    <tr>
-                        <td>Project ID:</td>
-                        <td>000-${project.projectId}</td>
-                    </tr>
+                    
                     <tr>
                         <td>Project title:</td>
                         <td>
@@ -86,16 +95,23 @@
                 </table>
             </div>
             
-           
-            
-            <!--ONLY VISIBLE FOR ADMINISTRATORS-->
-            <t:if test="loggedInRole">
-                <!--EDIT PROJECT LINK BUTTON-->
-                <div class="row">
-                    <a t:type="pagelink" t:page="edit/EditProject" context="project.projectId" class="btn btn-primary  pull-right ">Edit project</a> 
-                </div>
-            </t:if>
-            <div class="spacer"/>
+            <!--TIME LOGGING TABLE-->
+            <t:grid t:source="getFilteredLogs()"
+                    model="logTableGrid"
+                    rowsperpage="5"
+                    add="delete"
+                    row="log">
+                <p:logIdCell>
+                    #${log.logProjectId}-${log.logId}
+                </p:logIdCell>
+                <p:logMemberIdCell>
+                    ${log.logMemberName}
+                </p:logMemberIdCell>
+                <p:deleteCell>
+                    <t:eventlink t:event="deleteLog" context="log.logId">Delete</t:eventlink>
+                </p:deleteCell>
+                
+            </t:grid>
         </div>
     </body>
 </html>

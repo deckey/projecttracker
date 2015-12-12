@@ -88,6 +88,8 @@
             <!--ADDING PROJECTS FORM-->
             <t:form t:type="beaneditform" t:id="projectEditForm" object="project">
                 <t:errors/>
+                
+                
                 <!--PROJECT TITLE, CLIENT AND DATES-->
                 <div class="row">
                     <div class="form-group col-sm-3">
@@ -126,13 +128,15 @@
 
                 <!--MEMBER ASSIGNMENT PALETTE--> 
                 <div class="row">
-                    <div class="form-group col-sm-9">
+                    <div class="form-group col-sm-10">
                         <!--<label for="memberPalette">Assign members:</label>-->
                         <t:palette model="members" selected="selectedMembers" encoder="memberEncoder" />
                     </div>
-                    <t:alerts class="col-sm-2"/>
-                    <div class="col-sm-1">
-                        <t:submit class="btn btn-primary pull-right" value="Update project"/>
+                    
+                    <!--UPDATE & CANCEL BUTTONS-->
+                    <div class="form-group col-sm-2">
+                        <t:submit class="btn btn-primary pull-right left10" value="Update"/>
+                        <t:pagelink t:page="view/ViewProject" t:context="project.projectId" class="btn btn-default pull-right">Cancel</t:pagelink>
                     </div>
                 </div>
             </t:form>

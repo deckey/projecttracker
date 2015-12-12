@@ -4,20 +4,21 @@
         <div class="container">
             <t:header/>
             <t:mainmenu/>
-            <div class="row border_btm" id="projectSelectForm">
-                <!-- PROJECT DETAILS HEADER -->
-                <label>
-                    Log time on: ${project.projectTitle}
-                </label>
+            
+            <div class="row border_btm "> 
+                <t:form class="col-sm-12 form-inline" t:id="projectSelectForm">
+                    <!-- PROJECT DETAILS HEADER -->
+                    <label>
+                        Log time on: ${project.projectTitle}
+                    </label>
+                    <div class="col-sm-3 pull-right text-right">
+                        <h5> Project ID:000-${project.projectId}</h5>
+                    </div>
+                </t:form>
             </div>
             <!--BEAN DISPLAY TABLE-->
             <div class="row well">
                 <table class="col-sm-6" id="detailsTable">
-                    <tr>
-                        <td>Project ID:</td>
-                        <td>000-${project.projectId}</td>
-                    </tr>
-                    
                     <tr>
                         <td>Project description:</td>
                         <td>${project.projectDescription}</td>

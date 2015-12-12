@@ -1,6 +1,6 @@
-
 package tapestry.projecttracker.entities;
 
+import java.io.Serializable;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,23 +16,49 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 import tapestry.projecttracker.prop.WorkType;
 
 @Entity
-@Table(name="tbl_log")
-public class Log {
-    
+@Table(name = "tbl_log")
+public class Log implements Serializable {
+
+    @Column(name = "logId")
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer logId;
-    private Integer logMember;
+
+    @Column(name = "logMemberId")
+    private Integer logMemberId;
+
+    @Column(name = "logProjectId")
+    private Integer logProjectId;
+
+    @Column(name = "logComment")
     private String logComment;
+
+    @Column(name = "logAdded")
+    @Temporal(TemporalType.DATE)
     private Date logAdded;
+
+    @Column(name = "logTime")
     private double logTime;
+
+    @Column(name = "logWork")
+    @Enumerated(EnumType.STRING)
     private WorkType logWork;
+
+    @Column(name = "logMemberName")
+    private String logMemberName;
 
     @Inject
     public Log() {
     }
 
-    @Column(name="logId")
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    public Log(Integer logMemberId, Integer logProjectId, String logComment, double logTime, WorkType logWork) {
+        this.logMemberId = logMemberId;
+        this.logProjectId = logProjectId;
+        this.logComment = logComment;
+        this.logTime = logTime;
+        this.logWork = logWork;
+    }
+
     public Integer getLogId() {
         return logId;
     }
@@ -41,16 +67,22 @@ public class Log {
         this.logId = logId;
     }
 
-    @Column(name="logMember")
-    public Integer getLogMember() {
-        return logMember;
+    public Integer getLogMemberId() {
+        return logMemberId;
     }
 
-    public void setLogMember(Integer logMember) {
-        this.logMember = logMember;
+    public void setLogMemberId(Integer logMemberId) {
+        this.logMemberId = logMemberId;
     }
-    
-    @Column(name="logComment")
+
+    public Integer getLogProjectId() {
+        return logProjectId;
+    }
+
+    public void setLogProjectId(Integer logProjectId) {
+        this.logProjectId = logProjectId;
+    }
+
     public String getLogComment() {
         return logComment;
     }
@@ -59,8 +91,6 @@ public class Log {
         this.logComment = logComment;
     }
 
-    @Column(name="logAdded")
-    @Temporal(TemporalType.DATE)
     public Date getLogAdded() {
         return logAdded;
     }
@@ -69,7 +99,6 @@ public class Log {
         this.logAdded = logAdded;
     }
 
-    @Column(name="logTime")
     public double getLogTime() {
         return logTime;
     }
@@ -78,8 +107,6 @@ public class Log {
         this.logTime = logTime;
     }
 
-    @Column(name="logWork")
-    @Enumerated(EnumType.STRING)
     public WorkType getLogWork() {
         return logWork;
     }
@@ -88,6 +115,12 @@ public class Log {
         this.logWork = logWork;
     }
 
-    
-    
+    public String getLogMemberName() {
+        return logMemberName;
+    }
+
+    public void setLogMemberName(String logMemberName) {
+        this.logMemberName = logMemberName;
+    }
+
 }
