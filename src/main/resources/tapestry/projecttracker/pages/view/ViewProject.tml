@@ -83,35 +83,39 @@
                     </tr>
                 </table>
                
-                <table class="col-sm-3 " id="assignedTable">
+                <table class="col-sm-5 " id="assignedTable">
                     <th>Assigned member</th>
                     <th>Role</th>
+                    <th>Logged hours</th>
                     <tbody>
                         <tr t:type="loop" t:source="getSortedAssignedMembers()" t:value="member">
                             <td>${member.memberName}</td>
                             <td>${member.memberSpecialty}</td>
+                            <td class="text-center">${hoursByMember}</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
             
+            <!--ERROR REPORTING FORM-->
+            <t:alerts />
             <!--TIME LOGGING TABLE-->
             <t:grid t:source="getFilteredLogs()"
-                    model="logTableGrid"
-                    rowsperpage="5"
-                    add="delete"
-                    row="log">
+                        model="logTableGrid"
+                        class="table table-grid"
+                        rowsperpage="5"
+                        add="action"
+                        row="log">
                 <p:logIdCell>
                     #${log.logProjectId}-${log.logId}
                 </p:logIdCell>
                 <p:logMemberIdCell>
                     ${log.logMemberName}
                 </p:logMemberIdCell>
-                <p:deleteCell>
+                <p:actionCell>
                     <t:eventlink t:event="deleteLog" context="log.logId">Delete</t:eventlink>
-                </p:deleteCell>
-                
-            </t:grid>
+                </p:actionCell>
+            </t:grid> 
         </div>
     </body>
 </html>

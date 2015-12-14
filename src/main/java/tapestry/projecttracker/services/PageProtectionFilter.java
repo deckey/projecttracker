@@ -8,7 +8,6 @@ package tapestry.projecttracker.services;
 import java.io.IOException;
 import java.io.OutputStream;
 import javax.annotation.security.RolesAllowed;
-import javax.management.relation.Role;
 import org.apache.tapestry5.EventContext;
 import org.apache.tapestry5.Link;
 import org.apache.tapestry5.internal.EmptyEventContext;
@@ -22,7 +21,6 @@ import org.apache.tapestry5.services.PageRenderLinkSource;
 import org.apache.tapestry5.services.PageRenderRequestParameters;
 import org.apache.tapestry5.services.Request;
 import org.apache.tapestry5.services.Response;
-import org.hsqldb.rights.User;
 import org.slf4j.Logger;
 import tapestry.projecttracker.entities.Member;
 import tapestry.projecttracker.pages.Index;
@@ -138,7 +136,9 @@ public class PageProtectionFilter implements ComponentRequestFilter {
     private boolean isAuthenticated() throws IOException {
         Member user = sessionStateManager.getIfExists(Member.class);
         if (user != null) {
-            if (user.getMemberRole() == MemberRole.Administrator || user.getMemberRole() == MemberRole.Supervisor || user.getMemberRole() == MemberRole.Member) {
+            if (user.getMemberRole() == MemberRole.Administrator
+                    || user.getMemberRole() == MemberRole.Supervisor
+                    || user.getMemberRole() == MemberRole.Member) {
                 return true;
             }
         }

@@ -11,6 +11,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
+import org.apache.tapestry5.alerts.AlertManager;
+import org.apache.tapestry5.alerts.Duration;
+import org.apache.tapestry5.alerts.Severity;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.annotations.SessionState;
 import org.apache.tapestry5.beaneditor.BeanModel;
@@ -60,11 +63,17 @@ public class ViewProject {
     private List<Log> logs;
 
     @Property
+    private double memberProjectHours;
+
+    @Property
     private BeanModel<Log> logTableGrid;
     @Inject
     private BeanModelSource beanModelSource;
     @Inject
     private Messages messages;
+
+    @Inject
+    private AlertManager alertManager;
 
     @Property
     private final MemberEncoder memberEncoder = new MemberEncoder(memberDao);
@@ -129,7 +138,7 @@ public class ViewProject {
 
     void setupRender() {
         logTableGrid = beanModelSource.createDisplayModel(Log.class, messages);
-        logTableGrid.include("logId","logMemberId","logComment","logAdded","logTime","logWork");
+        logTableGrid.include("logId", "logMemberId", "logComment", "logAdded", "logTime", "logWork");
         logTableGrid.get("logId").label("Log #");
         logTableGrid.get("logMemberId").label("Added by");
         logTableGrid.get("logComment").label("Comment");
@@ -160,6 +169,19 @@ public class ViewProject {
         return filteredLogs;
     }
 
+    public double getHoursByMember() {
+        List<Log> filteredLogs = new ArrayList<>();
+        memberProjectHours = 0;
+        for (Log entry : logs) {
+            if (entry.getLogProjectId().equals(project.getProjectId())) {
+                if (entry.getLogMemberId().equals(member.getMemberId())) {
+                    memberProjectHours += entry.getLogTime();
+                }
+            }
+        }
+        return memberProjectHours;
+    }
+
     /* Method returning true if the member is assigned to selected project
         Used for log time button visibility
      */
@@ -177,6 +199,14 @@ public class ViewProject {
 
     @CommitAfter
     void onDeleteLog(Integer id) {
-        projectDao.deleteLog(id);
+        Log log = projectDao.getLogById(id);
+        System.out.println("LOG DELETING...." + log);
+        if (log.getLogMemberId().equals(loggedInMember.getMemberId())) {
+            projectDao.deleteLog(id);
+        } else {
+            //TODO: Create an error report here for not deleting the log
+            alertManager.alert(Duration.TRANSIENT, Severity.ERROR, 
+                    "Log can only be deleted by it's creator!");
+        }
     }
 }

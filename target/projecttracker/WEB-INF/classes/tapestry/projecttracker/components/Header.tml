@@ -13,7 +13,7 @@
                         </t:eventlink>
                     </div>
                     <div class="pull-right" id="loggedUser">
-                        Welcome, <t:pagelink t:page="view/ViewMemberDetails" t:context="loggedInMember">
+                        Welcome, <t:pagelink t:page="view/ViewMember" t:context="loggedInMember">
                             <b>${user}</b>
                         </t:pagelink>
                     </div>

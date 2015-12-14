@@ -17,7 +17,7 @@
                         model="activeMembersGridModel"
                         row="member">
                     <p:memberNameCell>
-                        <t:pagelink  t:page="view/ViewMemberDetails" context="member" class="table-link" title="View member details">
+                        <t:pagelink  t:page="view/ViewMember" context="member" class="table-link" title="View member details">
                             ${member.memberName}
                         </t:pagelink>
                     </p:memberNameCell>
@@ -33,7 +33,7 @@
                         model="allMembersGridModel"
                         row="member">
                     <p:memberNameCell>
-                        <t:pagelink  t:page="view/ViewMemberDetails" context="member" class="table-link" title="View member details">
+                        <t:pagelink  t:page="view/ViewMember" context="member" class="table-link" title="View member details">
                             ${member.memberName}
                         </t:pagelink>
                     </p:memberNameCell>
