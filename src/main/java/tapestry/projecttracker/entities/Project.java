@@ -178,7 +178,7 @@ public class Project implements java.io.Serializable {
 
     @Override
     public String toString() {
-        return this.projectTitle; //To change body of generated methods, choose Tools | Templates.
+        return this.getProjectTitle(); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

@@ -60,7 +60,7 @@
                             row="member"
                             exclude="memberId, memberPassword">
                         <p:memberNameCell>
-                            <t:pagelink t:page="view/ViewMemberDetails" class="table-link"
+                            <t:pagelink t:page="view/ViewMember" class="table-link"
                                         t:context="member.memberId">${member.memberName}
                             </t:pagelink>
                         </p:memberNameCell>

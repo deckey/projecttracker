@@ -13,6 +13,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import tapestry.projecttracker.entities.Log;
+import tapestry.projecttracker.entities.Member;
 import tapestry.projecttracker.entities.Project;
 
 /**
@@ -35,6 +36,12 @@ public class ProjectIMPL implements ProjectDAO {
     @Override
     public Project updateProject(Project project) {
         return (Project) dbs.merge(project);
+    }
+
+    @Override
+    public void deleteProject(Integer id) {
+        Project project = (Project) dbs.createCriteria(Project.class).add(Restrictions.eq("projectId", id)).uniqueResult();
+        dbs.delete(project);
     }
 
     @Override
@@ -65,6 +72,13 @@ public class ProjectIMPL implements ProjectDAO {
     }
 
     @Override
+    public Project removeAssignedFromProject(Project project) {
+        List<Member> emptyList = new ArrayList<>();
+        project.setAssignedMembers(emptyList);
+        return project;
+    }
+
+    @Override
     public List<Log> getLogsByProject(Project project) {
         List<Log> logs = new ArrayList<>();
         Integer projectId = project.getProjectId();
@@ -88,7 +102,9 @@ public class ProjectIMPL implements ProjectDAO {
     @Override
     public void addLog(Log log) {
         log.setLogAdded(new Date());
-        log.setLogMemberName(memberDao.getMemberById(log.getLogMemberId()).getMemberName());
+        Member member = memberDao.getMemberById(log.getLogMemberId());
+        log.setLogMemberName(member.getMemberName());
+        member.setMemberTotalHours(member.getMemberTotalHours()+log.getLogTime());
         dbs.persist(log);
         System.out.println("PROJECT DAO...NEW LOG CREATED...");
     }
@@ -97,12 +113,18 @@ public class ProjectIMPL implements ProjectDAO {
     public List<Log> getAllLogs() {
         return dbs.createCriteria(Log.class).list();
     }
+    
+    public Log getLogById(Integer id){
+        return (Log) dbs.createCriteria(Log.class).add(Restrictions.eq("logId", id)).uniqueResult();
+    }
 
     @Override
     public void deleteLog(Integer id) {
-        Log log = (Log) dbs.createCriteria(Log.class).add(Restrictions.eq("logId", id)).uniqueResult();
+        Log log = getLogById(id);
         Project project = getProjectById(log.getLogProjectId());
         project.setProjectTime(project.getProjectTime()-log.getLogTime());
+        Member member = memberDao.getMemberById(log.getLogMemberId());
+        member.setMemberTotalHours(member.getMemberTotalHours()-log.getLogTime());
         dbs.delete(log);
     }
 }

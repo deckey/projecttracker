@@ -26,6 +26,8 @@ and open the template in the editor.
 .marg10{margin:10px;}
 .right10{margin-right: 10px;}
 .left10{margin-left:10px;}
+.left20{margin-left:20px;}
+.top20{margin-top:20px;}
 p{white-space: pre-line;}
 .row {
 }
@@ -49,10 +51,10 @@ p{white-space: pre-line;}
 /*#projectSelectForm{
     margin-top:15px;
 }*/
-#projectSelectForm {margin:30px 0 20px 0;}
-#projectSelectForm select{margin-left:10px;}
-#projectSelectForm .btn{margin-left:5px;}
-#projectSelectForm label{font-size:1.6em;font-weight:normal;}
+#projectSelectForm,#memberSelectForm {margin:30px 0 20px 0;}
+#projectSelectForm select,#memberSelectForm select{margin-left:10px;}
+#projectSelectForm .btn,#memberSelectForm .btn{margin-left:5px;}
+#projectSelectForm label,#memberSelectForm label{font-size:1.6em;font-weight:normal;}
 .btn-arrow{float:left;}
 
 .table-colored tr:nth-child(even) {background: rgba(255,102,50,0.2)}
@@ -125,3 +127,5 @@ p{white-space: pre-line;}
 /*first column */ 
 #detailsTable tr td:first-child{width:30%;font-weight: bold;color:#666666;padding:2px 0;vertical-align: top}
 /* second column */
+
+.t-alert-controls{display:none; }

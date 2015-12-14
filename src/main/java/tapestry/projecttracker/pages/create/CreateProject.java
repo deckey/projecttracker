@@ -105,6 +105,9 @@ public class CreateProject {
         if (selectedMembers == null) {
             selectedMembers = new ArrayList<>();
         }
+        if (projects == null) {
+            projects = new ArrayList<>();
+        }
     }
 
     void onSubmitFromAddProjectForm() {
@@ -113,6 +116,10 @@ public class CreateProject {
 
     void onValidateFromAddProjectForm() {
         System.out.println("ADD PROJECT FORM: VALIDATING...");
+        if(projectDue.before(projectStart)){
+            form.recordError("Due date can not be before start date!");
+            return;
+        }
         for (Project prj : projects) {
             if (projectTitle.equals(prj.getProjectTitle())) {
                 form.recordError("Project named '" + projectTitle + "' already exists!");
@@ -122,9 +129,11 @@ public class CreateProject {
     }
 
     @CommitAfter
-    void onSuccessFromAddProjectForm() {
+    Object onSuccessFromAddProjectForm() {
         System.out.println("ADD PROJECT FORM: SUCCESS...");
-        projectDao.addProject(new Project(projectTitle, projectClient, projectStart, projectDue, projectCategory, projectStatus, selectedMembers));
+        Project newProject =projectDao.updateProject(new Project(projectTitle, projectClient, projectStart, projectDue, projectCategory, projectStatus, selectedMembers));
+        viewProjectPage.set(newProject);
+        return viewProjectPage;
     }
 
     void onFailureFromAddProjectForm() {

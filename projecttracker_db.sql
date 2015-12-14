@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 12, 2015 at 06:00 PM
+-- Generation Time: Dec 14, 2015 at 12:34 PM
 -- Server version: 5.6.24
 -- PHP Version: 5.5.24
 
@@ -36,33 +36,14 @@ CREATE TABLE IF NOT EXISTS `project_member` (
 --
 
 INSERT INTO `project_member` (`memberId`, `projectId`) VALUES
-(34, 31),
-(36, 31),
-(37, 31),
-(38, 31),
-(32, 32),
-(34, 32),
-(36, 32),
-(37, 32),
-(39, 32),
-(32, 33),
-(33, 33),
-(34, 33),
-(35, 33),
-(33, 34),
-(34, 34),
-(32, 36),
-(34, 36),
-(35, 36),
-(32, 37),
-(34, 37),
-(35, 37),
-(36, 37),
-(38, 37),
-(32, 38),
-(34, 38),
-(35, 38),
-(36, 38);
+(44, 51),
+(44, 52),
+(46, 52),
+(44, 53),
+(46, 53),
+(44, 54),
+(46, 54),
+(47, 54);
 
 -- --------------------------------------------------------
 
@@ -79,18 +60,19 @@ CREATE TABLE IF NOT EXISTS `tbl_log` (
   `logTime` float NOT NULL,
   `logWork` varchar(32) NOT NULL,
   `logMemberName` varchar(32) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=50 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tbl_log`
 --
 
 INSERT INTO `tbl_log` (`logId`, `logMemberId`, `logProjectId`, `logComment`, `logAdded`, `logTime`, `logWork`, `logMemberName`) VALUES
-(45, 32, 32, 'erbwtrne tjejje5j e5', '2015-12-12 00:00:00', 6, 'Rigging', 'Administrator'),
-(46, 32, 37, 'ney eytjryjj rymr6mr66r7k6r7k6r7k6k 67 k67k 67k67ds aweetaw a', '2015-12-12 00:00:00', 8, 'Compositing', 'Administrator'),
-(47, 32, 37, ' hdfgnfhmfhmf  fhh mfhjm, yfj, tytu,tyu,tyaqweerjttulryul ', '2015-12-12 00:00:00', 8, 'Rendering', 'Administrator'),
-(48, 32, 37, 'rr estjey5rt5 5k5 7k67k qr sgs g', '2015-12-12 00:00:00', 4, 'Modeling', 'Administrator'),
-(49, 32, 37, 'v 6um67k467kjb5ebyq34q3bqywn5  wrwrh', '2015-12-12 00:00:00', 4, 'LookDevelopment', 'Administrator');
+(67, 44, 52, ' wr g3345 y45h 46j yj y5m ', '2015-12-13 00:00:00', 7, 'Rigging', 'Administrator'),
+(68, 44, 51, 'q fq fwg 3g 45hy46567', '2015-12-13 00:00:00', 9, 'Compositing', 'Administrator'),
+(71, 44, 53, 'wrq qew w t w wewww', '2015-12-13 00:00:00', 12, 'Rigging', 'Administrator'),
+(72, 44, 53, 'w egrg esrh 4rtj tdyj ftykk tyuky7 k67', '2015-12-13 00:00:00', 35, 'Rigging', 'Administrator'),
+(74, 47, 54, 'fsdf  sd sdgweg ewg w', '2015-12-13 00:00:00', 5, 'Animation', 'Supervisor'),
+(80, 44, 54, 'dfh xf g xfj fj f', '2015-12-13 00:00:00', 7, 'Storyboard', 'Administrator');
 
 -- --------------------------------------------------------
 
@@ -107,22 +89,17 @@ CREATE TABLE IF NOT EXISTS `tbl_member` (
   `memberSpecialty` varchar(255) DEFAULT NULL,
   `memberStatus` varchar(255) DEFAULT NULL,
   `memberTotalHours` double NOT NULL DEFAULT '0'
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=49 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tbl_member`
 --
 
 INSERT INTO `tbl_member` (`memberId`, `memberName`, `memberUsername`, `memberPassword`, `memberRole`, `memberSpecialty`, `memberStatus`, `memberTotalHours`) VALUES
-(32, 'Administrator', 'admin', 'admin', 'Administrator', 'Supervision', 'Active', 32),
-(33, 'Team member', 'team', 'team', 'Member', 'Modeling', 'Active', 28),
-(34, 'Supervisor', 'sup', 'sup', 'Supervisor', 'Supervision', 'Active', 0),
-(35, 'Petar Peric', 'petar', 'petar', 'Member', 'Lighting', 'Active', 0),
-(36, 'Mika Mikic', 'mika', 'mika', 'Member', 'VFX', 'Active', 13),
-(37, 'Zika Zikic', 'zika', 'zika', 'Member', 'Lighting', 'Active', 0),
-(38, 'Nenad Sovic', 'nesa', 'nesa', 'Administrator', 'Animation', 'Active', 0),
-(39, 'Sasa', 'sasa', 'sasa', 'Administrator', 'Rigging', 'Active', 0),
-(40, 'dragan', 'dragan', 'dragan', 'Supervisor', 'Lighting', 'Active', 0);
+(44, 'Administrator', 'admin', 'admin', 'Administrator', 'Supervision', 'Active', 70),
+(46, 'test', 'test', 'test', 'Supervisor', 'Animation', 'Active', 0),
+(47, 'Supervisor', 'sup', 'sup', 'Supervisor', 'Animation', 'Active', 5),
+(48, 'Team member', 'team', 'team', 'Member', 'Modeling', 'Active', 0);
 
 -- --------------------------------------------------------
 
@@ -132,6 +109,7 @@ INSERT INTO `tbl_member` (`memberId`, `memberName`, `memberUsername`, `memberPas
 
 CREATE TABLE IF NOT EXISTS `tbl_project` (
   `projectId` int(11) NOT NULL,
+  `projectTitle` varchar(255) DEFAULT NULL,
   `projectCategory` varchar(255) DEFAULT NULL,
   `projectClient` varchar(255) DEFAULT NULL,
   `projectCreationDate` datetime DEFAULT NULL,
@@ -140,22 +118,18 @@ CREATE TABLE IF NOT EXISTS `tbl_project` (
   `projectEnd` date DEFAULT NULL,
   `projectStart` datetime DEFAULT NULL,
   `projectStatus` varchar(255) DEFAULT NULL,
-  `projectTime` double DEFAULT NULL,
-  `projectTitle` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=latin1;
+  `projectTime` double DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tbl_project`
 --
 
-INSERT INTO `tbl_project` (`projectId`, `projectCategory`, `projectClient`, `projectCreationDate`, `projectDescription`, `projectDue`, `projectEnd`, `projectStart`, `projectStatus`, `projectTime`, `projectTitle`) VALUES
-(31, 'Other', 'Company A', '2015-12-10 14:21:04', 'No description provided ...', '2015-12-31 00:00:00', NULL, '2015-12-03 00:00:00', 'Active', 43, 'Project 3546'),
-(32, 'Other', 'Company B', '2015-12-10 14:23:53', 'No description provided ...', '2015-12-31 00:00:00', NULL, '2015-07-01 00:00:00', 'Active', 6, 'Project 55'),
-(33, 'Animation', 'Company C', '2015-12-10 14:26:57', 'No description provided ...', '2015-12-22 00:00:00', NULL, '2015-10-01 00:00:00', 'Active', 123, 'Project 3'),
-(34, 'Other', 'Company AB', '2015-12-10 14:27:51', 'No description provided ...', '2015-12-31 00:00:00', NULL, '2015-12-16 00:00:00', 'Active', 0, 'New project 1'),
-(36, 'Other', 'Company X', '2015-12-10 15:25:29', 'No description provided ...', '2015-12-23 00:00:00', NULL, '2015-12-08 00:00:00', 'Active', 5, 'Project 4'),
-(37, 'Motion_Graphics', 'Company X', '2015-12-10 15:25:53', 'No description provided ...', '2015-12-29 00:00:00', NULL, '2015-12-24 00:00:00', 'Inactive', 24, 'Project 41'),
-(38, 'Game_Modeling', 'company', '2015-12-11 10:25:03', 'No description provided ...', '2015-12-31 00:00:00', NULL, '2015-12-24 00:00:00', 'Active', 0, 'Novi');
+INSERT INTO `tbl_project` (`projectId`, `projectTitle`, `projectCategory`, `projectClient`, `projectCreationDate`, `projectDescription`, `projectDue`, `projectEnd`, `projectStart`, `projectStatus`, `projectTime`) VALUES
+(51, 'Project 3', 'Other', 'Company Z', '2015-12-13 18:07:21', 'No description provided ...', '2015-12-16 00:00:00', NULL, '2015-12-02 00:00:00', 'Active', 9),
+(52, 'Project 1', 'Other', 'Company A', '2015-12-13 18:08:10', 'No description provided ...', '2015-12-23 00:00:00', NULL, '2015-12-01 00:00:00', 'Active', 7),
+(53, 'Project 4', 'Game_Modeling', 'Company Y', '2015-12-13 20:47:07', 'No description provided ...', '2015-12-18 00:00:00', NULL, '2015-12-03 00:00:00', 'Active', 47),
+(54, 'Project 2', 'Motion_Graphics', 'Company B', '2015-12-13 20:59:19', 'No description provided ...', '2015-12-17 00:00:00', NULL, '2015-12-02 00:00:00', 'Active', 12);
 
 --
 -- Indexes for dumped tables
@@ -193,17 +167,17 @@ ALTER TABLE `tbl_project`
 -- AUTO_INCREMENT for table `tbl_log`
 --
 ALTER TABLE `tbl_log`
-  MODIFY `logId` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=50;
+  MODIFY `logId` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=81;
 --
 -- AUTO_INCREMENT for table `tbl_member`
 --
 ALTER TABLE `tbl_member`
-  MODIFY `memberId` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=41;
+  MODIFY `memberId` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=49;
 --
 -- AUTO_INCREMENT for table `tbl_project`
 --
 ALTER TABLE `tbl_project`
-  MODIFY `projectId` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=39;
+  MODIFY `projectId` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=55;
 --
 -- Constraints for dumped tables
 --
@@ -213,7 +187,7 @@ ALTER TABLE `tbl_project`
 --
 ALTER TABLE `project_member`
 ADD CONSTRAINT `FK_memberID` FOREIGN KEY (`memberId`) REFERENCES `tbl_member` (`memberId`),
-ADD CONSTRAINT `FK_projectID` FOREIGN KEY (`projectId`) REFERENCES `tbl_project` (`projectId`) ON DELETE CASCADE ON UPDATE CASCADE;
+ADD CONSTRAINT `FK_projectID` FOREIGN KEY (`projectId`) REFERENCES `tbl_project` (`projectId`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

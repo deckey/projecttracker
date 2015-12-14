@@ -122,5 +122,4 @@ public class Log implements Serializable {
     public void setLogMemberName(String logMemberName) {
         this.logMemberName = logMemberName;
     }
-
 }

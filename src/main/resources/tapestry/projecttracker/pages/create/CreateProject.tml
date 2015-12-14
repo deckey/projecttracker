@@ -55,8 +55,9 @@
                         <!--<label for="memberPalette">Assign members:</label>-->
                         <t:palette model="members" selected="selectedMembers" encoder="memberEncoder" />
                     </div>
-                    <div class="col-sm-1 col-sm-offset-2">
-                        <t:submit class="btn btn-primary pull-right " value="Create project"/>
+                    <div class="col-sm-3">
+                        <t:pagelink t:page="view/ViewProjects" class="btn btn-default col-sm-offset-4">Cancel</t:pagelink>
+                        <t:submit class="btn btn-primary  pull-right"  value="Add project" />
                     </div>
                 </div>
             </t:form>

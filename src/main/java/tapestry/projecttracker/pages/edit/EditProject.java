@@ -5,6 +5,7 @@
  */
 package tapestry.projecttracker.pages.edit;
 
+import tapestry.projecttracker.pages.delete.DeleteProject;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -12,13 +13,8 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import javax.annotation.security.RolesAllowed;
-import org.apache.tapestry5.PersistenceConstants;
-import org.apache.tapestry5.alerts.AlertManager;
-import org.apache.tapestry5.alerts.Duration;
-import org.apache.tapestry5.alerts.Severity;
 import org.apache.tapestry5.annotations.InjectComponent;
 import org.apache.tapestry5.annotations.InjectPage;
-import org.apache.tapestry5.annotations.Persist;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.annotations.SessionState;
 import org.apache.tapestry5.corelib.components.Form;
@@ -49,6 +45,9 @@ public class EditProject {
 
     @InjectPage
     private ViewProject viewProjectPage;
+    
+    @InjectPage
+    private DeleteProject deletePage;
 
     @Property
     private List<Project> projects;
@@ -147,5 +146,10 @@ public class EditProject {
         System.out.println("EDIT FORM: SUCCESS... UPDATED PROJECT..." + project);
         viewProjectPage.set(projectDao.updateProject(project));
         return viewProjectPage;
+    }
+    
+    Object onDeleteProject(Project project){
+        deletePage.set(project);
+        return deletePage;
     }
 }

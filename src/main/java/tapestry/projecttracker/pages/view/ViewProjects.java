@@ -51,7 +51,7 @@ public class ViewProjects {
     void setupRender() {
         /* Draw grid table for archived projects: */
         gridModel = beanModelSource.createDisplayModel(Project.class, messages);
-        gridModel.include("projectTitle",  "projectClient", "projectStatus","projectStart", "projectDue", "projectCreationDate");
+        gridModel.include("projectTitle",  "projectClient","projectCategory", "projectStatus","projectStart", "projectDue", "projectCreationDate");
         gridModel.get("projectClient").sortable(false);
         gridModel.get("projectStatus").sortable(false);
         // Column titles:

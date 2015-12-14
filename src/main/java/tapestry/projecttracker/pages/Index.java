@@ -15,6 +15,7 @@ import tapestry.projecttracker.data.ProjectDAO;
 import tapestry.projecttracker.entities.Log;
 import tapestry.projecttracker.entities.Member;
 import tapestry.projecttracker.pages.view.ViewDashboard;
+import tapestry.projecttracker.prop.MemberStatus;
 
 /**
  * Start page of application ProjectTracker.
@@ -51,7 +52,12 @@ public class Index {
         if (member == null) {
             System.out.println("SERVER SIDE VERIFICATION ERROR!");
             form.recordError("Login failed, wrong username or password!");
-        } else {
+        } 
+        if(member.getMemberStatus().equals(MemberStatus.Inactive)){
+            form.recordError("User status is INACTIVE, login disabled!");
+        }
+        
+        else {
             loggedInMember = member;
         }
     }

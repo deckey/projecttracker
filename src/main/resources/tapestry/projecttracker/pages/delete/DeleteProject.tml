@@ -1,0 +1,52 @@
+<html t:type="layout" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_4.xsd"
+      xmlns:p="tapestry:parameter">
+    <body>
+        <div class="container">
+            <t:header/>
+            <t:mainmenu/>
+            <div class="row border_btm">
+                <!-- PROJECT DETAILS HEADER -->
+                <t:form class="col-sm-10 form-inline" t:id="projectSelectForm">
+                    <label for="projectSelector">
+                        Confirm deleting...
+                    </label>
+                </t:form>
+            </div>
+            <!--BEAN DISPLAY TABLE-->
+            <div class="row well">
+                <table class="col-sm-6">
+                    <tr>
+                        <td>Project name:</td>
+                        <td>
+                            <b>${project.projectTitle}</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Project description:</td>
+                        <td>${project.projectDescription}</td>
+                    </tr>
+                    <tr>
+                        <td>Company:</td>
+                        <td>${project.projectClient}</td>
+                    </tr>
+                    <tr>
+                        <td>Category:</td>
+                        <td>${project.projectCategory}</td>
+                    </tr>
+                    <tr>
+                        <td>Hours logged:</td>
+                        <td>${project.projectTime}</td>
+                    </tr>
+                    <tr>
+                        <td>Status:</td>
+                        <td>${project.projectStatus}</td>
+                    </tr>
+                </table>
+                <div class="col-sm-3">
+                    <t:pagelink t:page="edit/EditProject" class="btn btn-default" t:context="project.projectId">Cancel</t:pagelink>
+                    <t:eventlink t:event="deleteProject" class="btn btn-danger" t:context="project.projectId">Confirm</t:eventlink>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
