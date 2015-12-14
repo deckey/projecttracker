@@ -3,6 +3,9 @@ package tapestry.projecttracker.pages.create;
 import java.util.Collections;
 import java.util.List;
 import javax.annotation.security.RolesAllowed;
+import org.apache.tapestry5.alerts.AlertManager;
+import org.apache.tapestry5.alerts.Duration;
+import org.apache.tapestry5.alerts.Severity;
 import org.apache.tapestry5.annotations.InjectComponent;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.beaneditor.BeanModel;
@@ -73,6 +76,9 @@ public class CreateMember {
     @Validate("required")
     private MemberStatus memberStatus;
 
+    @Inject
+    private AlertManager alertManager;
+
     public MemberRole[] getRoles() {
         MemberRole[] roles = MemberRole.values();
         return roles;
@@ -119,7 +125,7 @@ public class CreateMember {
         System.out.println("ADD MEMBER FORM: VALIDATING...");
         for (Member mem : members) {
             if (memberUsername.equals(mem.getMemberUsername())) {
-                form.recordError("Username '"+memberUsername +"' already exists!");
+                form.recordError("Username '" + memberUsername + "' already exists!");
                 return;
             }
         }
@@ -129,6 +135,7 @@ public class CreateMember {
     void onSuccessFromAddMemberForm() {
         System.out.println("ADD MEMBER FORM: SUCCESS...");
         Member newMember = new Member(memberName, memberUsername, memberPassword, memberRole, memberSpecialty, memberStatus);
+        alertManager.alert(Duration.TRANSIENT, Severity.SUCCESS, "New member "+memberName+" successfully created!");
         memberDao.addMember(newMember);
     }
 

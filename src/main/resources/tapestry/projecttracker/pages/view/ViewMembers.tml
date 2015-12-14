@@ -1,4 +1,4 @@
-<html t:type="layout" 
+<html t:type="layout" title="Project Tracker : Members"
       xmlns:t="http://tapestry.apache.org/schema/tapestry_5_4.xsd"
       xmlns:p="tapestry:parameter">
     <body>
@@ -6,6 +6,7 @@
             <t:header/>
             <t:mainmenu/>
             <div class="row spacer"/>
+            <t:alerts/>
             <div class="row grey frame">
                 <h4>Most active members:
                     <small>

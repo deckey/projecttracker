@@ -5,12 +5,15 @@
  */
 package tapestry.projecttracker.data;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
+import tapestry.projecttracker.entities.Log;
 import tapestry.projecttracker.entities.Member;
 import tapestry.projecttracker.entities.Project;
 
@@ -22,6 +25,9 @@ public class MemberIMPL implements MemberDAO {
 
     @Inject
     private Session dbs;
+    
+    @Inject
+    private ProjectDAO projectDao;
 
     @Override
     public void addMember(Member member) {
@@ -36,10 +42,8 @@ public class MemberIMPL implements MemberDAO {
     @Override
     public void deleteMember(Integer id) {
         Member member = getMemberById(id);
-        dbs.delete(member);    
-        System.out.println("DB: Member "+member.getMemberName()+" deleted...");
+        dbs.delete(member);
     }
-    
 
     @Override
     public List<Member> getAllMembers() {
@@ -83,4 +87,36 @@ public class MemberIMPL implements MemberDAO {
         Member member = getMemberByUsername(uName);
         return (member == null) ? false : true;
     }
+
+    @Override
+    public Member removeAssignedProjects(Member member) {
+        Set<Project> emptyList = new HashSet<>();
+        member.setAssignedProjects(emptyList);
+        return member;
+    }
+
+    @Override
+    public List<Log> getLogsByMember(Member member) {
+        List<Log> logs = new ArrayList<>();
+        Integer memberId = member.getMemberId();
+        logs = dbs.createCriteria(Log.class).add(Restrictions.eq("logMemberId", memberId)).list();
+        if (logs == null) {
+            return null;
+        }
+        return logs;
+    }
+
+    @Override
+    public void deleteMemberLogs(List<Log> logList) {
+        for(Log entry:logList){
+            // REMOVE LOGGED HOURS FROM A PROJECT BEFORE DELETING MEMBER
+            Project project = projectDao.getProjectById(entry.getLogProjectId());
+            project.setProjectTime(project.getProjectTime()-entry.getLogTime());
+            // REMOVE LOG 
+            dbs.delete(entry);
+        }
+    }
+    
+    
+
 }

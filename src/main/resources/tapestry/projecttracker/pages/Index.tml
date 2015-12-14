@@ -1,4 +1,5 @@
-<html t:type="layout" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_4.xsd">
+<html t:type="layout" title="Welcome to Project Tracker App" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_4.xsd"
+      xmlns:p="tapestry:parameter">
    
     <div class="container">
         <!-- MAIN MENU COMPONENT -->
@@ -32,11 +33,11 @@
             <img class="img-responsive" src="${context:images/projectTracker_logo.png}"/>
             <p>Quickly find what your employees are working on,
                 add new projects and assignments
-            and track time spent on each project</p>
+                and track time spent on each project</p>
         </div>
             
         <div class="row">
-<!--            <div class="col-md-3">
+            <!--            <div class="col-md-3">
                 Team members: <strong>##</strong>
             </div>
             <div class="col-md-3">
@@ -50,7 +51,7 @@
         <!--<t:beaneditform t:id="addMemberForm" object="member" exclude="memberId"/>-->
         
         <!--TEMPORARY FOR TESTING OF LOGS: -->
-<!--        <t:beaneditform t:id="addLog" object="log" exclude="logId"/>
+        <!--        <t:beaneditform t:id="addLog" object="log" exclude="logId"/>
         <t:grid source="logs"/>-->
     </div>
 </html>

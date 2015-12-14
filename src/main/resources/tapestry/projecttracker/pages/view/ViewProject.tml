@@ -1,4 +1,4 @@
-<html t:type="layout" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_4.xsd"
+<html t:type="layout" title="Project Tracker : View project" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_4.xsd"
       xmlns:p="tapestry:parameter">
     <body>
         <div class="container">
@@ -32,12 +32,11 @@
                     <div class="col-sm-3 pull-right text-right">
                         <h5> Project ID:000-${project.projectId}</h5>
                     </div>
-                
                 </t:form> 
-                
             </div>
             <!--BEAN DISPLAY TABLE-->
             <div class="row well">
+            <t:alerts />
                 <table class="col-sm-6" id="detailsTable">
                     
                     <tr>
@@ -98,14 +97,13 @@
             </div>
             
             <!--ERROR REPORTING FORM-->
-            <t:alerts />
             <!--TIME LOGGING TABLE-->
             <t:grid t:source="getFilteredLogs()"
-                        model="logTableGrid"
-                        class="table table-grid"
-                        rowsperpage="5"
-                        add="action"
-                        row="log">
+                    model="logTableGrid"
+                    class="table table-grid"
+                    rowsperpage="5"
+                    add="action"
+                    row="log">
                 <p:logIdCell>
                     #${log.logProjectId}-${log.logId}
                 </p:logIdCell>

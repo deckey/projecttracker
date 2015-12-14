@@ -133,6 +133,7 @@ public class CreateProject {
         System.out.println("ADD PROJECT FORM: SUCCESS...");
         Project newProject =projectDao.updateProject(new Project(projectTitle, projectClient, projectStart, projectDue, projectCategory, projectStatus, selectedMembers));
         viewProjectPage.set(newProject);
+        viewProjectPage.setSuccessAlert("New project "+projectTitle+ " successfully created!");
         return viewProjectPage;
     }
 

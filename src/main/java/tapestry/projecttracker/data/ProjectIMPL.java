@@ -24,7 +24,7 @@ public class ProjectIMPL implements ProjectDAO {
 
     @Inject
     private Session dbs;
-    
+
     @Inject
     private MemberDAO memberDao;
 
@@ -104,7 +104,7 @@ public class ProjectIMPL implements ProjectDAO {
         log.setLogAdded(new Date());
         Member member = memberDao.getMemberById(log.getLogMemberId());
         log.setLogMemberName(member.getMemberName());
-        member.setMemberTotalHours(member.getMemberTotalHours()+log.getLogTime());
+        member.setMemberTotalHours(member.getMemberTotalHours() + log.getLogTime());
         dbs.persist(log);
         System.out.println("PROJECT DAO...NEW LOG CREATED...");
     }
@@ -113,8 +113,8 @@ public class ProjectIMPL implements ProjectDAO {
     public List<Log> getAllLogs() {
         return dbs.createCriteria(Log.class).list();
     }
-    
-    public Log getLogById(Integer id){
+
+    public Log getLogById(Integer id) {
         return (Log) dbs.createCriteria(Log.class).add(Restrictions.eq("logId", id)).uniqueResult();
     }
 
@@ -122,9 +122,9 @@ public class ProjectIMPL implements ProjectDAO {
     public void deleteLog(Integer id) {
         Log log = getLogById(id);
         Project project = getProjectById(log.getLogProjectId());
-        project.setProjectTime(project.getProjectTime()-log.getLogTime());
+        project.setProjectTime(project.getProjectTime() - log.getLogTime());
         Member member = memberDao.getMemberById(log.getLogMemberId());
-        member.setMemberTotalHours(member.getMemberTotalHours()-log.getLogTime());
+        member.setMemberTotalHours(member.getMemberTotalHours() - log.getLogTime());
         dbs.delete(log);
     }
 }

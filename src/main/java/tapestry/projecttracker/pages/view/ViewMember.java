@@ -6,15 +6,16 @@
 package tapestry.projecttracker.pages.view;
 
 import java.util.List;
+import org.apache.tapestry5.alerts.AlertManager;
+import org.apache.tapestry5.alerts.Duration;
+import org.apache.tapestry5.alerts.Severity;
 import org.apache.tapestry5.annotations.InjectPage;
-import org.apache.tapestry5.annotations.Persist;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.annotations.SessionState;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import tapestry.projecttracker.data.MemberDAO;
 import tapestry.projecttracker.entities.Member;
 import tapestry.projecttracker.pages.edit.EditMember;
-import tapestry.projecttracker.prop.MemberRole;
 
 /**
  *
@@ -33,15 +34,26 @@ public class ViewMember {
 
     @SessionState
     private Member loggedInMember;
-    
+
     @Property
     private String passwordFormat;
-    
+
     @InjectPage
     private EditMember editMemberPage;
 
+    @Inject
+    private AlertManager alertManager;
+
     public void set(Member member) {
         this.member = member;
+    }
+
+    public void setErrorAlert(String message) {
+        alertManager.alert(Duration.TRANSIENT, Severity.ERROR, message);
+    }
+
+    public void setSuccessAlert(String message) {
+        alertManager.alert(Duration.TRANSIENT, Severity.SUCCESS, message);
     }
 
     void onActivate(Member member) {
