@@ -1,4 +1,4 @@
-<html t:type="layout" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_4.xsd"
+<html t:type="layout" title="Project Tracker : Edit member" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_4.xsd"
       xmlns:p="tapestry:parameter">
     <body>
         <div class="container">
@@ -15,6 +15,7 @@
                                 t:model="members" 
                                 t:value="member"/>
                         <t:submit class="btn btn-default" value="Select"/>
+                        <t:pagelink t:page="view/ViewMember" t:context="member.memberId" class="btn btn-default left20">Cancel</t:pagelink>
                     </div>
                 </t:form>
             </div>
@@ -88,7 +89,7 @@
                     </t:if>
                     <div class="form-group col-sm-1 ">
                         <label for="cancelUpdate" class="invisible">spacer</label>
-                        <t:pagelink t:page="view/ViewMember" t:context="member.memberId" class="btn btn-default left20">Cancel</t:pagelink>
+                        <t:pagelink t:page="delete/DeleteMember" t:context="member.memberId" class="btn btn-danger left20">Delete</t:pagelink>
                     </div>
                     <div class="form-group col-sm-1 pull-right">
                         <label for="updateMember" class="invisible">spacer</label>

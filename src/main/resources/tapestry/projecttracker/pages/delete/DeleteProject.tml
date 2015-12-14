@@ -1,4 +1,4 @@
-<html t:type="layout" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_4.xsd"
+<html t:type="layout" title="Project Tracker : Delete project?" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_4.xsd"
       xmlns:p="tapestry:parameter">
     <body>
         <div class="container">
@@ -43,7 +43,7 @@
                     </tr>
                 </table>
                 <div class="col-sm-3">
-                    <t:pagelink t:page="edit/EditProject" class="btn btn-default" t:context="project.projectId">Cancel</t:pagelink>
+                    <t:pagelink t:page="edit/EditProject" class="btn btn-default right10" t:context="project.projectId">Cancel</t:pagelink>
                     <t:eventlink t:event="deleteProject" class="btn btn-danger" t:context="project.projectId">Confirm</t:eventlink>
                 </div>
             </div>

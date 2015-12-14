@@ -5,11 +5,13 @@
  */
 package tapestry.projecttracker.pages.view;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import org.apache.tapestry5.alerts.AlertManager;
+import org.apache.tapestry5.alerts.Duration;
+import org.apache.tapestry5.alerts.Severity;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.annotations.SessionState;
 import org.apache.tapestry5.beaneditor.BeanModel;
@@ -18,9 +20,7 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.BeanModelSource;
 import tapestry.projecttracker.data.MemberDAO;
 import tapestry.projecttracker.entities.Member;
-import tapestry.projecttracker.entities.Project;
 import tapestry.projecttracker.prop.MemberStatus;
-import tapestry.projecttracker.prop.ProjectStatus;
 
 /**
  *
@@ -50,6 +50,9 @@ public class ViewMembers {
     private BeanModelSource beanModelSource;
     @Inject
     private Messages messages;
+    
+    @Inject
+    private AlertManager alertManager;
 
     public boolean getLoggedInRole() {
         return (loggedInMember.getMemberRole().name() == "Administrator") ? true : false;
@@ -79,7 +82,7 @@ public class ViewMembers {
 
         return recentMembers;
     }
-
+    
     void setupRender() {
         activeMembersGridModel = beanModelSource.createDisplayModel(Member.class, messages);
         activeMembersGridModel.include("memberName", "memberUsername", "MemberRole", "MemberSpecialty", "MemberTotalHours");

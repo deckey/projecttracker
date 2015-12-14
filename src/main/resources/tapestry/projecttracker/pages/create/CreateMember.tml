@@ -1,4 +1,4 @@
-<html t:type="layout" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_4.xsd"
+<html t:type="layout" title="Project Tracker : Create member" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_4.xsd"
       xmlns:p="tapestry:parameter">
     <body>
         <div class="container">
@@ -11,6 +11,7 @@
             <!--ADDING MEMBERS FORM-->
             <t:form t:id="addMemberForm">
                 <t:errors/>
+                <t:alerts/>
                 
                 <!--PROJECT TITLE, CLIENT AND DATES-->
                 <div class="row">

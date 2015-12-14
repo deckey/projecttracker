@@ -3,11 +3,11 @@ package tapestry.projecttracker.pages;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.tapestry5.annotations.InjectComponent;
+import org.apache.tapestry5.annotations.Parameter;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.annotations.SessionState;
 import org.apache.tapestry5.beaneditor.Validate;
 import org.apache.tapestry5.corelib.components.Form;
-import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.hibernate.Session;
 import tapestry.projecttracker.data.MemberDAO;
@@ -46,18 +46,16 @@ public class Index {
 
     @Inject
     private Session dbs;
-
+    
     void onValidateFromLoginForm() {
         member = memberDao.validateMember(memberUsername, memberPassword);
         if (member == null) {
             System.out.println("SERVER SIDE VERIFICATION ERROR!");
             form.recordError("Login failed, wrong username or password!");
-        } 
-        if(member.getMemberStatus().equals(MemberStatus.Inactive)){
-            form.recordError("User status is INACTIVE, login disabled!");
         }
-        
-        else {
+        if (member.getMemberStatus().equals(MemberStatus.Inactive)) {
+            form.recordError("User status is INACTIVE, login disabled!");
+        } else {
             loggedInMember = member;
         }
     }

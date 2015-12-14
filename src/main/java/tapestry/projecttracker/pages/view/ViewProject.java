@@ -127,6 +127,9 @@ public class ViewProject {
     public void set(Project project) {
         this.project = project;
     }
+    public void setSuccessAlert(String message){
+        alertManager.alert(Duration.TRANSIENT, Severity.SUCCESS, message);
+    }
 
     void onActivate(Project project) {
         this.project = project;

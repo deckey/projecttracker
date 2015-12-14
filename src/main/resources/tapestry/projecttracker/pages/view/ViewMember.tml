@@ -1,4 +1,4 @@
-<html t:type="layout" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_4.xsd">
+<html t:type="layout" title="Project Tracker : View member" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_4.xsd">
     <body>
         <div class="container">
             <t:header/>
@@ -8,7 +8,7 @@
                 <t:form class="col-sm-12 form-inline" t:id="memberSelectForm">
                     <label class="col-sm-2">
                         Member details:
-                    </label>
+                    </label>    
                     <div class="form-group">
                         <select t:type="select"
                                 t:model="members" 
@@ -26,6 +26,7 @@
                 </t:form> 
             </div>
             <div class="row well">
+                <t:alerts/>
                 <table class="col-sm-6" id="detailsTable">
                     <tr>
                         <td>Member name:</td>
