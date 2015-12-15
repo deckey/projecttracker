@@ -97,6 +97,16 @@ p{white-space: pre-line;}
 .table-archived  td, th{padding: 5px;}
 .table-grey th, .table-archived th, .table-colored th, .table-grid th{font-size: 0.9em;}
 .table-grey th, .table-archived th {font-weight: normal;}
+.table-activity {width:100%;}
+.table-activity td{height:30px;width:12%;border-bottom: rgba(160,160,160,0.2) 1px solid;color:#666666 }
+.table-activity th{border-bottom: rgba(255,102,50,0.5) 1px solid;color:#666666; }
+.table-activity td, th{padding: 5px;}
+/* GRID ACTIVITY TABLE STYLE: 
+/* 1st COLUMN: */
+.table-activity td:first-child{width:90%;}
+/* 2nd COLUMN: - project client*/
+.table-activity td:nth-child(2){width:10%;}
+
 /*.palette-available, .palette-selected, .palette-controls{padding:20px;}*/
 /*.palette-available, .palette-selected{width:300px;}*/
 
@@ -127,5 +137,3 @@ p{white-space: pre-line;}
 /*first column */ 
 #detailsTable tr td:first-child{width:30%;font-weight: bold;color:#666666;padding:2px 0;vertical-align: top}
 /* second column */
-
-.t-alert-controls{display:none; }

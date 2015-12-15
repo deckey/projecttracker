@@ -46,14 +46,13 @@ public class Index {
 
     @Inject
     private Session dbs;
-    
+
     void onValidateFromLoginForm() {
         member = memberDao.validateMember(memberUsername, memberPassword);
         if (member == null) {
             System.out.println("SERVER SIDE VERIFICATION ERROR!");
             form.recordError("Login failed, wrong username or password!");
-        }
-        if (member.getMemberStatus().equals(MemberStatus.Inactive)) {
+        } else if (member.getMemberStatus().equals(MemberStatus.Inactive)) {
             form.recordError("User status is INACTIVE, login disabled!");
         } else {
             loggedInMember = member;
@@ -61,7 +60,6 @@ public class Index {
     }
 
     Object onSuccessFromLoginForm() {
-        System.out.println("LOGGED IN MEMBER AT INDEX..." + loggedInMember.getMemberUsername());
         return ViewDashboard.class;
     }
 
@@ -72,12 +70,6 @@ public class Index {
     public boolean getLoggedIn() {
         return (loggedInMember.getMemberUsername() == null) ? true : false;
     }
-//    @CommitAfter
-//    Object onSuccessFromAddMemberForm() {
-//        dbs.persist(member);
-//        return ViewMembers.class;
-//    }
-
     @Property
     private Log log;
 
@@ -88,16 +80,9 @@ public class Index {
     private ProjectDAO projectDao;
 
     void onActivate() {
-        System.out.println("ON ACTIVATE - INDEX - LOGGED IN MEMBER..." + loggedInMember.getMemberUsername());
         if (logs == null) {
             logs = new ArrayList<>();
         }
         logs = projectDao.getAllLogs();
     }
-//
-//    @CommitAfter
-//    void onSuccessFromAddLog() {
-//        projectDao.addLog(log);
-//    }
-
 }

@@ -7,11 +7,27 @@
             <t:mainmenu/> 
             <div class="row spacer"/>
             <div class="row grey frame">
-                <h4>Recent active projects
+                <h4>My projects
                     <small>
                         <i>(click on the project name for more details)</i>
                     </small>
                 </h4>
+                <!--MY PROJECTS-->
+                <t:grid class="table-grid"
+                        t:source="userProjects"
+                        model="gridModel"
+                        rowsperpage="5"
+                        row="project">
+                    <p:projectTitleCell> 
+                        <t:pagelink  t:page="view/ViewProject" context="project" class="table-link" title="View project details" >
+                            ${project.projectTitle}
+                        </t:pagelink>
+                    </p:projectTitleCell>
+                </t:grid>
+            </div>
+            <div class="row spacer"/>
+            <div class="row grey frame">
+                <h4>Recent active projects</h4>
                 <!--RECENT ACTIVE PROJECTS-->
                 <t:grid class="table-grid"
                         t:source="recentProjects"
@@ -29,11 +45,11 @@
             <div class="row grey frame">
                 <h4>Full project list</h4>
                 <t:grid class="table-grid"
-                            source="projects"
-                            model="gridModel"
-                            rowsperpage="10"
-                            pagerPosition="bottom"
-                            row="project">
+                        source="projects"
+                        model="gridModel"
+                        rowsperpage="10"
+                        pagerPosition="bottom"
+                        row="project">
                     <p:projectTitleCell>
                         <t:pagelink  t:page="view/ViewProject" context="project" class="table-link" title="View project details">
                             ${project.projectTitle}
@@ -46,10 +62,10 @@
             <h4>Archived projects</h4>
             <div class="row grey frame">
                 <t:grid class="table-archived "
-                            source="archivedProjects"
-                            model="gridArchiveModel"
-                            rowsperpage="5"
-                            pagerPosition="bottom">
+                        source="archivedProjects"
+                        model="gridArchiveModel"
+                        rowsperpage="5"
+                        pagerPosition="bottom">
                     <p:projectTitleCell>
                         <a t:type="pagelink"  t:page="view/ViewProject" context="project" title="View project details">
                             ${project.projectTitle}

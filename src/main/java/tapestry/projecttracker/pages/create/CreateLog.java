@@ -17,8 +17,10 @@ import org.apache.tapestry5.annotations.SessionState;
 import org.apache.tapestry5.beaneditor.Validate;
 import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.Inject;
+import tapestry.projecttracker.data.ActivityDAO;
 import tapestry.projecttracker.data.MemberDAO;
 import tapestry.projecttracker.data.ProjectDAO;
+import tapestry.projecttracker.entities.Activity;
 import tapestry.projecttracker.entities.Log;
 import tapestry.projecttracker.entities.Member;
 import tapestry.projecttracker.entities.Project;
@@ -40,6 +42,8 @@ public class CreateLog {
     private ProjectDAO projectDao;
     @Inject
     private MemberDAO memberDao;
+    @Inject
+    private ActivityDAO activityDao;
 
     @Property
     private Member member;
@@ -126,6 +130,10 @@ public class CreateLog {
     Object onSubmitFromLogTimeForm() {
         Log newLog = new Log(loggedInMember.getMemberId(), project.getProjectId(), logComment, logTime, logWork);
         projectDao.addLog(newLog);
+        
+//      ACTIVITY RECORD
+        Activity activity = activityDao.recordActivity(loggedInMember, ("logged "+newLog.getLogTime()+" hours of "+ newLog.getLogWork()+" on " + project));
+        
         project.setProjectTime(projectDao.getProjectLoggedTime(project));
         viewProjectPage.set(project);
         return viewProjectPage;

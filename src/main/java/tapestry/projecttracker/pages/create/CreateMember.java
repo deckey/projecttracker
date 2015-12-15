@@ -1,6 +1,5 @@
 package tapestry.projecttracker.pages.create;
 
-import java.util.Collections;
 import java.util.List;
 import javax.annotation.security.RolesAllowed;
 import org.apache.tapestry5.alerts.AlertManager;
@@ -8,19 +7,17 @@ import org.apache.tapestry5.alerts.Duration;
 import org.apache.tapestry5.alerts.Severity;
 import org.apache.tapestry5.annotations.InjectComponent;
 import org.apache.tapestry5.annotations.Property;
+import org.apache.tapestry5.annotations.SessionState;
 import org.apache.tapestry5.beaneditor.BeanModel;
 import org.apache.tapestry5.beaneditor.Validate;
 import org.apache.tapestry5.corelib.components.Form;
-import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.Messages;
 import org.apache.tapestry5.ioc.annotations.Inject;
-import org.apache.tapestry5.json.JSONObject;
 import org.apache.tapestry5.services.BeanModelSource;
-import org.apache.tapestry5.services.ajax.AjaxResponseRenderer;
-import org.apache.tapestry5.services.ajax.JavaScriptCallback;
-import org.apache.tapestry5.services.javascript.JavaScriptSupport;
+import tapestry.projecttracker.data.ActivityDAO;
 import tapestry.projecttracker.data.MemberDAO;
+import tapestry.projecttracker.entities.Activity;
 import tapestry.projecttracker.entities.Member;
 import tapestry.projecttracker.prop.MemberRole;
 import tapestry.projecttracker.prop.MemberSpecialty;
@@ -33,6 +30,9 @@ public class CreateMember {
 
     @Inject
     private MemberDAO memberDao;
+    
+    @Inject
+    private ActivityDAO activityDao;
 
     @Property
     private List<Member> members;
@@ -40,6 +40,9 @@ public class CreateMember {
     @Property
     private Member member;
 
+    @SessionState
+    private Member loggedInMember;
+    
     @InjectComponent("addMemberForm")
     private Form form;
 
@@ -106,17 +109,6 @@ public class CreateMember {
     void onActivate() {
     }
 
-//    @CommitAfter
-//    void onSuccessFromAddMemberForm() {
-//        System.out.println("VALIDATING INPUT...");
-//        for (Member m : members){
-//            if (memberUsername.equals(m.getMemberUsername())){
-//                form.recordError("Username already exists!");
-//            }
-//        }
-//        Member newMember = new Member(memberName, memberUsername, memberPassword, memberRole, memberSpecialty, memberStatus);
-//        memberDao.addMember(newMember);
-//    }
     void onSubmitFromAddMemberForm() {
         System.out.println("ADD MEMBER FORM: SUBMITTED...");
     }
@@ -135,7 +127,10 @@ public class CreateMember {
     void onSuccessFromAddMemberForm() {
         System.out.println("ADD MEMBER FORM: SUCCESS...");
         Member newMember = new Member(memberName, memberUsername, memberPassword, memberRole, memberSpecialty, memberStatus);
-        alertManager.alert(Duration.TRANSIENT, Severity.SUCCESS, "New member "+memberName+" successfully created!");
+//      ACTIVITY RECORD
+        Activity activity = activityDao.recordActivity(loggedInMember, (" created new member  " + newMember.getMemberName()));
+        
+        alertManager.alert(Duration.TRANSIENT, Severity.SUCCESS, "New member "+ memberName+" successfully created!");
         memberDao.addMember(newMember);
     }
 

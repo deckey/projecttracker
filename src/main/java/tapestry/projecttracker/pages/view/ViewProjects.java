@@ -3,8 +3,10 @@ package tapestry.projecttracker.pages.view;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.annotations.SessionState;
 import org.apache.tapestry5.beaneditor.BeanModel;
@@ -47,11 +49,11 @@ public class ViewProjects {
     @Inject
     private Messages messages;
 //
-
     void setupRender() {
-        /* Draw grid table for archived projects: */
+
+        /* Draw grid tables for projects: */
         gridModel = beanModelSource.createDisplayModel(Project.class, messages);
-        gridModel.include("projectTitle",  "projectClient","projectCategory", "projectStatus","projectStart", "projectDue", "projectCreationDate");
+        gridModel.include("projectTitle", "projectClient", "projectCategory", "projectStatus", "projectStart", "projectDue", "projectCreationDate");
         gridModel.get("projectClient").sortable(false);
         gridModel.get("projectStatus").sortable(false);
         // Column titles:
@@ -64,11 +66,11 @@ public class ViewProjects {
 
         /* ARCHIVE MODEL */
         gridArchiveModel = beanModelSource.createDisplayModel(Project.class, messages);
-        gridArchiveModel.include("projectTitle", "projectClient","projectDescription",  "projectCategory", "projectStart", "projectEnd");
+        gridArchiveModel.include("projectTitle", "projectClient", "projectDescription", "projectCategory", "projectStart", "projectEnd");
         gridArchiveModel.get("projectClient").sortable(false);
         gridArchiveModel.get("projectDescription").sortable(false);
         gridArchiveModel.get("projectCategory").sortable(false);
-        
+
         // Column titles:
         gridArchiveModel.get("projectTitle").label("Project name");
         gridArchiveModel.get("projectClient").label("Company");
@@ -89,7 +91,20 @@ public class ViewProjects {
     public boolean getLoggedInRole() {
         return (loggedInMember.getMemberRole().name() != "Member") ? true : false;
     }
-
+    
+    public List<Project> getUserProjects(){
+        List<Project> allProjects = projectDao.getAllProjects();
+        List<Project> userProjects = new ArrayList<>();
+        for (Project prj : allProjects){
+            for(Member mem : prj.getAssignedMembers()){
+                if (mem.getMemberId()== loggedInMember.getMemberId()){
+                    userProjects.add(prj);
+                }
+            }
+        }
+        return userProjects;
+    }
+    
     public List<Project> getRecentProjects() {
         List<Project> recentProjects;
         List<Project> allProjects = projectDao.getAllProjects();
@@ -107,7 +122,7 @@ public class ViewProjects {
         }
         if (allProjects.size() < 5) {
             recentProjects = allProjects.subList(0, allProjects.size());
-        }else{
+        } else {
             recentProjects = allProjects.subList(0, 5);
         }
         return recentProjects;

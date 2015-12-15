@@ -1,4 +1,6 @@
-<html t:type="layout" title="Project Tracker : Dashboard" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_4.xsd">
+<html t:type="layout" title="Project Tracker : Dashboard" 
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_4.xsd"
+      xmlns:p="tapestry:parameter">
     <body>
         <div class="container">
             <t:header/>
@@ -33,6 +35,18 @@
                     </h1>
                 </div>
             </div>
+            <div class="row spacer"/> 
+            <div class="row" >
+                <t:grid t:source="activities"
+                        class="table-activity col-sm-10"
+                        t:model="activityGridModel"
+                        t:id="activityGrid"
+                        include="activityOutput"
+                        rowsperpage="10"
+                        pagerposition="bottom">
+                </t:grid>
+            </div> 
+            <div class="row spacer"/>
         </div>
     </body>
 </html>

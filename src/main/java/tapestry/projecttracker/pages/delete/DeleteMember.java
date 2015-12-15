@@ -11,7 +11,9 @@ import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.annotations.SessionState;
 import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.Inject;
+import tapestry.projecttracker.data.ActivityDAO;
 import tapestry.projecttracker.data.MemberDAO;
+import tapestry.projecttracker.entities.Activity;
 import tapestry.projecttracker.entities.Log;
 import tapestry.projecttracker.entities.Member;
 import tapestry.projecttracker.pages.view.ViewMember;
@@ -36,6 +38,8 @@ public class DeleteMember {
 
     @SessionState
     private Member loggedInMember;
+    @Inject
+    private ActivityDAO activityDao;
 
     public void set(Member member) {
         this.member = member;
@@ -64,6 +68,9 @@ public class DeleteMember {
             List<Log> logList = memberDao.getLogsByMember(member);
             memberDao.deleteMemberLogs(logList);
             memberDao.deleteMember(id);
+
+//      ACTIVITY RECORD
+            Activity activity = activityDao.recordActivity(loggedInMember, ("deleted " + member + " member "));
             viewMemberPage.setSuccessAlert("Member " + member.getMemberName() + " successfully deleted!");
             viewMemberPage.set(members.get(0));
             return viewMemberPage;

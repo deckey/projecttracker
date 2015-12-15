@@ -42,10 +42,10 @@
             </div>
                 
             <!-- ADD NEW MEMBER -->
-            <div class="row spacer"/>
+            <!--<div class="row spacer"/>
             <div class="row grey frame">
                 <h4>Member activity </h4>
-                <!--                <div class="row grey frame">
+                                <div class="row grey frame">
                     <t:grid class="table-archived "
                             source="archivedProjects"
                             model="gridArchiveModel"
@@ -57,8 +57,8 @@
                             </a>
                         </p:projectTitleCell>
                     </t:grid>
-                </div>-->
-            </div>
+                </div>
+            </div>-->
         </div>
     </body>
 </html>

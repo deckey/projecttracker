@@ -30,28 +30,15 @@
             </div>
         </t:if>
         <div class="jumbotron marg10">
-            <img class="img-responsive" src="${context:images/projectTracker_logo.png}"/>
-            <p>Quickly find what your employees are working on,
-                add new projects and assignments
-                and track time spent on each project</p>
-        </div>
-            
-        <div class="row">
-            <!--            <div class="col-md-3">
-                Team members: <strong>##</strong>
+            <img class="img-responsive " src="${context:images/projectTracker_logo.png}"/>
+            <div class="row">
+                <p class="col-sm-8 col-sm-offset-1 col-xs-12">
+                   Quickly find what your employees are working on,
+                        add new projects and assignments,
+                                    or track time spent on each project
+                </p>
             </div>
-            <div class="col-md-3">
-                Active projects: <strong>##</strong>
-            </div>
-            <div class="col-md-6">
-                Latest finished project: <strong></strong>
-            </div>-->
         </div>
-        <!--TEMPORARY FOR ADDING MEMBERS:-->
-        <!--<t:beaneditform t:id="addMemberForm" object="member" exclude="memberId"/>-->
-        
-        <!--TEMPORARY FOR TESTING OF LOGS: -->
-        <!--        <t:beaneditform t:id="addLog" object="log" exclude="logId"/>
-        <t:grid source="logs"/>-->
+        <div class="row spacer"/>
     </div>
 </html>

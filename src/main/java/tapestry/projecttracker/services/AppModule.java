@@ -12,6 +12,8 @@ import org.apache.tapestry5.ioc.services.ApplicationDefaults;
 import org.apache.tapestry5.ioc.services.SymbolProvider;
 import org.apache.tapestry5.services.*;
 import org.slf4j.Logger;
+import tapestry.projecttracker.data.ActivityDAO;
+import tapestry.projecttracker.data.ActivityIMPL;
 import tapestry.projecttracker.data.MemberDAO;
 import tapestry.projecttracker.data.MemberIMPL;
 import tapestry.projecttracker.data.ProjectDAO;
@@ -28,6 +30,7 @@ public class AppModule {
         // binder.bind(MyServiceInterface.class, MyServiceImpl.class);
         binder.bind(MemberDAO.class, MemberIMPL.class);
         binder.bind(ProjectDAO.class, ProjectIMPL.class);
+        binder.bind(ActivityDAO.class, ActivityIMPL.class);
 
 // Make bind() calls on the binder object to define most IoC services.
         // Use service builder methods (example below) when the implementation

@@ -11,17 +11,19 @@ import org.apache.tapestry5.annotations.InjectComponent;
 import org.apache.tapestry5.annotations.InjectPage;
 import org.apache.tapestry5.annotations.Persist;
 import org.apache.tapestry5.annotations.Property;
+import org.apache.tapestry5.annotations.SessionState;
 import org.apache.tapestry5.beaneditor.Validate;
 import org.apache.tapestry5.corelib.components.Form;
 import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.Inject;
+import tapestry.projecttracker.data.ActivityDAO;
 import tapestry.projecttracker.data.MemberDAO;
 import tapestry.projecttracker.data.ProjectDAO;
 import tapestry.projecttracker.encoders.MemberEncoder;
+import tapestry.projecttracker.entities.Activity;
 import tapestry.projecttracker.entities.Member;
 import tapestry.projecttracker.entities.Project;
 import tapestry.projecttracker.pages.view.ViewProject;
-import tapestry.projecttracker.pages.view.ViewProjects;
 import tapestry.projecttracker.prop.ProjectCategory;
 import tapestry.projecttracker.prop.ProjectStatus;
 import tapestry.projecttracker.services.ProtectedPage;
@@ -42,12 +44,18 @@ public class CreateProject {
     @Inject
     private MemberDAO memberDao;
 
+    @Inject
+    private ActivityDAO activityDao;
+
     @Property
     private List<Member> members;
 
     @Property
     @Persist
     private List<Member> selectedMembers;
+
+    @SessionState
+    private Member loggedInMember;
 
     @InjectComponent("addProjectForm")
     private Form form;
@@ -116,7 +124,7 @@ public class CreateProject {
 
     void onValidateFromAddProjectForm() {
         System.out.println("ADD PROJECT FORM: VALIDATING...");
-        if(projectDue.before(projectStart)){
+        if (projectDue.before(projectStart)) {
             form.recordError("Due date can not be before start date!");
             return;
         }
@@ -131,9 +139,11 @@ public class CreateProject {
     @CommitAfter
     Object onSuccessFromAddProjectForm() {
         System.out.println("ADD PROJECT FORM: SUCCESS...");
-        Project newProject =projectDao.updateProject(new Project(projectTitle, projectClient, projectStart, projectDue, projectCategory, projectStatus, selectedMembers));
+        Project newProject = projectDao.updateProject(new Project(projectTitle, projectClient, projectStart, projectDue, projectCategory, projectStatus, selectedMembers));
+//      ACTIVITY RECORD
+        Activity activity = activityDao.recordActivity(loggedInMember, ("created project " + newProject.getProjectTitle()));
         viewProjectPage.set(newProject);
-        viewProjectPage.setSuccessAlert("New project "+projectTitle+ " successfully created!");
+        viewProjectPage.setSuccessAlert("New project " + projectTitle + " successfully created!");
         return viewProjectPage;
     }
 

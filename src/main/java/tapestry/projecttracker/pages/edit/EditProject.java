@@ -20,9 +20,11 @@ import org.apache.tapestry5.annotations.SessionState;
 import org.apache.tapestry5.corelib.components.Form;
 import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.Inject;
+import tapestry.projecttracker.data.ActivityDAO;
 import tapestry.projecttracker.data.MemberDAO;
 import tapestry.projecttracker.data.ProjectDAO;
 import tapestry.projecttracker.encoders.MemberEncoder;
+import tapestry.projecttracker.entities.Activity;
 import tapestry.projecttracker.entities.Member;
 import tapestry.projecttracker.entities.Project;
 import tapestry.projecttracker.pages.view.ViewProject;
@@ -61,6 +63,9 @@ public class EditProject {
     @Property
     private List<Member> selectedMembers;
 
+    @Inject
+    private ActivityDAO activityDao;
+    
     @SessionState
     private Member loggedInMember;
 
@@ -145,6 +150,10 @@ public class EditProject {
     Object onSuccessFromProjectEditForm() {
         System.out.println("EDIT FORM: SUCCESS... UPDATED PROJECT..." + project);
         viewProjectPage.set(projectDao.updateProject(project));
+        
+//      ACTIVITY RECORD
+        Activity activity = activityDao.recordActivity(loggedInMember, ("updated " + project +" project "));
+        
         return viewProjectPage;
     }
     
