@@ -70,7 +70,14 @@ public class EditMember {
     private Member loggedInMember;
 
     @Property
+    private String memberPassword;
+    
+    @Property
     private String passwordFormat;
+
+    @Property
+    private String repeatPassword="";
+
     @Property
     private final MemberEncoder memberEncoder = new MemberEncoder(memberDao);
 
@@ -97,7 +104,7 @@ public class EditMember {
         MemberStatus[] statuses = MemberStatus.values();
         return statuses;
     }
-    
+
     public MemberRole[] getRoles() {
         MemberRole[] roles = MemberRole.values();
         return roles;
@@ -160,13 +167,22 @@ public class EditMember {
         }
         return false;
     }
-    
-    public boolean getUserAdmin(){
+
+    public boolean getUserAdmin() {
         return loggedInMember.getMemberRole().equals(MemberRole.Administrator);
+    }
+
+    public boolean checkPassword(String pass1, String pass2) {
+        System.out.println("CHECKING PASSWORD...."+"string1:"+pass1+" : String2:"+pass2);
+        return pass1.equals(pass2);
     }
 
     @CommitAfter
     Object onSuccessFromMemberEditForm() {
+        if(!checkPassword(memberPassword, repeatPassword)){
+            form.recordError("Passwords don't match!");
+            return null;
+        }
         memberDao.updateMember(member);
         viewMemberPage.set(member);
         return viewMemberPage;

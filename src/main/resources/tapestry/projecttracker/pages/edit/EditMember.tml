@@ -61,39 +61,53 @@
                 <t:errors/>
                 <!--MEMBER DETAILS-->
                 <div class="row top20">
-                    <div class="form-group col-sm-2">
-                        <label for="memberName">* Full name:</label>
-                        <t:textfield t:id="memberName" t:value="member.memberName" validate="required"/>
-                    </div>
-                    <div class="form-group col-sm-2 ">
-                        <label for="memberPassword">* Password:</label>
-                        <input t:type="textfield" type="password" t:id="passwordFormat" t:value="member.memberPassword" validate="required"/>
-                    </div>
-                    <div class="form-group col-sm-2">
-                        <label for="memberStatus">Status:</label>
-                        <t:select model="statuses" t:value="member.memberStatus" validate="required"/>
-                    </div>
-                    <div class="form-group col-sm-2">
-                        <label for="memberSpecialty">Specialty:</label>
-                        <t:select model="specialties" t:value="member.memberSpecialty" validate="required"/>
-                    </div>
-                    <!--ONLY VISIBLE TO ADMINS-->
-                    <t:if test="userAdmin">
+                    <div class="row">
                         <div class="form-group col-sm-2">
-                            <label for="memberRole">Role:</label>
-                            <t:select model="roles" t:value="member.memberRole" validate="required"/>
+                            <label for="memberName">* Full name:</label>
+                            <t:textfield t:id="memberName" t:value="member.memberName" validate="required"/>
                         </div>
-                    </t:if>
-                    <t:if test="!userAdmin">
-                        <div class="form-group col-sm-2 invisible ">SPACER</div>
-                    </t:if>
-                    <div class="form-group col-sm-1 ">
-                        <label for="cancelUpdate" class="invisible">spacer</label>
-                        <t:pagelink t:page="delete/DeleteMember" t:context="member.memberId" class="btn btn-danger left20">Delete</t:pagelink>
+                        <div class="form-group col-sm-2 ">
+                            <label for="memberPassword">* Password:</label>
+                            <input t:type="textfield" type="password" t:id="memberPassword" t:value="memberPassword" validate="required"/>
+                        </div>
+                        <div class="form-group col-sm-2 ">
+                            <label for="repeatPassword">* Repeat password</label>
+                            <input t:type="textfield" type="password" t:id="repeatPassword" t:value="repeatPassword" validate="required"/>
+                        </div>
+                        <div class="form-group col-sm-2">
+                            <label for="memberStatus">Status:</label>
+                            <t:select model="statuses" t:value="member.memberStatus" validate="required"/>
+                        </div> 
+                        <div class="form-group col-sm-2">
+                            <label for="memberSpecialty">Specialty:</label>
+                            <t:select model="specialties" t:value="member.memberSpecialty" validate="required"/>
+                        </div>
+                        <div class="form-group col-sm-1 ">
+                            <label for="cancelUpdate" class="invisible">spacer</label>
+                            <t:pagelink t:page="delete/DeleteMember" t:context="member.memberId" class="btn btn-danger left20">Delete</t:pagelink>
+                        </div>
+                        <div class="form-group col-sm-1 pull-right">
+                            <label for="updateMember" class="invisible">spacer</label>
+                            <t:submit t:id="updateMember" class="btn btn-primary" value="Update"/>  
+                        </div>
                     </div>
-                    <div class="form-group col-sm-1 pull-right">
-                        <label for="updateMember" class="invisible">spacer</label>
-                        <t:submit t:id="updateMember" class="btn btn-primary" value="Update"/>  
+                   
+                    <div class="row">
+                        <!--ONLY VISIBLE TO ADMINS-->
+                        <t:if test="userAdmin">
+                            <div class="form-group col-sm-2">
+                                <label for="memberUsername">Username:</label>
+                                <t:textfield t:id="memberUsername" t:value="member.memberUsername" validate="required"/>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label for="memberRole">Role:</label>
+                                <t:select model="roles" t:value="member.memberRole" validate="required"/>
+                            </div>
+                        </t:if>
+                        <!--                    <t:if test="!userAdmin">
+                            <div class="form-group col-sm-2 invisible ">SPACER</div>
+                        </t:if>-->
+                        
                     </div>
                 </div>
             </t:form>
