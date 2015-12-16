@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package tapestry.projecttracker.pages.delete;
 
 import org.apache.tapestry5.annotations.Property;
@@ -18,26 +13,36 @@ import tapestry.projecttracker.pages.view.ViewProjects;
 
 /**
  *
- * @author Dejan Ivanovic
+ * Page to confirm deleting of a project
+ *
+ * @author Dejan Ivanovic divanovic3d@gmail.com
  */
 public class DeleteProject {
 
+    /* Properties */
     @Property
     private Project project;
-
+    
+    @SessionState
+    private Member loggedInMember;
+    
+    /*Services */
     @Inject
     private ProjectDAO projectDao;
 
     @Inject
     private ActivityDAO activityDao;
-    
-    @SessionState
-    private Member loggedInMember;
 
+    /**
+     * Set active project for the page to render properly
+     *
+     * @param project Project instance to show
+     */
     public void set(Project project) {
         this.project = project;
     }
 
+    /* Page rendering */
     void onActivate(Project project) {
         this.project = project;
         System.out.println("DELETE PAGE:ON ACTIVATE..." + project);
@@ -46,14 +51,15 @@ public class DeleteProject {
     Project onPassivate() {
         return project;
     }
-
+    
+    /* Form submission */
     @CommitAfter
     Object onDeleteProject(Integer id) {
         projectDao.removeAssignedFromProject(project);
         projectDao.deleteProject(id);
 
 //      ACTIVITY RECORD
-        Activity activity = activityDao.recordActivity(loggedInMember, ("deleted " + project +" project "));
+        Activity activity = activityDao.recordActivity(loggedInMember, ("deleted " + project + " project "));
         return ViewProjects.class;
     }
 }

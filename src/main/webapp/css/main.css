@@ -98,7 +98,7 @@ p{white-space: pre-line;}
 .table-grey th, .table-archived th, .table-colored th, .table-grid th{font-size: 0.9em;}
 .table-grey th, .table-archived th {font-weight: normal;}
 .table-activity {width:100%;}
-.table-activity td{height:30px;width:12%;border-bottom: rgba(160,160,160,0.2) 1px solid;color:#666666 }
+.table-activity td{height:30px;width:12%;border-bottom: rgba(160,160,160,0.2) 1px solid; }
 .table-activity th{border-bottom: rgba(255,102,50,0.5) 1px solid;color:#666666; }
 .table-activity td, th{padding: 5px;}
 /* GRID ACTIVITY TABLE STYLE: 

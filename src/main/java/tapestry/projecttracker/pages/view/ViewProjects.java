@@ -18,7 +18,18 @@ import tapestry.projecttracker.entities.Member;
 import tapestry.projecttracker.entities.Project;
 import tapestry.projecttracker.prop.ProjectStatus;
 
+/**
+ *
+ * @author Dejan Ivanovic divanovic3d@gmail.com
+ */
 public class ViewProjects {
+
+    /* Properties */
+    @Property
+    private BeanModel<Project> gridArchiveModel;
+
+    @Property
+    private BeanModel<Project> gridModel;
 
     @SessionState
     @Property
@@ -30,28 +41,20 @@ public class ViewProjects {
     @Property
     private List<Project> projects;
 
-    @Inject
-    private ProjectDAO projectDao;
-
-    /* GRID EDITS */
-    @Property
-    private BeanModel<Project> gridModel;
-
-    @Property
-    private BeanModel<Project> gridArchiveModel;
-//
-//    @Component
-//    private Grid archivedProjectsGrid;
-
+//    Services 
     @Inject
     private BeanModelSource beanModelSource;
 
     @Inject
     private Messages messages;
-//
+
+    @Inject
+    private ProjectDAO projectDao;
+
+//    Page rendering 
     void setupRender() {
 
-        /* Draw grid tables for projects: */
+        /* Draw grid tables for projects - grid model */
         gridModel = beanModelSource.createDisplayModel(Project.class, messages);
         gridModel.include("projectTitle", "projectClient", "projectCategory", "projectStatus", "projectStart", "projectDue", "projectCreationDate");
         gridModel.get("projectClient").sortable(false);
@@ -64,7 +67,7 @@ public class ViewProjects {
         gridModel.get("projectDue").label("Due date");
         gridModel.get("projectCreationDate").label("Created on");
 
-        /* ARCHIVE MODEL */
+        /* Draw grid tables for projects - archive model */
         gridArchiveModel = beanModelSource.createDisplayModel(Project.class, messages);
         gridArchiveModel.include("projectTitle", "projectClient", "projectDescription", "projectCategory", "projectStart", "projectEnd");
         gridArchiveModel.get("projectClient").sortable(false);
@@ -78,7 +81,7 @@ public class ViewProjects {
         gridArchiveModel.get("projectCategory").label("Category");
         gridArchiveModel.get("projectStart").label("Start date");
         gridArchiveModel.get("projectEnd").label("Completed on");
-        /*  */
+
     }
 
     void onActivate() {
@@ -88,31 +91,54 @@ public class ViewProjects {
         projects = projectDao.getAllProjects();
     }
 
+    /**
+     * Check if logged in user is Administrator or Supervisor
+     *
+     * @return True if user is Admin or Sup
+     */
     public boolean getLoggedInRole() {
         return (loggedInMember.getMemberRole().name() != "Member") ? true : false;
     }
-    
-    public List<Project> getUserProjects(){
+
+    /**
+     * Get projects for logged in member
+     *
+     * @return List of projects member is assigned to
+     */
+    public List<Project> getUserProjects() {
         List<Project> allProjects = projectDao.getAllProjects();
         List<Project> userProjects = new ArrayList<>();
-        for (Project prj : allProjects){
-            for(Member mem : prj.getAssignedMembers()){
-                if (mem.getMemberId()== loggedInMember.getMemberId()){
+
+        //for each project in the list, for each member in project's assignment list
+        //if logged in member is found, put that project in it's 'user projects'
+        for (Project prj : allProjects) {
+            for (Member mem : prj.getAssignedMembers()) {
+                if (mem.getMemberId() == loggedInMember.getMemberId()) {
                     userProjects.add(prj);
                 }
             }
         }
         return userProjects;
     }
-    
+
+    /**
+     * Get recent projects from the member
+     *
+     * @return List of projects, sorted by creation date and picking 5 most
+     * recent ones
+     */
     public List<Project> getRecentProjects() {
         List<Project> recentProjects;
         List<Project> allProjects = projectDao.getAllProjects();
+
+        // compare projects by creation date
         Collections.sort(allProjects, new Comparator<Project>() {
             public int compare(Project p1, Project p2) {
                 return p2.getProjectCreationDate().compareTo(p1.getProjectCreationDate());
             }
         });
+
+        // if project is not Active, remove it from the list
         Iterator it = allProjects.iterator();
         while (it.hasNext()) {
             Project recent = (Project) it.next();
@@ -120,14 +146,22 @@ public class ViewProjects {
                 it.remove();
             }
         }
+
+        // if less than 5 projects, display them all
         if (allProjects.size() < 5) {
             recentProjects = allProjects.subList(0, allProjects.size());
         } else {
+            // otherwise, get top 5
             recentProjects = allProjects.subList(0, 5);
         }
         return recentProjects;
     }
 
+    /**
+     * Get archived projects from the member
+     * 
+     * @return List of projects with status set to Archived
+     */
     public List<Project> getArchivedProjects() {
         List<Project> archivedProjects = projectDao.getAllProjects();
         Iterator it = archivedProjects.iterator();

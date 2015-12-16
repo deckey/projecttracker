@@ -24,16 +24,16 @@ import tapestry.projecttracker.prop.MemberSpecialty;
 import tapestry.projecttracker.prop.MemberStatus;
 import tapestry.projecttracker.services.ProtectedPage;
 
+/**
+ * Page for creating new members
+ *
+ * @author Dejan Ivanovic divanovic3d@gmail.com
+ */
 @ProtectedPage
 @RolesAllowed(value = {"Administrator"})
 public class CreateMember {
 
-    @Inject
-    private MemberDAO memberDao;
-    
-    @Inject
-    private ActivityDAO activityDao;
-
+    /* Properties */
     @Property
     private List<Member> members;
 
@@ -42,19 +42,28 @@ public class CreateMember {
 
     @SessionState
     private Member loggedInMember;
-    
+
+    /* Table grid model */
+    @Inject
+    private BeanModelSource beanModelSource;
+    @Property
+    private BeanModel<Member> membersGridModel;
+    @Inject
+    private Messages messages;
+    @Inject
+    private AlertManager alertManager;
+
+    /* Services */
+    @Inject
+    private MemberDAO memberDao;
+
+    @Inject
+    private ActivityDAO activityDao;
+
     @InjectComponent("addMemberForm")
     private Form form;
 
-    @Property
-    private BeanModel<Member> membersGridModel;
-
-    @Inject
-    private BeanModelSource beanModelSource;
-    @Inject
-    private Messages messages;
-
-    /*PROJECT PROPERTIES*/
+    /*MEMBER FIELDS*/
     @Property
     @Validate("required")
     private String memberName;
@@ -79,24 +88,38 @@ public class CreateMember {
     @Validate("required")
     private MemberStatus memberStatus;
 
-    @Inject
-    private AlertManager alertManager;
-
+    /**
+     * Get dropdown list of MemberRole types (Admin, Sup, Member)
+     *
+     * @return List of MemberRole enum values
+     */
     public MemberRole[] getRoles() {
         MemberRole[] roles = MemberRole.values();
         return roles;
     }
 
+    /**
+     * Get dropdown list of MemberSpecialty types (Animation, Supervision,
+     * Lighting)
+     *
+     * @return List of MemberSpecialty enum values
+     */
     public MemberSpecialty[] getSpecialties() {
         MemberSpecialty[] specialties = MemberSpecialty.values();
         return specialties;
     }
 
+    /**
+     * Get dropdown list of MemberStatus types (Active, Inactive)
+     *
+     * @return List of MemberStatus enum values
+     */
     public MemberStatus[] getStatuses() {
         MemberStatus[] statuses = MemberStatus.values();
         return statuses;
     }
 
+    /* Page rendering methods */
     void onPrepare() {
         members = memberDao.getAllMembers();
     }
@@ -109,12 +132,9 @@ public class CreateMember {
     void onActivate() {
     }
 
-    void onSubmitFromAddMemberForm() {
-        System.out.println("ADD MEMBER FORM: SUBMITTED...");
-    }
-
+    /* Form validation and submission */
+    
     void onValidateFromAddMemberForm() {
-        System.out.println("ADD MEMBER FORM: VALIDATING...");
         for (Member mem : members) {
             if (memberUsername.equals(mem.getMemberUsername())) {
                 form.recordError("Username '" + memberUsername + "' already exists!");
@@ -125,16 +145,12 @@ public class CreateMember {
 
     @CommitAfter
     void onSuccessFromAddMemberForm() {
-        System.out.println("ADD MEMBER FORM: SUCCESS...");
         Member newMember = new Member(memberName, memberUsername, memberPassword, memberRole, memberSpecialty, memberStatus);
+        
 //      ACTIVITY RECORD
         Activity activity = activityDao.recordActivity(loggedInMember, (" created new member  " + newMember.getMemberName()));
-        
-        alertManager.alert(Duration.TRANSIENT, Severity.SUCCESS, "New member "+ memberName+" successfully created!");
-        memberDao.addMember(newMember);
-    }
 
-    void onFailureFromAddMemberForm() {
-        System.out.println("ADD MEMBER FORM: FAILURE...");
+        alertManager.alert(Duration.TRANSIENT, Severity.SUCCESS, "New member " + memberName + " successfully created!");
+        memberDao.addMember(newMember);
     }
 }

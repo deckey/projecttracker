@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package tapestry.projecttracker.entities;
 
 import java.util.Date;
@@ -18,7 +14,7 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 
 /**
  *
- * @author Dejan Ivanovic
+ * @author Dejan Ivanovic divanovic3d@gmail.com
  */
 @Entity
 @Table(name="tbl_activity")
@@ -41,15 +37,28 @@ public class Activity {
     @Column(name="activityOutput")
     private String activityOutput;
     
-    
+    /**
+     * Empty constructor
+     */
     @Inject
     public Activity() {
     }
 
+    /**
+     * Constructor with action as parameter
+     * @param activityAction String explaining activity
+     */
     public Activity(String activityAction) {
         this.activityAction = activityAction;
     }
 
+    /**
+     * Complete constructor
+     * @param activityMemberId Member creating the activity
+     * @param activityAction String explaining activity action
+     * @param activityDate Date and time at which activity was logged
+     * @param activityOutput String formatting entry as human readable
+     */
     public Activity(Integer activityMemberId, String activityAction, Date activityDate, String activityOutput) {
         this.activityMemberId = activityMemberId;
         this.activityAction = activityAction;
@@ -57,42 +66,82 @@ public class Activity {
         this.activityOutput = activityOutput;
     }
     
+    /**
+     *
+     * @return
+     */
     public Integer getActivityId() {
         return activityId;
     }
 
+    /**
+     *
+     * @param activityId
+     */
     public void setActivityId(Integer activityId) {
         this.activityId = activityId;
     }
     
+    /**
+     *
+     * @return
+     */
     public Integer getActivityMemberId() {
         return activityMemberId;
     }
 
+    /**
+     *
+     * @param activityMemberId
+     */
     public void setActivityMemberId(Integer activityMemberId) {
         this.activityMemberId = activityMemberId;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getActivityAction() {
         return activityAction;
     }
 
+    /**
+     *
+     * @param activityAction
+     */
     public void setActivityAction(String activityAction) {
         this.activityAction = activityAction;
     }
 
+    /**
+     *
+     * @return
+     */
     public Date getActivityDate() {
         return activityDate;
     }
 
+    /**
+     *
+     * @param activityDate
+     */
     public void setActivityDate(Date activityDate) {
         this.activityDate = activityDate;
     }    
 
+    /**
+     *
+     * @return
+     */
     public String getActivityOutput() {
         return activityOutput;
     }
 
+    /**
+     *
+     * @param activityOutput
+     */
     public void setActivityOutput(String activityOutput) {
         this.activityOutput = activityOutput;
     }

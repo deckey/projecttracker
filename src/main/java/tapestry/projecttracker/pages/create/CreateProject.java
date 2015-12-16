@@ -28,24 +28,21 @@ import tapestry.projecttracker.prop.ProjectCategory;
 import tapestry.projecttracker.prop.ProjectStatus;
 import tapestry.projecttracker.services.ProtectedPage;
 
+/**
+ * Page for creating new projects 
+ * 
+ * @author Dejan Ivanovic divanovic3d@gmail.com
+ */
 @ProtectedPage
 @RolesAllowed(value = {"Administrator", "Supervisor"})
 public class CreateProject {
 
+    /* Properties */ 
     @Property
     private Project project;
 
     @Property
     private List<Project> projects;
-
-    @Inject
-    private ProjectDAO projectDao;
-
-    @Inject
-    private MemberDAO memberDao;
-
-    @Inject
-    private ActivityDAO activityDao;
 
     @Property
     private List<Member> members;
@@ -56,6 +53,16 @@ public class CreateProject {
 
     @SessionState
     private Member loggedInMember;
+    
+    /* Services */ 
+    @Inject
+    private ProjectDAO projectDao;
+
+    @Inject
+    private MemberDAO memberDao;
+
+    @Inject
+    private ActivityDAO activityDao;
 
     @InjectComponent("addProjectForm")
     private Form form;
@@ -63,7 +70,7 @@ public class CreateProject {
     @InjectPage
     private ViewProject viewProjectPage;
 
-    /*PROJECT PROPERTIES*/
+    /*PROJECT FIELDS*/
     @Property
     @Validate("required")
     private String projectTitle;
@@ -96,16 +103,27 @@ public class CreateProject {
     @Property
     private final MemberEncoder memberEncoder = new MemberEncoder(memberDao);
 
+    /**
+     * Get dropdown list of ProjectCategory types (Animation, MotionGraphics...)
+     *
+     * @return List of ProjectCategory enum values
+     */
     public ProjectCategory[] getCategories() {
         ProjectCategory[] categories = ProjectCategory.values();
         return categories;
     }
 
+    /**
+     *Get dropdown list of ProjectStatus types (Active, Completed ...)
+     *
+     * @return List of ProjectStatus enum values
+     */
     public ProjectStatus[] getStatuses() {
         ProjectStatus[] statuses = ProjectStatus.values();
         return statuses;
     }
 
+    /* Page rendering */ 
     void onPrepare() {
         members = memberDao.getAllMembers();
         selectedMembers = new ArrayList<>();
@@ -118,6 +136,8 @@ public class CreateProject {
         }
     }
 
+    
+    /* Form validation */ 
     void onSubmitFromAddProjectForm() {
         System.out.println("ADD PROJECT FORM: SUBMITTED...");
     }
@@ -145,9 +165,5 @@ public class CreateProject {
         viewProjectPage.set(newProject);
         viewProjectPage.setSuccessAlert("New project " + projectTitle + " successfully created!");
         return viewProjectPage;
-    }
-
-    void onFailureFromAddProjectForm() {
-        System.out.println("ADD MEMBER FORM: FAILURE...");
     }
 }

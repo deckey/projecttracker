@@ -1,15 +1,39 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package tapestry.projecttracker.prop;
 
 /**
  *
- * @author dejan
+ * @author Dejan Ivanovic divanovic3d@gmail.com
  */
 public enum MemberSpecialty {
 
-    Animation, Lighting, Modeling, Rigging, Supervision, VFX;
+    /**
+     * Member specialized in 3d animation
+     */
+    Animation,
+
+    /**
+     * Member specialized in lighting and rendering
+     */
+    Lighting,
+
+    /**
+     * Member specialized in modeling and texturing
+     */
+    Modeling,
+
+    /**
+     * Member specialized in rigging
+     */
+    Rigging,
+
+    /**
+     * Member supervisor
+     */
+    Supervision,
+
+    /**
+     * Member specialized in visual effects
+     */
+    VFX;
 }

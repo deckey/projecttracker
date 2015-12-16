@@ -41,13 +41,6 @@ public class ActivityIMPL implements ActivityDAO {
         return (Activity) dbs.merge(activity);
     }
 
-    @Override
-    public String formatActivity(Activity activity, String actionMessage) {
-        Member member = memberDao.getMemberById(activity.getActivityMemberId());
-        String formatActivity = "Member " + member.getMemberName()
-                + actionMessage + "at " + activity.getActivityDate();
-        return formatActivity;
-    }
 
     @Override
     public List<Activity> getAllActivities() {

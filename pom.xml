@@ -29,11 +29,6 @@
             <artifactId>tapestry-hibernate</artifactId>
             <version>${tapestry-release-version}</version>
         </dependency>
-        <dependency>
-            <groupId>org.hsqldb</groupId>
-            <artifactId>hsqldb</artifactId>
-            <version>2.3.2</version>
-        </dependency>
         <!-- MySQL database driver -->
         <dependency>
             <groupId>mysql</groupId>
@@ -182,4 +177,6 @@
         <slf4j-release-version>1.7.7</slf4j-release-version>
 
     </properties>
+    <description>Simple Web application for tracking progress on projects
+Technology - Java, Tapestry, Hibernate, MySQL</description>
 </project>

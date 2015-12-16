@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package tapestry.projecttracker.pages.view;
 
 import java.util.Collections;
@@ -24,49 +20,64 @@ import tapestry.projecttracker.prop.MemberStatus;
 
 /**
  *
- * @author dejan
+ * @author Dejan Ivanovic divanovic3d@gmail.com
  */
 public class ViewMembers {
-
+    
+    /* Properties */ 
     @Property
-    private List<Member> members;
-
+    private BeanModel<Member> activeMembersGridModel;
+    
     @Property
-    private Member member;
-
-    @Inject
-    private MemberDAO memberDao;
-
+    private BeanModel<Member> allMembersGridModel;
+    
     @SessionState
     @Property
     private Member loggedInMember;
-
-    /* GRID EDITS */
-    @Property
-    private BeanModel<Member> activeMembersGridModel;
-    @Property
-    private BeanModel<Member> allMembersGridModel;
-    @Inject
-    private BeanModelSource beanModelSource;
-    @Inject
-    private Messages messages;
     
+    @Property
+    private Member member;
+    
+    @Property
+    private List<Member> members;
+
+    /* Services */
     @Inject
     private AlertManager alertManager;
 
+    @Inject
+    private BeanModelSource beanModelSource;
+    
+    @Inject
+    private MemberDAO memberDao;
+
+    @Inject
+    private Messages messages;
+
+    /**
+     * Check if logged in user is Administrator 
+     * @return True if user is Admin
+     */
     public boolean getLoggedInRole() {
         return (loggedInMember.getMemberRole().name() == "Administrator") ? true : false;
     }
 
+    /**
+     * Get list of active members, sort members by total hours and return top 5
+     * @return List of members with most hours logged
+     */
     public List<Member> getActiveMembers() {
-        // SORT MEMBERS BY TOTAL HOURS AND DISPLAY ONLY TOP 5
-        List<Member> recentMembers;
+        List<Member> recentMembers; 
         List<Member> allMembers = memberDao.getAllMembers();
+        
+        // sort by comparing number of hours logged
         Collections.sort(allMembers, new Comparator<Member>() {
             public int compare(Member m1, Member m2) {
                 return m2.getMemberTotalHours() > m1.getMemberTotalHours()? 1 : -1;
             }
         });
+        
+        // if member is not active remove it from the list
         Iterator it = allMembers.iterator();
         while (it.hasNext()) {
             Member activeMember = (Member) it.next();
@@ -74,16 +85,20 @@ public class ViewMembers {
                 it.remove();
             }
         }
+        
+        // if number of members is less than 5, get all of them
         if (allMembers.size() < 5) {
             recentMembers = allMembers.subList(0, allMembers.size());
         } else {
+            // get top five members
             recentMembers = allMembers.subList(0, 5);
         }
-
         return recentMembers;
     }
     
+    /* Page render */ 
     void setupRender() {
+        // grid models setup - active members grid
         activeMembersGridModel = beanModelSource.createDisplayModel(Member.class, messages);
         activeMembersGridModel.include("memberName", "memberUsername", "MemberRole", "MemberSpecialty", "MemberTotalHours");
         activeMembersGridModel.get("memberName").label("Team member");
@@ -95,6 +110,7 @@ public class ViewMembers {
         activeMembersGridModel.get("memberSpecialty").sortable(false);
         activeMembersGridModel.get("memberTotalHours").label("Hours logged");
 
+        // grid models setup - all members grid
         allMembersGridModel = beanModelSource.createDisplayModel(Member.class, messages);
         allMembersGridModel.include("memberName", "memberUsername", "MemberRole", "MemberSpecialty", "MemberStatus");
         allMembersGridModel.get("memberName").label("Team member");
