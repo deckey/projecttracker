@@ -19,7 +19,7 @@ import tapestry.projecttracker.entities.Project;
 
 /**
  *
- * @author dejan
+ * @author Dejan Ivanovic divanovic3d@gmail.com
  */
 public class MemberIMPL implements MemberDAO {
 
@@ -80,12 +80,6 @@ public class MemberIMPL implements MemberDAO {
             }
         }
         return null;
-    }
-
-    @Override
-    public boolean checkIfMemberExists(String uName) {
-        Member member = getMemberByUsername(uName);
-        return (member == null) ? false : true;
     }
 
     @Override

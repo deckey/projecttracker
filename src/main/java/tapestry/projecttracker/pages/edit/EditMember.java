@@ -1,20 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package tapestry.projecttracker.pages.edit;
 
 import tapestry.projecttracker.pages.delete.DeleteProject;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.security.RolesAllowed;
 import org.apache.tapestry5.annotations.InjectComponent;
 import org.apache.tapestry5.annotations.InjectPage;
-import org.apache.tapestry5.annotations.Persist;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.annotations.SessionState;
-import org.apache.tapestry5.beaneditor.Validate;
 import org.apache.tapestry5.corelib.components.Form;
 import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.Inject;
@@ -29,33 +23,21 @@ import tapestry.projecttracker.prop.MemberRole;
 import tapestry.projecttracker.prop.MemberSpecialty;
 import tapestry.projecttracker.prop.MemberStatus;
 import tapestry.projecttracker.prop.ProjectCategory;
-import tapestry.projecttracker.prop.ProjectStatus;
 import tapestry.projecttracker.services.ProtectedPage;
 
+/**
+ *
+ * Page for editing Member instances
+ *
+ * @author Dejan Ivanovic divanovic3d@gmail.com
+ */
 @ProtectedPage
 @RolesAllowed(value = {"Administrator", "Supervisor", "Member"})
 public class EditMember {
 
-    @Inject
-    private ProjectDAO projectDao;
-
-    @Inject
-    private MemberDAO memberDao;
-
-    @Property
-    private Project project;
-
-    @InjectPage
-    private ViewProject viewProjectPage;
-
-    @InjectPage
-    private ViewMember viewMemberPage;
-
-    @InjectPage
-    private DeleteProject deletePage;
-
-    @Property
-    private List<Project> projects;
+    /* Properties */
+    @SessionState
+    private Member loggedInMember;
 
     @Property
     private Member member;
@@ -64,74 +46,103 @@ public class EditMember {
     private List<Member> members;
 
     @Property
+    private Project project;
+
+    @Property
+    private List<Project> projects;
+
+    @Property
     private List<Member> selectedMembers;
 
-    @SessionState
-    private Member loggedInMember;
-
+    /* FIELDS */
     @Property
     private String memberPassword;
-    
+    @Property
+    private MemberStatus memberStatus;
+    @Property
+    private MemberSpecialty memberSpecialty;
     @Property
     private String passwordFormat;
-
     @Property
-    private String repeatPassword="";
+    private String repeatPassword = "";
 
-    @Property
-    private final MemberEncoder memberEncoder = new MemberEncoder(memberDao);
+    /*Services */
+    @InjectPage
+    private DeleteProject deletePage;
 
     @InjectComponent("memberEditForm")
     private Form form;
 
-    @Property
-    private MemberSpecialty memberSpecialty;
+    @Inject
+    private MemberDAO memberDao;
+
+    @Inject
+    private ProjectDAO projectDao;
+
+    @InjectPage
+    private ViewProject viewProjectPage;
+
+    @InjectPage
+    private ViewMember viewMemberPage;
 
     @Property
-    private MemberStatus memberStatus;
+    private final MemberEncoder memberEncoder = new MemberEncoder(memberDao);
 
+    /**
+     * Get dropdown list of ProjectCategory types (Animation, MotionGraphics...)
+     *
+     * @return List of ProjectCategory enum values
+     */
     public ProjectCategory[] getCategories() {
         ProjectCategory[] categories = ProjectCategory.values();
         return categories;
     }
 
+    /**
+     * Get dropdown list of MemberSpecialty types (Supervision, Modeling,
+     * Rigging ...)
+     *
+     * @return List of MemberSpecialty enum values
+     */
     public MemberSpecialty[] getSpecialties() {
         MemberSpecialty[] specialties = MemberSpecialty.values();
         return specialties;
     }
 
+    /**
+     * Get dropdown list of ProjectStatus types (Active, Completed ...)
+     *
+     * @return List of ProjectStatus enum values
+     */
     public MemberStatus[] getStatuses() {
         MemberStatus[] statuses = MemberStatus.values();
         return statuses;
     }
 
+    /**
+     * Get dropdown list of MemberRole types (Supervisor, Administrator, Member)
+     *
+     * @return List of MemberRole enum values
+     */
     public MemberRole[] getRoles() {
         MemberRole[] roles = MemberRole.values();
         return roles;
     }
 
-    public String getStartDateFormat() {
-        SimpleDateFormat formatter = new SimpleDateFormat("MMM d, yyyy");
-        return formatter.format(project.getProjectStart());
-    }
-
-    public String getDueDateFormat() {
-        SimpleDateFormat formatter = new SimpleDateFormat("MMM d, yyyy");
-        return formatter.format(project.getProjectDue());
-    }
-
-    public String getCreationDateFormat() {
-        SimpleDateFormat formatter = new SimpleDateFormat("MMM d, yyyy");
-        return formatter.format(project.getProjectCreationDate());
-    }
-
-    void onPrepare() {
-        members = memberDao.getAllMembers();
-        projects = projectDao.getAllProjects();
-    }
-
+    /**
+     * Set active member for the page to render properly
+     *
+     * @param member Member instance to show
+     */
     public void set(Member member) {
         this.member = member;
+    }
+
+    /* Page rendering */
+    void onPrepare() {
+        // Get all members and projects 
+        members = memberDao.getAllMembers();
+        projects = projectDao.getAllProjects();
     }
 
     Object onActivate(Member member) {
@@ -150,16 +161,13 @@ public class EditMember {
     Member onPassivate() {
         return member;
     }
-
-    Object checkOwnerShip() {
-        if (!getLoggedInRole()) {
-            return this;
-        } else {
-            viewMemberPage.set(member);
-            return viewMemberPage;
-        }
-    }
-
+    
+    //Other page methods
+    
+    /**
+     * Check if the user is Administrator or that page is his/her profile
+     * @return True if the user can edit the page
+     */
     public boolean getLoggedInRole() {
         if ((loggedInMember.getMemberRole().equals(MemberRole.Administrator))
                 || (loggedInMember.getMemberId() == (this.member.getMemberId()))) {
@@ -168,18 +176,29 @@ public class EditMember {
         return false;
     }
 
+    /**
+     * Check if the logged in member is Administrator
+     * @return True if user is Admin
+     */
     public boolean getUserAdmin() {
         return loggedInMember.getMemberRole().equals(MemberRole.Administrator);
     }
 
+    /**
+     * Check if both passwords match for confirmation
+     * @param pass1 String of 1st password entry
+     * @param pass2 String of 2nd password entry
+     * @return True if both passwords are equal
+     */
     public boolean checkPassword(String pass1, String pass2) {
-        System.out.println("CHECKING PASSWORD...."+"string1:"+pass1+" : String2:"+pass2);
         return pass1.equals(pass2);
     }
+    
+    /* Form validation */
 
     @CommitAfter
     Object onSuccessFromMemberEditForm() {
-        if(!checkPassword(memberPassword, repeatPassword)){
+        if (!checkPassword(memberPassword, repeatPassword)) {
             form.recordError("Passwords don't match!");
             return null;
         }

@@ -18,11 +18,12 @@ import tapestry.projecttracker.pages.view.ViewDashboard;
 import tapestry.projecttracker.prop.MemberStatus;
 
 /**
- * Start page of application ProjectTracker.
+ * Index page of Project Tracker application
+ * @author Dejan Ivanovic divanovic3d@gmail.com
  */
 public class Index {
 
-//    TEMPORARY to ADD members
+    /* Properties */
     @Property
     private Member member;
 
@@ -38,15 +39,33 @@ public class Index {
     @Validate("required")
     private String memberPassword;
 
+    @Property
+    private Log log;
+
+    @Property
+    private List<Log> logs;
+    
+    /* Services */
+    @Inject
+    private ProjectDAO projectDao;
+    
     @InjectComponent("loginForm")
     private Form form;
 
     @Inject
     private MemberDAO memberDao;
-
-    @Inject
-    private Session dbs;
-
+    
+    /* Page start and render */ 
+    void onActivate() {
+        if (logs == null) {
+            logs = new ArrayList<>();
+        }
+        logs = projectDao.getAllLogs();
+    }
+    
+    /* Form validation */ 
+    
+    
     void onValidateFromLoginForm() {
         member = memberDao.validateMember(memberUsername, memberPassword);
         if (member == null) {
@@ -62,27 +81,22 @@ public class Index {
     Object onSuccessFromLoginForm() {
         return ViewDashboard.class;
     }
+    
+    /* Methods */
 
+    /**
+     *
+     * @return
+     */
     public String getUser() {
         return loggedInMember.getMemberUsername();
     }
 
+    /**
+     *
+     * @return
+     */
     public boolean getLoggedIn() {
         return (loggedInMember.getMemberUsername() == null) ? true : false;
-    }
-    @Property
-    private Log log;
-
-    @Property
-    private List<Log> logs;
-
-    @Inject
-    private ProjectDAO projectDao;
-
-    void onActivate() {
-        if (logs == null) {
-            logs = new ArrayList<>();
-        }
-        logs = projectDao.getAllLogs();
     }
 }

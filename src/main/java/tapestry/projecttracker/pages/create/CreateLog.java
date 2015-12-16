@@ -1,13 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package tapestry.projecttracker.pages.create;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -28,33 +24,31 @@ import tapestry.projecttracker.pages.view.ViewProject;
 import tapestry.projecttracker.prop.WorkType;
 
 /**
+ * Page for creating logs on a project
  *
- * @author Dejan Ivanovic
+ * @author Dejan Ivanovic divanovic3d@gmail.com
  */
 public class CreateLog {
 
+    /* Properties */
     @Property
     private Project project;
     @Property
     private List<Project> projects;
+    @Property
+    private Member member;
+    @Property
+    private List<Member> members;
+    @SessionState
+    private Member loggedInMember;
 
+    /* Services */
     @Inject
     private ProjectDAO projectDao;
     @Inject
     private MemberDAO memberDao;
     @Inject
     private ActivityDAO activityDao;
-
-    @Property
-    private Member member;
-    @Property
-    private List<Member> members;
-
-    @SessionState
-    private Member loggedInMember;
-    @Property
-    private List<Member> selectedMembers;
-
     @InjectPage
     private ViewProject viewProjectPage;
 
@@ -70,84 +64,76 @@ public class CreateLog {
     @Validate("required")
     private double logTime;
 
-    public String getStartDateFormat() {
+    /**
+     * Format the Date instance as 'Fri 05, 2015'
+     *
+     * @param dateToFormat
+     * @return String with formatted date
+     */
+    public String getDateFormat(Date dateToFormat) {
         SimpleDateFormat formatter = new SimpleDateFormat("MMM d, yyyy");
-        return formatter.format(project.getProjectStart());
+        return formatter.format(dateToFormat);
     }
 
-    public String getDueDateFormat() {
-        SimpleDateFormat formatter = new SimpleDateFormat("MMM d, yyyy");
-        return formatter.format(project.getProjectDue());
-    }
-
-    public String getCreationDateFormat() {
-        SimpleDateFormat formatter = new SimpleDateFormat("MMM d, yyyy");
-        return formatter.format(project.getProjectCreationDate());
-    }
-
+    /**
+     * Get dropdown list of WorkType values e.g. Animation, Lighting, Storyboard
+     *
+     * @return List of WorkType enum values
+     */
     public WorkType[] getWorkTypes() {
         WorkType[] workTypes = WorkType.values();
         return workTypes;
     }
 
+    /**
+     * Get all members and projects as lists
+     */
     void onPrepare() {
         members = memberDao.getAllMembers();
         projects = projectDao.getAllProjects();
-       
-        if (selectedMembers == null) {
-            selectedMembers = new ArrayList<>();
-        }
-        if(projects==null){
+
+        if (projects == null) {
             projects = new ArrayList<>();
         }
-        
-        Collections.sort(selectedMembers);
     }
 
+    /**
+     * Get Role of the logged in member
+     *
+     * @return True if logged in member is either Admin or Supervisor
+     */
+    public boolean getLoggedInRole() {
+        return (loggedInMember.getMemberRole().name() != "Member") ? true : false;
+    }
+
+   
+    /**
+     * Set active project for the page to render properly
+     * @param project Project instance to show
+     */
     public void set(Project project) {
         this.project = project;
     }
 
     void onActivate(Project project) {
         this.project = project;
-        selectedMembers = project.getAssignedMembers();
     }
 
     Project onPassivate() {
         return project;
     }
 
-    public SortedSet<Member> getSortedAssignedMembers() {
-        return new TreeSet(project.getAssignedMembers());
-    }
-    
-   
-    public boolean getLoggedInRole() {
-        return (loggedInMember.getMemberRole().name() != "Member") ? true : false;
-    }
-
+    /* Creating log form validation */
     @CommitAfter
     Object onSubmitFromLogTimeForm() {
         Log newLog = new Log(loggedInMember.getMemberId(), project.getProjectId(), logComment, logTime, logWork);
         projectDao.addLog(newLog);
-        
+
 //      ACTIVITY RECORD
-        Activity activity = activityDao.recordActivity(loggedInMember, ("logged "+newLog.getLogTime()+" hours of "+ newLog.getLogWork()+" on " + project));
-        
+        Activity activity = activityDao.recordActivity(loggedInMember, ("logged " + newLog.getLogTime() + " hours of " + newLog.getLogWork() + " on " + project));
+
         project.setProjectTime(projectDao.getProjectLoggedTime(project));
         viewProjectPage.set(project);
         return viewProjectPage;
-    }
-
-    /* Method returning true if the member is assigned to selected project
-        Used for log time button visibility
-     */
-    public boolean getCheckProjectMember() {
-        for (Member mem : selectedMembers) {
-            if (mem.getMemberUsername().equals(loggedInMember.getMemberUsername())) {
-                return true;
-            }
-        }
-        return false;
     }
 }

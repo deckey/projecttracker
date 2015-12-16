@@ -33,11 +33,11 @@
                     </tr>
                     <tr>
                         <td>Start date:</td>
-                        <td>${startDateFormat}</td>
+                        <td>${getDateFormat(project.getProjectStart())}</td>
                     </tr>
                     <tr>
                         <td>Due date:</td>
-                        <td>${dueDateFormat}</td>
+                        <td>${getDateFormat(project.getProjectDue())}</td>
                     </tr>
                         
                     <tr>
@@ -50,34 +50,29 @@
                     </tr>
                     <tr>
                         <td>Created on:</td>
-                        <td>
-                            ${creationDateFormat}
-                        </td>
+                        <td>${getDateFormat(project.getProjectCreationDate())}</td>
                     </tr>
                 </table>
                 <div class="col-sm-6 ">
                     <!--LOG PROJECT TIME LINK BUTTON-->
-                    <!--CHECKING IF LOGGED MEMBER IS ASSIGNED TO THE PROJECT-->
-                    <t:if test="checkProjectMember">
-                        <t:form t:id="logTimeForm">
-                            <div class="form-group col-sm-12">
-                                <label for="logComment">Work details:</label>
-                                <input t:type="textarea" t:id="logComment" value="logComment" />
-                            </div>
-                            <div class="form-group col-sm-3">
-                                <label for="logTime">Time (hrs)</label>
-                                <input t:type="textfield" t:id="logTime" value="logTime" />
-                            </div> 
-                            <div class="form-group col-sm-5 col-sm-offset-1">
-                                <label for="logWork">Type of work:</label>
-                                <input t:type="select" model="workTypes" value="logWork"/>
-                            </div> 
-                            <div class="form-group col-sm-3">
-                                <label for="logTimeBtn" class="invisible">spacer</label>
-                                <t:submit t:id="logTimeBtn" class="btn btn-warning  pull-right" value="Log time"/> 
-                            </div>
-                        </t:form>
-                    </t:if>
+                    <t:form t:id="logTimeForm">
+                        <div class="form-group col-sm-12">
+                            <label for="logComment">Work details:</label>
+                            <input t:type="textarea" t:id="logComment" value="logComment" />
+                        </div>
+                        <div class="form-group col-sm-3">
+                            <label for="logTime">Time (hrs)</label>
+                            <input t:type="textfield" t:id="logTime" value="logTime" />
+                        </div> 
+                        <div class="form-group col-sm-5 col-sm-offset-1">
+                            <label for="logWork">Type of work:</label>
+                            <input t:type="select" model="workTypes" value="logWork"/>
+                        </div> 
+                        <div class="form-group col-sm-3">
+                            <label for="logTimeBtn" class="invisible">spacer</label>
+                            <t:submit t:id="logTimeBtn" class="btn btn-warning  pull-right" value="Log time"/> 
+                        </div>
+                    </t:form>
                     <div class="spacer"/>
                 </div>
             </div>

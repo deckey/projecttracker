@@ -59,11 +59,11 @@
                     </tr>
                     <tr>
                         <td>Start date:</td>
-                        <td>${startDateFormat}</td>
+                        <td>${getDateFormat(project.getProjectStart())}</td>
                     </tr>
                     <tr>
                         <td>Due date:</td>
-                        <td>${dueDateFormat}</td>
+                        <td>${getDateFormat(project.getProjectDue())}</td>
                     </tr>
                         
                     <tr>
@@ -76,9 +76,7 @@
                     </tr>
                     <tr>
                         <td>Created on:</td>
-                        <td>
-                            ${creationDateFormat}
-                        </td>
+                        <td>${getDateFormat(project.getProjectCreationDate())}</td>
                     </tr>
                 </table>
                

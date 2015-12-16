@@ -1,7 +1,30 @@
 
 package tapestry.projecttracker.prop;
 
+/**
+ *
+ * @author Dejan Ivanovic divanovic3d@gmail.com
+ */
 public enum ProjectStatus {
-    Active, Inactive, Completed, Archived;
+
+    /**
+     * Active project
+     */
+    Active,
+
+    /**
+     * Inactive, muted project
+     */
+    Inactive,
+
+    /**
+     * Completed, closed project
+     */
+    Completed,
+
+    /**
+     * Archived project status
+     */
+    Archived;
     
 }

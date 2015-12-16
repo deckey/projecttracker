@@ -1,14 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package tapestry.projecttracker.pages.edit;
 
 import tapestry.projecttracker.pages.delete.DeleteProject;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -32,74 +28,95 @@ import tapestry.projecttracker.prop.ProjectCategory;
 import tapestry.projecttracker.prop.ProjectStatus;
 import tapestry.projecttracker.services.ProtectedPage;
 
+/**
+ *
+ * Page for editing Project instances
+ *
+ * @author Dejan Ivanovic divanovic3d@gmail.com
+ */
 @ProtectedPage
 @RolesAllowed(value = {"Administrator", "Supervisor"})
 public class EditProject {
 
-    @Inject
-    private ProjectDAO projectDao;
-
-    @Inject
-    private MemberDAO memberDao;
-
-    @Property
-    private Project project;
-
-    @InjectPage
-    private ViewProject viewProjectPage;
-    
-    @InjectPage
-    private DeleteProject deletePage;
-
-    @Property
-    private List<Project> projects;
-
+    /* Properties */
+    @SessionState
+    private Member loggedInMember;
     @Property
     private Member member;
-
     @Property
     private List<Member> members;
 
     @Property
-    private List<Member> selectedMembers;
-
-    @Inject
-    private ActivityDAO activityDao;
-    
-    @SessionState
-    private Member loggedInMember;
+    private Project project;
+    @Property
+    private List<Project> projects;
 
     @Property
-    private final MemberEncoder memberEncoder = new MemberEncoder(memberDao);
+    private List<Member> selectedMembers;
+
+    /* Services */
+    @Inject
+    private ActivityDAO activityDao;
+
+    @InjectPage
+    private DeleteProject deletePage;
 
     @InjectComponent("projectEditForm")
     private Form form;
 
+    @Inject
+    private MemberDAO memberDao;
+
+    @Inject
+    private ProjectDAO projectDao;
+
+    @InjectPage
+    private ViewProject viewProjectPage;
+
+    @Property
+    private final MemberEncoder memberEncoder = new MemberEncoder(memberDao);
+
+    /**
+     * Get dropdown list of ProjectCategory types (Animation, MotionGraphics...)
+     *
+     * @return List of ProjectCategory enum values
+     */
     public ProjectCategory[] getCategories() {
         ProjectCategory[] categories = ProjectCategory.values();
         return categories;
     }
 
+    /**
+     * Get dropdown list of ProjectStatus types (Active, Completed ...)
+     *
+     * @return List of ProjectStatus enum values
+     */
     public ProjectStatus[] getStatuses() {
         ProjectStatus[] statuses = ProjectStatus.values();
         return statuses;
     }
 
-    public String getStartDateFormat() {
+    /**
+     * Format the Date instance as 'Fri 05, 2015'
+     *
+     * @param dateToFormat Date instance to format
+     * @return String with formatted date
+     */
+    public String getDateFormat(Date dateToFormat) {
         SimpleDateFormat formatter = new SimpleDateFormat("MMM d, yyyy");
-        return formatter.format(project.getProjectStart());
+        return formatter.format(dateToFormat);
     }
 
-    public String getDueDateFormat() {
-        SimpleDateFormat formatter = new SimpleDateFormat("MMM d, yyyy");
-        return formatter.format(project.getProjectDue());
+    /**
+     * Set active project for the page to render properly
+     *
+     * @param project Project instance to show
+     */
+    public void set(Project project) {
+        this.project = project;
     }
 
-    public String getCreationDateFormat() {
-        SimpleDateFormat formatter = new SimpleDateFormat("MMM d, yyyy");
-        return formatter.format(project.getProjectCreationDate());
-    }
-
+    /* Page rendering */
     void onPrepare() {
         members = memberDao.getAllMembers();
         projects = projectDao.getAllProjects();
@@ -110,14 +127,6 @@ public class EditProject {
         Collections.sort(selectedMembers);
     }
 
-    public SortedSet<Member> getSortedAssignedMembers() {
-        return new TreeSet(project.getAssignedMembers());
-    }
-
-    public void set(Project project) {
-        this.project = project;
-    }
-
     void onActivate(Project project) {
         this.project = project;
     }
@@ -126,17 +135,29 @@ public class EditProject {
         return project;
     }
 
+    /**
+     * Return sorted list of assigned members 
+     * @return SortedSet of Member instances
+     */
+    public SortedSet<Member> getSortedAssignedMembers() {
+        return new TreeSet(project.getAssignedMembers());
+    }
+
+    /**
+     * Check if logged in member is Administrator
+     * @return True if member is not Admin
+     */
     public boolean getLoggedInRole() {
         return (loggedInMember.getMemberRole().name() != "Administrator") ? true : false;
     }
 
+    /* Form validation */
     void onValidateFromProjectSelectForm() {
         System.out.println("VALIDATION CALLED.... " + ": PROJECT : " + project);
         if (project == null) {
             project = projects.get(0);
         }
     }
-
     void onValidateFromProjectEditForm() {
         System.out.println("EDIT FORM: VALIDATION... " + ": PROJECT : " + project);
         // validation queries like
@@ -145,19 +166,18 @@ public class EditProject {
             form.recordError("Due date can not be set before start date!");
         }
     }
-
     @CommitAfter
     Object onSuccessFromProjectEditForm() {
         System.out.println("EDIT FORM: SUCCESS... UPDATED PROJECT..." + project);
         viewProjectPage.set(projectDao.updateProject(project));
-        
+
 //      ACTIVITY RECORD
-        Activity activity = activityDao.recordActivity(loggedInMember, ("updated " + project +" project "));
-        
+        Activity activity = activityDao.recordActivity(loggedInMember, ("updated " + project + " project "));
+
         return viewProjectPage;
     }
-    
-    Object onDeleteProject(Project project){
+
+    Object onDeleteProject(Project project) {
         deletePage.set(project);
         return deletePage;
     }

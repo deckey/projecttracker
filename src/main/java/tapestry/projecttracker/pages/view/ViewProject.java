@@ -1,13 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package tapestry.projecttracker.pages.view;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -30,13 +26,33 @@ import tapestry.projecttracker.entities.Project;
 import tapestry.projecttracker.prop.ProjectCategory;
 import tapestry.projecttracker.prop.ProjectStatus;
 
+/**
+ *
+ * @author Dejan Ivanovic divanovic3d@gmail.com
+ */
 public class ViewProject {
 
-    @Inject
-    private ProjectDAO projectDao;
+    /* Properties */
+    @SessionState
+    private Member loggedInMember;
 
-    @Inject
-    private MemberDAO memberDao;
+    @Property
+    private Log log;
+
+    @Property
+    private BeanModel<Log> logTableGrid;
+
+    @Property
+    private List<Log> logs;
+
+    @Property
+    private Member member;
+
+    @Property
+    private double memberProjectHours;
+
+    @Property
+    private List<Member> members;
 
     @Property
     private Project project;
@@ -45,68 +61,62 @@ public class ViewProject {
     private List<Project> projects;
 
     @Property
-    private Member member;
-
-    @Property
-    private List<Member> members;
-
-    @Property
     private List<Member> selectedMembers;
 
-    @SessionState
-    private Member loggedInMember;
-
-    @Property
-    private Log log;
-
-    @Property
-    private List<Log> logs;
-
-    @Property
-    private double memberProjectHours;
-
-    @Property
-    private BeanModel<Log> logTableGrid;
+    /* Services */
+    @Inject
+    private AlertManager alertManager;
     @Inject
     private BeanModelSource beanModelSource;
     @Inject
-    private Messages messages;
-
+    private MemberDAO memberDao;
     @Inject
-    private AlertManager alertManager;
+    private Messages messages;
+    @Inject
+    private ProjectDAO projectDao;
 
     @Property
     private final MemberEncoder memberEncoder = new MemberEncoder(memberDao);
 
+    /**
+     * Get dropdown list of ProjectCategory types (Animation, MotionGraphics...)
+     *
+     * @return List of ProjectCategory enum values
+     */
     public ProjectCategory[] getCategories() {
         ProjectCategory[] categories = ProjectCategory.values();
         return categories;
     }
 
+    /**
+     * Get dropdown list of ProjectStatus types (Active, Completed ...)
+     *
+     * @return List of ProjectStatus enum values
+     */
     public ProjectStatus[] getStatuses() {
         ProjectStatus[] statuses = ProjectStatus.values();
         return statuses;
     }
 
-    public String getStartDateFormat() {
+    /**
+     * Format the Date instance as 'Fri 05, 2015'
+     *
+     * @param dateToFormat Date instance to format
+     * @return String with formatted date
+     */
+    public String getDateFormat(Date dateToFormat) {
         SimpleDateFormat formatter = new SimpleDateFormat("MMM d, yyyy");
-        return formatter.format(project.getProjectStart());
+        return formatter.format(dateToFormat);
     }
 
-    public String getDueDateFormat() {
-        SimpleDateFormat formatter = new SimpleDateFormat("MMM d, yyyy");
-        return formatter.format(project.getProjectDue());
-    }
-
-    public String getCreationDateFormat() {
-        SimpleDateFormat formatter = new SimpleDateFormat("MMM d, yyyy");
-        return formatter.format(project.getProjectCreationDate());
-    }
-
+    /* Page rendering */
     void onPrepare() {
+        // get all projects, members and logs
         members = memberDao.getAllMembers();
         projects = projectDao.getAllProjects();
         logs = projectDao.getAllLogs();
+
+        /* Avoid NullPointer exception by initializing empty lists */
         if (selectedMembers == null) {
             selectedMembers = new ArrayList<>();
         }
@@ -116,27 +126,19 @@ public class ViewProject {
         if (logs == null) {
             logs = new ArrayList<>();
         }
+
+        /* get and sort members assigned on a project */
         selectedMembers = project.getAssignedMembers();
         Collections.sort(selectedMembers);
     }
 
-    public SortedSet<Member> getSortedAssignedMembers() {
-        return new TreeSet(project.getAssignedMembers());
-    }
-
+    /**
+     * Set active project for the page to render properly
+     *
+     * @param project Project instance to show
+     */
     public void set(Project project) {
         this.project = project;
-    }
-    public void setSuccessAlert(String message){
-        alertManager.alert(Duration.TRANSIENT, Severity.SUCCESS, message);
-    }
-
-    void onActivate(Project project) {
-        this.project = project;
-    }
-
-    Project onPassivate() {
-        return project;
     }
 
     void setupRender() {
@@ -151,17 +153,46 @@ public class ViewProject {
         logTableGrid.get("logWork").label("Work type");
     }
 
+    void onActivate(Project project) {
+        this.project = project;
+    }
+
+    Project onPassivate() {
+        return project;
+    }
+
+    /**
+     * Sort and return list of assigned members
+     *
+     * @return Sorted set of members
+     */
+    public SortedSet<Member> getSortedAssignedMembers() {
+        return new TreeSet(project.getAssignedMembers());
+    }
+
+    /**
+     * Activation context from CreateProject page sending success message
+     *
+     * @param message Showing project was successfully created
+     */
+    public void setSuccessAlert(String message) {
+        alertManager.alert(Duration.TRANSIENT, Severity.SUCCESS, message);
+    }
+
+    /**
+     * Check if logged in user is not a Member, being either Admin or Supervisor
+     *
+     * @return True if user can edit the project
+     */
     public boolean getLoggedInRole() {
         return (loggedInMember.getMemberRole().name() != "Member") ? true : false;
     }
 
-    void onValidateFromProjectSelectForm() {
-        System.out.println("VALIDATION CALLED.... " + ": PROJECT : " + project);
-        if (project == null) {
-            project = projects.get(0);
-        }
-    }
-
+    /**
+     * Get logs for a current project
+     *
+     * @return List of logs submitted for this project
+     */
     public List<Log> getFilteredLogs() {
         List<Log> filteredLogs = new ArrayList<>();
         for (Log entry : logs) {
@@ -172,6 +203,12 @@ public class ViewProject {
         return filteredLogs;
     }
 
+    /**
+     * Get total of hours that member spent on a project, calculating sum of log
+     * times
+     *
+     * @return Number of hours (double)
+     */
     public double getHoursByMember() {
         List<Log> filteredLogs = new ArrayList<>();
         memberProjectHours = 0;
@@ -185,8 +222,11 @@ public class ViewProject {
         return memberProjectHours;
     }
 
-    /* Method returning true if the member is assigned to selected project
-        Used for log time button visibility
+    /**
+     * Method returning true if the member is assigned to selected project 
+     * Used for 'log time' button visibility
+     *
+     * @return True if user can log time on a current project
      */
     public boolean getCheckProjectMember() {
         System.out.println("SELECTED MEMBERS...." + selectedMembers);
@@ -200,16 +240,30 @@ public class ViewProject {
         return false;
     }
 
+    
+    /**
+     * Called onDeleteLog event
+     * check if user can delete the log, or send alert message
+     * @param id Unique log id
+     */
     @CommitAfter
     void onDeleteLog(Integer id) {
         Log log = projectDao.getLogById(id);
-        System.out.println("LOG DELETING...." + log);
+        /* member owns the log, so it can be deleted */
         if (log.getLogMemberId().equals(loggedInMember.getMemberId())) {
             projectDao.deleteLog(id);
         } else {
-            //TODO: Create an error report here for not deleting the log
-            alertManager.alert(Duration.TRANSIENT, Severity.ERROR, 
+            /* alert that log can't be deleted */
+            alertManager.alert(Duration.TRANSIENT, Severity.ERROR,
                     "Log can only be deleted by it's creator!");
+        }
+    }
+
+    /* Form validation */
+    void onValidateFromProjectSelectForm() {
+        /* If dropdown empty field is selected, show first project on the list */
+        if (project == null) {
+            project = projects.get(0);
         }
     }
 }
