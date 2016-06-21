@@ -5,11 +5,10 @@
     <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
     <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
     <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/projecttracker.db?zeroDateTimeBehavior=convertToNull </property>
-    <!--<property name="hibernate.connection.url">jdbc:mysql://node114176-divanovic.j.layershift.co.uk/projecttracker.db</property>-->
+    <!--<property name="hibernate.connection.url">jdbc:mysql://node126801-divanovic.j.layershift.co.uk/projecttracker.db</property>-->
     <property name="hibernate.connection.username">root</property>
-    <!--<property name="hibernate.connection.password">IAPizt53103</property>-->
+    <property name="hibernate.connection.password">LYFpod10889</property>
     <property name="hibernate.hbm2ddl.auto">update</property>
-    <property name="hibernate.show_sql">true</property>
     <property name="hibernate.format_sql">true</property>
     <property name="connection.pool_size">1</property>
     <mapping class="tapestry.projecttracker.entities.Member"/>

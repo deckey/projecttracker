@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.apache.tapestry:tapestry-hibernate-core:5.4-beta-26">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/apache/tapestry/tapestry-hibernate-core/5.4-beta-26/tapestry-hibernate-core-5.4-beta-26.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/apache/tapestry/tapestry-hibernate-core/5.4-beta-26/tapestry-hibernate-core-5.4-beta-26-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/apache/tapestry/tapestry-hibernate-core/5.4-beta-26/tapestry-hibernate-core-5.4-beta-26-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

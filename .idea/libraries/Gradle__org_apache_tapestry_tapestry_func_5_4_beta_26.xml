@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Gradle: org.apache.tapestry:tapestry-func:5.4-beta-26">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/apache/tapestry/tapestry-func/5.4-beta-26/tapestry-func-5.4-beta-26.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
