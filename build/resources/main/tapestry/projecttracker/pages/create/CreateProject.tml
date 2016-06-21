@@ -1,0 +1,66 @@
+<html t:type="layout" title="Project Tracker : Create project" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_4.xsd"
+      xmlns:p="tapestry:parameter">
+    <body>
+        <div class="container">
+            <t:header/>
+            <t:mainmenu/>
+            <div class="row border_btm">
+                <h3> Create new project: </h3>
+            </div>
+            <div class="spacer"/>
+            <!--ADDING PROJECTS FORM-->
+            <t:form t:id="addProjectForm">
+                <t:errors/>
+                
+                <!--PROJECT TITLE, CLIENT AND DATES-->
+                <div class="row">
+                    <div class="form-group col-sm-3">
+                        <label for="projectTitle">* Project title:</label>
+                        <t:textfield t:id="projectTitle" t:value="projectTitle"/>
+                    </div>
+                    <div class="form-group col-sm-3 col-sm-offset-1">
+                        <label for="projectClient">* Company:</label>
+                        <t:textfield t:id="projectClient" t:value="projectClient"/>
+                    </div>
+                    <div class="form-group col-sm-2 col-sm-offset-1">
+                        <label for="projectStartDate">* Start date:</label>
+                        <input t:type="datefield" t:id="projectStartDate" t:value="projectStart"/>
+                    </div>
+                    <div class="form-group col-sm-2">
+                        <label for="projectDueDate">* Due date:</label>
+                        <input t:type="datefield" t:id="projectDueDate" t:value="projectDue"/>
+                    </div>
+                </div>
+                
+                
+                <!--PROJECT DESCRIPTION,  CATEGORY, PROJECT STATUS--> 
+                <div class="row">
+                    <div class="form-group col-sm-7">
+                        <label for="projectDescription">Description:</label>
+                        <t:textarea t:id="projectDescription" t:value="projectDescription"/>
+                    </div>
+                    <div class="form-group col-sm-2 col-sm-offset-1">
+                        <label for="projectCategory">Category:</label>
+                        <t:select  model="categories" t:value="projectCategory"/>
+                    </div>
+                    <div class="form-group col-sm-2">
+                        <label for="projectStatus">Status:</label>
+                        <t:select  model="statuses" t:value="projectStatus"/>
+                    </div>
+                </div>
+
+                <!--MEMBER ASSIGNMENT PALETTE--> 
+                <div class="row">
+                    <div class="form-group col-sm-9">
+                        <!--<label for="memberPalette">Assign members:</label>-->
+                        <t:palette model="members" selected="selectedMembers" encoder="memberEncoder" />
+                    </div>
+                    <div class="col-sm-3">
+                        <t:pagelink t:page="view/ViewProjects" class="btn btn-default col-sm-offset-4">Cancel</t:pagelink>
+                        <t:submit class="btn btn-primary  pull-right"  value="Add project" />
+                    </div>
+                </div>
+            </t:form>
+        </div>
+    </body>
+</html>

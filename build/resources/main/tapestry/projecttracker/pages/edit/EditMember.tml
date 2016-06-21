@@ -1,0 +1,116 @@
+<html t:type="layout" title="Project Tracker : Edit member" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_4.xsd"
+      xmlns:p="tapestry:parameter">
+    <body>
+        <div class="container">
+            <t:header/>
+            <t:mainmenu/>
+            <div class="row border_btm">
+                <!-- MEMBER DETAILS HEADER -->
+                <t:form class="col-sm-12 form-inline" t:id="memberSelectForm">
+                    <label class="col-sm-2">
+                        Edit member:
+                    </label>
+                    <div class="form-group">
+                        <select t:type="select"
+                                t:model="members" 
+                                t:value="member"/>
+                        <t:submit class="btn btn-default" value="Select"/>
+                        <t:pagelink t:page="view/ViewMember" t:context="member.memberId" class="btn btn-default left20">Cancel</t:pagelink>
+                    </div>
+                </t:form>
+            </div>
+            <div class="row well">
+                <table class="col-sm-6" id="detailsTable">
+                    <tr>
+                        <td>Member name:</td>
+                        <td>
+                            <b>${member.memberName}</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Username:</td>
+                        <td>${member.memberUsername}</td>
+                    </tr>
+                    <tr>
+                        <td>Password:</td>
+                        <td>
+                            <t:any>${passwordFormat}</t:any>  
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Role:</td>
+                        <td>${member.memberRole}</td>
+                    </tr>
+                    <tr>
+                        <td>Specialty:</td>
+                        <td>${member.memberSpecialty}</td>
+                    </tr>
+                        
+                    <tr>
+                        <td>Status:</td>
+                        <td>${member.memberStatus}</td>
+                    </tr>
+                    <tr>
+                        <td>Hours logged:</td>
+                        <td>${member.memberTotalHours}</td>
+                    </tr>
+                </table>
+            </div>
+            <!--EDIT MEMBER-->
+            <t:form t:type="beaneditform"  t:id="memberEditForm" object="member">
+                <t:errors/>
+                <!--MEMBER DETAILS-->
+                <div class="row top20">
+                    <div class="row">
+                        <div class="form-group col-sm-2">
+                            <label for="memberName">* Full name:</label>
+                            <t:textfield t:id="memberName" t:value="member.memberName" validate="required"/>
+                        </div>
+                        <div class="form-group col-sm-2 ">
+                            <label for="memberPassword">* Password:</label>
+                            <input t:type="textfield" type="password" t:id="memberPassword" t:value="memberPassword" validate="required"/>
+                        </div>
+                        <div class="form-group col-sm-2 ">
+                            <label for="repeatPassword">* Repeat password</label>
+                            <input t:type="textfield" type="password" t:id="repeatPassword" t:value="repeatPassword" validate="required"/>
+                        </div>
+                        <div class="form-group col-sm-2">
+                            <label for="memberStatus">Status:</label>
+                            <t:select model="statuses" t:value="member.memberStatus" validate="required"/>
+                        </div> 
+                        <div class="form-group col-sm-2">
+                            <label for="memberSpecialty">Specialty:</label>
+                            <t:select model="specialties" t:value="member.memberSpecialty" validate="required"/>
+                        </div>
+                        <div class="form-group col-sm-1 ">
+                            <label for="cancelUpdate" class="invisible">spacer</label>
+                            <t:pagelink t:page="delete/DeleteMember" t:context="member.memberId" class="btn btn-danger left20">Delete</t:pagelink>
+                        </div>
+                        <div class="form-group col-sm-1 pull-right">
+                            <label for="updateMember" class="invisible">spacer</label>
+                            <t:submit t:id="updateMember" class="btn btn-primary" value="Update"/>  
+                        </div>
+                    </div>
+                   
+                    <div class="row">
+                        <!--ONLY VISIBLE TO ADMINS-->
+                        <t:if test="userAdmin">
+                            <div class="form-group col-sm-2">
+                                <label for="memberUsername">Username:</label>
+                                <t:textfield t:id="memberUsername" t:value="member.memberUsername" validate="required"/>
+                            </div>
+                            <div class="form-group col-sm-2">
+                                <label for="memberRole">Role:</label>
+                                <t:select model="roles" t:value="member.memberRole" validate="required"/>
+                            </div>
+                        </t:if>
+                        <!--                    <t:if test="!userAdmin">
+                            <div class="form-group col-sm-2 invisible ">SPACER</div>
+                        </t:if>-->
+                        
+                    </div>
+                </div>
+            </t:form>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,138 @@
+<html t:type="layout" title="Project Tracker : Edit project" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_4.xsd"
+      xmlns:p="tapestry:parameter">
+    <body>
+        <div class="container">
+            <t:header/>
+            <t:mainmenu/>
+            <div class="row border_btm">
+                <!-- PROJECT DETAILS HEADER -->
+                <t:form class="col-sm-12 form-inline" t:id="projectSelectForm">
+                    <label for="projectSelector">
+                        Edit project:
+                    </label>
+                    <div class="form-group ">
+                        <select t:type="select"
+                                t:id="projectSelector" 
+                                t:model="projects" 
+                                t:value="project"/>
+                        <t:submit class="btn btn-default" value="Select"/>
+                        <t:pagelink t:page="view/ViewProject" t:context="project.projectId" class="btn btn-default">Cancel</t:pagelink>
+                    </div>
+                    <div class="col-sm-3 pull-right text-right">
+                        <h5> Project ID:000-${project.projectId}</h5>
+                    </div>
+                </t:form>
+            </div>
+
+            
+            
+            
+            <!--EDIT PROJECT--> 
+            <t:form t:type="beaneditform" t:id="projectEditForm" object="project">
+                <t:errors/>
+                
+                
+                <!--PROJECT TITLE, CLIENT AND DATES-->
+                <div class="row top20">
+                    <div class="form-group col-sm-3">
+                        <label for="projectTitle">* Project title:</label>
+                        <t:textfield t:id="projectTitle" t:value="project.projectTitle" validate="required"/>
+                    </div>
+                    <div class="form-group col-sm-3 col-sm-offset-1">
+                        <label for="projectClient">* Company:</label>
+                        <t:textfield t:id="projectClient" t:value="project.projectClient" validate="required"/>
+                    </div>
+                    <div class="form-group col-sm-2 col-sm-offset-1">
+                        <label for="projectStartDate">* Start date:</label>
+                        <t:datefield t:id="projectStartDate" t:value="project.projectStart" validate="required"/>
+                    </div>
+                    <div class="form-group col-sm-2">
+                        <label for="projectDueDate">* Due date:</label>
+                        <t:datefield  t:id="projectDueDate"  t:value="project.projectDue" validate="required"/>
+                    </div>
+                </div>
+                
+                <!--PROJECT DESCRIPTION,  CATEGORY, PROJECT STATUS--> 
+                <div class="row">
+                    <div class="form-group col-sm-7">
+                        <label for="projectDescription">Description:</label>
+                        <t:textarea t:id="projectDescription" t:value="project.projectDescription"/>
+                    </div>
+                    <div class="form-group col-sm-2 col-sm-offset-1">
+                        <label for="projectCategory">Category:</label>
+                        <t:select  model="categories" t:id="projectCategory" t:value="project.projectCategory"/>
+                    </div>
+                    <div class="form-group col-sm-2">
+                        <label for="projectStatus">Status:</label>
+                        <t:select  model="statuses" t:value="project.projectStatus"/>
+                    </div>
+                </div>
+
+                <!--MEMBER ASSIGNMENT PALETTE--> 
+                <div class="row">
+                    <div class="form-group col-sm-10">
+                        <!--<label for="memberPalette">Assign members:</label>-->
+                        <t:palette model="members" selected="selectedMembers" encoder="memberEncoder" />
+                    </div>
+                    
+                    <!--UPDATE & CANCEL BUTTONS-->
+                    <div class="form-group col-sm-2">
+                        <t:submit class="btn btn-primary pull-right left10" value="Update"/>
+                        <t:eventlink t:event="deleteProject" t:context="project.projectId" class="btn btn-danger pull-right">Delete</t:eventlink>
+                    </div>
+                </div>
+            </t:form>
+            
+            <!--BEAN DISPLAY TABLE-->
+            <div class="row well">
+                <table class="col-sm-6" id="detailsTable">
+                    <tr>
+                        <td>Project title:</td>
+                        <td>
+                            <b>${project.projectTitle}</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Project description:</td>
+                        <td>${project.projectDescription}</td>
+                    </tr>
+                    <tr>
+                        <td>Company:</td>
+                        <td>${project.projectClient}</td>
+                    </tr>
+                    <tr>
+                        <td>Category:</td>
+                        <td>${project.projectCategory}</td>
+                    </tr>
+                    <tr>
+                        <td>Start date:</td>
+                        <td>${getDateFormat(project.getProjectStart())}</td>
+                    </tr>
+                    <tr>
+                        <td>Due date:</td>
+                        <td>${getDateFormat(project.getProjectDue())}</td>
+                    </tr>
+                        
+                    <tr>
+                        <td>Hours logged:</td>
+                        <td>${project.projectTime}</td>
+                    </tr>
+                    <tr>
+                        <td>Status:</td>
+                        <td>${project.projectStatus}</td>
+                    </tr>
+                </table>
+                <table class="col-sm-3 " id="assignedTable">
+                    <th>Assigned members:</th>
+                    <tbody>
+                        <tr t:type="loop" t:source="getSortedAssignedMembers()" t:value="member">
+                            <td>${member.memberName}</td>
+                            <td>${member.memberSpecialty}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+        </div>
+    </body>
+</html>

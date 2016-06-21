@@ -1,0 +1,64 @@
+<html t:type="layout" title="Project Tracker : Members"
+      xmlns:t="http://tapestry.apache.org/schema/tapestry_5_4.xsd"
+      xmlns:p="tapestry:parameter">
+    <body>
+        <div class="container">
+            <t:header/>
+            <t:mainmenu/>
+            <div class="row spacer"/>
+            <t:alerts/>
+            <div class="row grey frame">
+                <h4>Most active members:
+                    <small>
+                        <i>(click on the member name for more details)</i>
+                    </small>
+                </h4>
+                <t:grid class="table-grid "
+                        source="activeMembers"
+                        model="activeMembersGridModel"
+                        row="member">
+                    <p:memberNameCell>
+                        <t:pagelink  t:page="view/ViewMember" context="member" class="table-link" title="View member details">
+                            ${member.memberName}
+                        </t:pagelink>
+                    </p:memberNameCell>
+                </t:grid>
+            </div>
+                
+            <!--ALL MEMBERS -->
+            <div class="row spacer"/>
+            <div class="row grey frame">
+                <h4>All team members:</h4>
+                <t:grid class="table-grid "
+                        t:source="members"
+                        model="allMembersGridModel"
+                        row="member">
+                    <p:memberNameCell>
+                        <t:pagelink  t:page="view/ViewMember" context="member" class="table-link" title="View member details">
+                            ${member.memberName}
+                        </t:pagelink>
+                    </p:memberNameCell>
+                </t:grid>
+            </div>
+                
+            <!-- ADD NEW MEMBER -->
+            <!--<div class="row spacer"/>
+            <div class="row grey frame">
+                <h4>Member activity </h4>
+                                <div class="row grey frame">
+                    <t:grid class="table-archived "
+                            source="archivedProjects"
+                            model="gridArchiveModel"
+                            rowsperpage="5"
+                            pagerPosition="bottom">
+                        <p:projectTitleCell>
+                            <a t:type="pagelink"  t:page="view/ViewProjectDetails" context="project" title="View archived project details">
+                                ${project.projectTitle}
+                            </a>
+                        </p:projectTitleCell>
+                    </t:grid>
+                </div>
+            </div>-->
+        </div>
+    </body>
+</html>
